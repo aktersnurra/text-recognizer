@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "text-recognizer"
+version = "0.1.0"
+authors = ["aktersnurra <gustaf.rydholm@gmail.com>"]
+description = "A text recognizer using best pratices in python and deep learning."
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/aktersnurra/text-recognizer"
+repository = "https://github.com/aktersnurra/text-recognizer"
+keywords = ["text recognizer, deep learning, pytorch"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+click = "^7.1.2"
+wandb = "^0.8.36"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
