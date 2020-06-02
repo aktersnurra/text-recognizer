@@ -1,4 +1,4 @@
-"""Fetches a DataLoader for EMNIST dataset with PyTorch."""
+"""Fetches a DataLoader with the EMNIST dataset with PyTorch."""
 from typing import Callable
 
 from torch.utils.data import DataLoader
