@@ -1,0 +1,12 @@
+rule infer
+  command = /home/akternurra/Documents/projects/quest-for-general-artifical-intelligence/projects/text-recognizer/.nox/pytype/bin/python -m pytype.single --imports_info $imports --module-name $module -V 3.7 -o $out --no-report-errors --nofail --quick $in
+  description = infer $module
+rule check
+  command = /home/akternurra/Documents/projects/quest-for-general-artifical-intelligence/projects/text-recognizer/.nox/pytype/bin/python -m pytype.single --disable import-error --imports_info $imports --module-name $module -V 3.7 -o $out --analyze-annotated --nofail --quick $in
+  description = check $module
+build /home/akternurra/Documents/projects/quest-for-general-artifical-intelligence/projects/text-recognizer/.pytype/pyi/noxfile.pyi: check /home/akternurra/Documents/projects/quest-for-general-artifical-intelligence/projects/text-recognizer/noxfile.py
+  imports = /home/akternurra/Documents/projects/quest-for-general-artifical-intelligence/projects/text-recognizer/.pytype/imports/noxfile.imports
+  module = noxfile
+build /home/akternurra/Documents/projects/quest-for-general-artifical-intelligence/projects/text-recognizer/.pytype/pyi/text_recognizer/__init__.pyi: check /home/akternurra/Documents/projects/quest-for-general-artifical-intelligence/projects/text-recognizer/src/text_recognizer/__init__.py
+  imports = /home/akternurra/Documents/projects/quest-for-general-artifical-intelligence/projects/text-recognizer/.pytype/imports/text_recognizer.__init__.imports
+  module = text_recognizer.__init__
