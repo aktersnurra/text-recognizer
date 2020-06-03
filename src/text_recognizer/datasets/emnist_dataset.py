@@ -1,8 +1,20 @@
 """Fetches a DataLoader with the EMNIST dataset with PyTorch."""
+from pathlib import Path
 from typing import Callable
 
+import click
+from loguru import logger
 from torch.utils.data import DataLoader
 from torchvision.datasets import EMNIST
+
+
+@click.command()
+@click.option("--split", "-s", default="byclass")
+def download_emnist(split: str) -> None:
+    """Download the EMNIST dataset via the PyTorch class."""
+    data_dir = Path(__file__).resolve().parents[3] / "data"
+    logger.debug(f"Data directory is: {data_dir}")
+    EMNIST(root=data_dir, split=split, download=True)
 
 
 def fetch_dataloader(
