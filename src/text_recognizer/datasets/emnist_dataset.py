@@ -1,4 +1,4 @@
-"""Fetches a DataLoader with the EMNIST dataset with PyTorch."""
+"""Fetches a PyTorch DataLoader with the EMNIST dataset."""
 from pathlib import Path
 from typing import Callable
 
