@@ -3,6 +3,13 @@ Implementing the text recognizer project from the course ["Full Stack Deep Learn
 
 
 ## Setup
----
 
 TBC
+
+## Todo
+-[x] subsampling
+-[] Be able to run experiments
+-[] Train models
+-[] Implement wandb
+-[] Implement Bayesian hyperparameter search
+-[] New models and datasets

@@ -1,2 +1,2 @@
 """Dataset modules."""
-from .data_loader import fetch_data_loader
+from .emnist_dataset import EmnistDataLoader

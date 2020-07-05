@@ -114,6 +114,17 @@ six = ">=1.9.0"
 webencodings = "*"
 
 [[package]]
+category = "dev"
+description = "A thin, practical wrapper around terminal coloring, styling, and positioning"
+name = "blessings"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "1.7"
+
+[package.dependencies]
+six = "*"
+
+[[package]]
 category = "main"
 description = "When they're not builtins, they're boltons."
 name = "boltons"
@@ -419,6 +430,23 @@ version = "3.1.2"
 
 [package.dependencies]
 gitdb = ">=4.0.1,<5"
+
+[[package]]
+category = "dev"
+description = "An utility to monitor NVIDIA GPU status and usage"
+name = "gpustat"
+optional = false
+python-versions = "*"
+version = "0.6.0"
+
+[package.dependencies]
+blessings = ">=1.6"
+nvidia-ml-py3 = ">=7.352.0"
+psutil = "*"
+six = ">=1.7"
+
+[package.extras]
+test = ["mock (>=2.0.0)", "pytest (<5.0)"]
 
 [[package]]
 category = "main"
@@ -1315,6 +1343,28 @@ version = "1.9.0"
 
 [[package]]
 category = "dev"
+description = "Python client for Redis key-value store"
+name = "redis"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "3.5.3"
+
+[package.extras]
+hiredis = ["hiredis (>=0.1.3)"]
+
+[[package]]
+category = "dev"
+description = "Redis locking mechanism"
+name = "redlock-py"
+optional = false
+python-versions = "*"
+version = "1.0.8"
+
+[package.dependencies]
+redis = "*"
+
+[[package]]
+category = "dev"
 description = "Alternative regular expression module, to replace re."
 name = "regex"
 optional = false
@@ -1836,7 +1886,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "4b4b531a4a45f81cf30cfdd45f34ef07a980689b5af2c99671e34c9ff9158836"
+content-hash = "21a2ef803311c6b5f5bbba56f2baa1b303fd0dd742f46c87f06b1d6dd01765b4"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1879,6 +1929,11 @@ black = [
 bleach = [
     {file = "bleach-3.1.5-py2.py3-none-any.whl", hash = "sha256:2bce3d8fab545a6528c8fa5d9f9ae8ebc85a56da365c7f85180bfe96a35ef22f"},
     {file = "bleach-3.1.5.tar.gz", hash = "sha256:3c4c520fdb9db59ef139915a5db79f8b51bc2a7257ea0389f30c846883430a4b"},
+]
+blessings = [
+    {file = "blessings-1.7-py2-none-any.whl", hash = "sha256:caad5211e7ba5afe04367cdd4cfc68fa886e2e08f6f35e76b7387d2109ccea6e"},
+    {file = "blessings-1.7-py3-none-any.whl", hash = "sha256:b1fdd7e7a675295630f9ae71527a8ebc10bfefa236b3d6aa4932ee4462c17ba3"},
+    {file = "blessings-1.7.tar.gz", hash = "sha256:98e5854d805f50a5b58ac2333411b0482516a8210f23f43308baeb58d77c157d"},
 ]
 boltons = [
     {file = "boltons-20.1.0-py2.py3-none-any.whl", hash = "sha256:b3fc2b711f50cd975e726324d98e0bd5a324dd7e3b81d5e6a1b03c542d0c66c4"},
@@ -2017,6 +2072,9 @@ gitdb = [
 gitpython = [
     {file = "GitPython-3.1.2-py3-none-any.whl", hash = "sha256:da3b2cf819974789da34f95ac218ef99f515a928685db141327c09b73dd69c09"},
     {file = "GitPython-3.1.2.tar.gz", hash = "sha256:864a47472548f3ba716ca202e034c1900f197c0fb3a08f641c20c3cafd15ed94"},
+]
+gpustat = [
+    {file = "gpustat-0.6.0.tar.gz", hash = "sha256:f69135080b2668b662822633312c2180002c10111597af9631bb02e042755b6c"},
 ]
 gql = [
     {file = "gql-0.2.0.tar.gz", hash = "sha256:ad0f0b8226428d727c8e1d1cac4e521d83ed024d814921bd55b8adb997dadf4b"},
@@ -2514,6 +2572,13 @@ qtconsole = [
 qtpy = [
     {file = "QtPy-1.9.0-py2.py3-none-any.whl", hash = "sha256:fa0b8363b363e89b2a6f49eddc162a04c0699ae95e109a6be3bb145a913190ea"},
     {file = "QtPy-1.9.0.tar.gz", hash = "sha256:2db72c44b55d0fe1407be8fba35c838ad0d6d3bb81f23007886dc1fc0f459c8d"},
+]
+redis = [
+    {file = "redis-3.5.3-py2.py3-none-any.whl", hash = "sha256:432b788c4530cfe16d8d943a09d40ca6c16149727e4afe8c2c9d5580c59d9f24"},
+    {file = "redis-3.5.3.tar.gz", hash = "sha256:0e7e0cfca8660dea8b7d5cd8c4f6c5e29e11f31158c0b0ae91a397f00e5a05a2"},
+]
+redlock-py = [
+    {file = "redlock-py-1.0.8.tar.gz", hash = "sha256:0b8722c4843ddeabc2fc1dd37c05859e0da29fbce3bd1f6ecc73c98396f139ac"},
 ]
 regex = [
     {file = "regex-2020.5.14-cp27-cp27m-win32.whl", hash = "sha256:e565569fc28e3ba3e475ec344d87ed3cd8ba2d575335359749298a0899fe122e"},

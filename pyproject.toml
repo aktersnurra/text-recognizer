@@ -49,6 +49,8 @@ typeguard = "^2.7.1"
 xdoctest = "^0.12.0"
 sphinx = "^3.0.4"
 jupyter = "^1.0.0"
+gpustat = "^0.6.0"
+redlock-py = "^1.0.8"
 
 [tool.coverage.report]
 fail_under = 50

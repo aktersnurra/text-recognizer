@@ -4,7 +4,7 @@ import torch
 
 
 def accuracy(outputs: torch.Tensor, labels: torch.Tensro) -> float:
-    """Short summary.
+    """Computes the accuracy.
 
     Args:
         outputs (torch.Tensor): The output from the network.

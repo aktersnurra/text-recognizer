@@ -10,7 +10,6 @@ import torch
 from torch import nn
 from torchsummary import summary
 
-from text_recognizer.dataset.data_loader import fetch_data_loader
 
 WEIGHT_DIRNAME = Path(__file__).parents[1].resolve() / "weights"
 
@@ -22,6 +21,7 @@ class Model(ABC):
         self,
         network_fn: Callable,
         network_args: Dict,
+        data_loader: Optional[Callable] = None,
         data_loader_args: Optional[Dict] = None,
         metrics: Optional[Dict] = None,
         criterion: Optional[Callable] = None,
@@ -32,12 +32,13 @@ class Model(ABC):
         lr_scheduler_args: Optional[Dict] = None,
         device: Optional[str] = None,
     ) -> None:
-        """Base class, to be inherited by predictors for specific type of data.
+        """Base class, to be inherited by model for specific type of data.
 
         Args:
             network_fn (Callable): The PyTorch network.
             network_args (Dict): Arguments for the network.
-            data_loader_args (Optional[Dict]):  Arguments for the data loader.
+            data_loader (Optional[Callable]): A function that fetches train and val DataLoader.
+            data_loader_args (Optional[Dict]):  Arguments for the DataLoader.
             metrics (Optional[Dict]): Metrics to evaluate the performance with. Defaults to None.
             criterion (Optional[Callable]): The criterion to evaulate the preformance of the network.
                 Defaults to None.
@@ -53,8 +54,8 @@ class Model(ABC):
 
         # Fetch data loaders.
         if data_loader_args is not None:
-            self._data_loaders = fetch_data_loader(**data_loader_args)
-            dataset_name = self._data_loaders.items()[0].dataset.__name__
+            self._data_loaders = data_loader(**data_loader_args)
+            dataset_name = self._data_loaders.__name__
         else:
             dataset_name = ""
             self._data_loaders = None
@@ -210,7 +211,6 @@ class Model(ABC):
             logger.debug(
                 f"Found a new best {val_metric}. Saving best checkpoint and weights."
             )
-            self.save_weights()
             shutil.copyfile(filepath, str(path / "best.pt"))
 
     def load_weights(self) -> None:

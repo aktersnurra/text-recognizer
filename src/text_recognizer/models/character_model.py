@@ -32,17 +32,21 @@ class CharacterModel(Model):
 
         super().__init__(
             network_fn,
-            data_loader_args,
             network_args,
+            data_loader_args,
             metrics,
             criterion,
+            criterion_args,
             optimizer,
+            optimizer_args,
+            lr_scheduler,
+            lr_scheduler_args,
             device,
         )
         self.emnist_mapping = self.mapping()
         self.eval()
 
-    def mapping(self) -> Dict:
+    def mapping(self) -> Dict[int, str]:
         """Mapping between integers and classes."""
         mapping = load_emnist_mapping()
         return mapping
