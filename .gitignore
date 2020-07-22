@@ -135,3 +135,6 @@ data/EMNIST/*
 !data/EMNIST/raw
 data/EMNIST/raw/*
 !data/EMNIST/raw/metadata.toml
+
+src/training/experiments/*
+!src/training/experiments/sample_experiment.yml
