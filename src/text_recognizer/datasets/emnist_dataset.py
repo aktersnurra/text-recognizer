@@ -2,7 +2,7 @@
 
 import json
 from pathlib import Path
-from typing import Callable, Dict, List, Optional
+from typing import Callable, Dict, List, Optional, Type
 
 from loguru import logger
 import numpy as np
@@ -102,21 +102,22 @@ class EmnistDataLoader:
         self.shuffle = shuffle
         self.num_workers = num_workers
         self.cuda = cuda
+        self.seed = seed
         self._data_loaders = self._fetch_emnist_data_loaders()
 
     @property
     def __name__(self) -> str:
         """Returns the name of the dataset."""
-        return "EMNIST"
+        return "Emnist"
 
-    def __call__(self, split: str) -> Optional[DataLoader]:
+    def __call__(self, split: str) -> DataLoader:
         """Returns the `split` DataLoader.
 
         Args:
             split (str): The dataset split, i.e. train or val.
 
         Returns:
-            type: A PyTorch DataLoader.
+            DataLoader: A PyTorch DataLoader.
 
         Raises:
             ValueError: If the split does not exist.

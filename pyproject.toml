@@ -58,6 +58,8 @@ fail_under = 50
 [tool.poetry.scripts]
 download-emnist = "text_recognizer.datasets.emnist_dataset:download_emnist"
 create-emnist-support-files = "text_recognizer.tests.support.create_emnist_support_files:create_emnist_support_files"
+run-experiment = "training.run_experiment:main"
+run-experiments = "training.prepare_experiments:main"
 # mlp = "text_recognizer.networks.mlp:test"
 # lenet = "text_recognizer.networks.lenet:test"
 

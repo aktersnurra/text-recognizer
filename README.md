@@ -8,8 +8,24 @@ TBC
 
 ## Todo
 - [x] subsampling
-- [ ] Be able to run experiments
-- [ ] Train models
-- [ ] Implement wandb
-- [ ] Implement Bayesian hyperparameter search
+- [x] Be able to run experiments
+- [x] Train models
+- [x] Fix input size in base model
+- [x] Fix s.t. the best weights are saved
+- [x] Implement total training time
+- [x] Fix tqdm and logging output
+- [x] Fix basic test to load model
+- [x] Fix loading previous experiments
+- [ ] Check how to pass arguments to unittest (remove B009 then)
+- [x] Able to set verbosity level on the logger to terminal output
+- [ ] Implement Callbacks for training
+    - [ ] Implement early stopping
+    - [ ] Implement wandb
+    - [ ] Implement lr scheduler as a callback
+- [ ] Continuing reimplementing labs
 - [ ] New models and datasets
+- [ ] Check that dataset exists, otherwise download it form the web. Do this in run_experiment.py.
+- [ ] Create repr func for data loaders
+- [ ] Be able to restart with lr scheduler
+- [ ] Implement Bayesian hyperparameter search
+- [ ] Try to fix shell cmd security issues S404, S602

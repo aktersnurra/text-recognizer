@@ -1,8 +1,8 @@
 """CharacterPredictor class."""
-
-from typing import Tuple, Union
+from typing import Dict, Tuple, Type, Union
 
 import numpy as np
+from torch import nn
 
 from text_recognizer.models import CharacterModel
 from text_recognizer.util import read_image
@@ -11,9 +11,9 @@ from text_recognizer.util import read_image
 class CharacterPredictor:
     """Recognizes the character in handwritten character images."""
 
-    def __init__(self) -> None:
+    def __init__(self, network_fn: Type[nn.Module], network_args: Dict) -> None:
         """Intializes the CharacterModel and load the pretrained weights."""
-        self.model = CharacterModel()
+        self.model = CharacterModel(network_fn=network_fn, network_args=network_args)
         self.model.load_weights()
         self.model.eval()
 

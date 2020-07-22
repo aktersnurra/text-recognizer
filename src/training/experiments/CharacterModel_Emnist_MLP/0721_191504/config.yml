@@ -1,0 +1,42 @@
+criterion: CrossEntropyLoss
+criterion_args:
+  ignore_index: -100
+  reduction: mean
+  weight: null
+data_loader_args:
+  batch_size: 256
+  cuda: true
+  num_workers: 4
+  sample_to_balance: true
+  seed: 4711
+  shuffle: true
+  splits:
+  - train
+  - val
+  subsample_fraction: null
+  target_transform: null
+  transform: null
+dataloader: EmnistDataLoader
+device: cuda:0
+experiment_group: Sample Experiments
+lr_scheduler: null
+metrics:
+- accuracy
+model: CharacterModel
+network: MLP
+network_args:
+  input_size: 784
+  num_layers: 3
+  output_size: 62
+optimizer: RMSprop
+optimizer_args:
+  alpha: 0.9
+  centered: false
+  eps: 1.0e-07
+  lr: 0.001
+  momentum: 0
+  weight_decay: 0
+train_args:
+  batch_size: 256
+  epochs: 16
+  val_metric: accuracy

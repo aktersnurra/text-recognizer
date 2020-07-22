@@ -25,7 +25,7 @@ def read_image(image_uri: Union[Path, str], grayscale: bool = False) -> np.ndarr
             ) from None
 
     imread_flag = cv2.IMREAD_GRAYSCALE if grayscale else cv2.IMREAD_COLOR
-    local_file = os.path.exsits(image_uri)
+    local_file = os.path.exists(image_uri)
     try:
         image = None
         if local_file:

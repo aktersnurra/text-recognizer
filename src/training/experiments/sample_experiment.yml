@@ -1,0 +1,56 @@
+experiment_group: Sample Experiments
+experiments:
+    - dataloader: EmnistDataLoader
+      data_loader_args:
+        splits: [train, val]
+        sample_to_balance: true
+        subsample_fraction: null
+        transform: null
+        target_transform: null
+        batch_size: 256
+        shuffle: true
+        num_workers: 8
+        cuda: true
+        seed: 4711
+      model: CharacterModel
+      metrics: [accuracy]
+      network: MLP
+      network_args:
+        input_size: 784
+        output_size: 62
+        num_layers: 3
+      # network: LeNet
+      # network_args:
+      #   input_size: [28, 28]
+      #   output_size: 62
+      train_args:
+        batch_size: 256
+        epochs: 16
+        val_metric: accuracy
+      criterion: CrossEntropyLoss
+      criterion_args:
+        weight: null
+        ignore_index: -100
+        reduction: mean
+      # optimizer: RMSprop
+      # optimizer_args:
+      #   lr: 1.e-3
+      #   alpha: 0.9
+      #   eps: 1.e-7
+      #   momentum: 0
+      #   weight_decay: 0
+      #   centered: false
+      optimizer: AdamW
+      optimizer_args:
+        lr: 1.e-2
+        betas: [0.9, 0.999]
+        eps: 1.e-08
+        weight_decay: 0
+        amsgrad: false
+      # lr_scheduler: null
+      lr_scheduler: OneCycleLR
+      lr_scheduler_args:
+        max_lr: 1.e-3
+        epochs: 16
+      verbosity: 2 # 0, 1, 2
+      resume_experiment: null

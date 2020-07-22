@@ -3,7 +3,7 @@
 import torch
 
 
-def accuracy(outputs: torch.Tensor, labels: torch.Tensro) -> float:
+def accuracy(outputs: torch.Tensor, labels: torch.Tensor) -> float:
     """Computes the accuracy.
 
     Args:
