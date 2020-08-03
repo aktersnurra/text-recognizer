@@ -35,6 +35,7 @@ TBC
 - [x] Start implementing callback list stuff in train.py
 - [x] Fix s.t. callbacks can be loaded in run_experiment.py
 - [x] Lift out Emnist dataset out of Emnist dataloaders
-- [ ] Finish Emnist line dataset
+- [x] Finish Emnist line dataset
 - [x] SentenceGenerator
-- [ ] Implement line model
+- [ ] Write a Emnist line data loader
+- [ ] Implement ctc line model

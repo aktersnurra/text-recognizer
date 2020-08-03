@@ -11,7 +11,8 @@ import torch
 from torch.utils.data import Dataset
 from torchvision.transforms import Compose, Normalize, ToTensor
 
-from text_recognizer.datasets import DATA_DIRNAME, EmnistDataset, SentenceGenerator
+from text_recognizer.datasets import DATA_DIRNAME, EmnistDataset
+from text_recognizer.datasets.sentence_generator import SentenceGenerator
 from text_recognizer.datasets.util import Transpose
 
 DATA_DIRNAME = DATA_DIRNAME / "processed" / "emnist_lines"

@@ -9,7 +9,6 @@ from .emnist_lines_dataset import (
     EmnistLinesDataset,
     get_samples_by_character,
 )
-from .sentence_generator import SentenceGenerator
 from .util import Transpose
 
 __all__ = [
@@ -19,6 +18,5 @@ __all__ = [
     "EmnistDataLoaders",
     "EmnistLinesDataset",
     "get_samples_by_character",
-    "SentenceGenerator",
     "Transpose",
 ]
