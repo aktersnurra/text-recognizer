@@ -16,16 +16,25 @@ TBC
 - [x] Fix tqdm and logging output
 - [x] Fix basic test to load model
 - [x] Fix loading previous experiments
-- [ ] Check how to pass arguments to unittest (remove B009 then)
 - [x] Able to set verbosity level on the logger to terminal output
 - [ ] Implement Callbacks for training
-    - [ ] Implement early stopping
-    - [ ] Implement wandb
-    - [ ] Implement lr scheduler as a callback
-- [ ] Continuing reimplementing labs
-- [ ] New models and datasets
+    - [x] Implement early stopping
+    - [x] Implement wandb
+    - [x] Implement lr scheduler as a callback
+    - [x] Implement save checkpoint callback
+    - [ ] Implement TQDM progress bar (Low priority)
 - [ ] Check that dataset exists, otherwise download it form the web. Do this in run_experiment.py.
-- [ ] Create repr func for data loaders
-- [ ] Be able to restart with lr scheduler
-- [ ] Implement Bayesian hyperparameter search
-- [ ] Try to fix shell cmd security issues S404, S602
+- [x] Create repr func for data loaders
+- [ ] Be able to restart with lr scheduler (May skip this BS)
+- [ ] Implement population based training
+- [ ] Implement Bayesian hyperparameter search (with W&B maybe)
+- [x] Try to fix shell cmd security issues S404, S602
+- [ ] Change prepare_experiment.py to print statements st it can be run with tasks/prepare_sample_experiments.sh | parallel -j1
+- [x] Fix caption in WandbImageLogger
+- [x] Rename val_accuracy in metric
+- [x] Start implementing callback list stuff in train.py
+- [x] Fix s.t. callbacks can be loaded in run_experiment.py
+- [x] Lift out Emnist dataset out of Emnist dataloaders
+- [ ] Finish Emnist line dataset
+- [x] SentenceGenerator
+- [ ] Implement line model

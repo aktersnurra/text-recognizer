@@ -1,0 +1,111 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.8.36
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.8.2
+callback_args:
+  desc: null
+  value:
+    Checkpoint:
+      monitor: val_accuracy
+    EarlyStopping:
+      min_delta: 0.0
+      mode: min
+      monitor: val_loss
+      patience: 3
+    WandbCallback:
+      log_batch_frequency: 1
+    WandbImageLogger:
+      num_examples: 4
+callbacks:
+  desc: null
+  value:
+  - Checkpoint
+  - EarlyStopping
+  - WandbCallback
+  - WandbImageLogger
+criterion:
+  desc: null
+  value: CrossEntropyLoss
+criterion_args:
+  desc: null
+  value:
+    ignore_index: -100
+    reduction: mean
+    weight: null
+data_loader_args:
+  desc: null
+  value:
+    batch_size: 256
+    cuda: true
+    num_workers: 8
+    sample_to_balance: true
+    seed: 4711
+    shuffle: true
+    splits:
+    - train
+    - val
+    subsample_fraction: null
+    target_transform: null
+    transform: null
+dataloader:
+  desc: null
+  value: EmnistDataLoader
+experiment_group:
+  desc: null
+  value: Sample Experiments
+lr_scheduler:
+  desc: null
+  value: OneCycleLR
+lr_scheduler_args:
+  desc: null
+  value:
+    epochs: 16
+    max_lr: 0.001
+    steps_per_epoch: 1314
+metrics:
+  desc: null
+  value:
+  - accuracy
+model:
+  desc: null
+  value: CharacterModel
+network:
+  desc: null
+  value: LeNet
+network_args:
+  desc: null
+  value:
+    input_size:
+    - 28
+    - 28
+    output_size: 62
+optimizer:
+  desc: null
+  value: AdamW
+optimizer_args:
+  desc: null
+  value:
+    amsgrad: false
+    betas:
+    - 0.9
+    - 0.999
+    eps: 1.0e-08
+    lr: 0.01
+    weight_decay: 0
+resume_experiment:
+  desc: null
+  value: null
+train_args:
+  desc: null
+  value:
+    batch_size: 256
+    epochs: 16
+verbosity:
+  desc: null
+  value: 2

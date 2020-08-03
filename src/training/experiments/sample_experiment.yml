@@ -1,6 +1,6 @@
 experiment_group: Sample Experiments
 experiments:
-    - dataloader: EmnistDataLoader
+    - dataloader: EmnistDataLoaders
       data_loader_args:
         splits: [train, val]
         sample_to_balance: true
@@ -14,19 +14,18 @@ experiments:
         seed: 4711
       model: CharacterModel
       metrics: [accuracy]
-      network: MLP
-      network_args:
-        input_size: 784
-        output_size: 62
-        num_layers: 3
-      # network: LeNet
+      # network: MLP
       # network_args:
-      #   input_size: [28, 28]
+      #   input_size: 784
       #   output_size: 62
+      #   num_layers: 3
+      network: LeNet
+      network_args:
+        input_size: [28, 28]
+        output_size: 62
       train_args:
         batch_size: 256
         epochs: 16
-        val_metric: accuracy
       criterion: CrossEntropyLoss
       criterion_args:
         weight: null
@@ -52,5 +51,20 @@ experiments:
       lr_scheduler_args:
         max_lr: 1.e-3
         epochs: 16
-      verbosity: 2 # 0, 1, 2
+      callbacks: [Checkpoint, EarlyStopping, WandbCallback, WandbImageLogger, OneCycleLR]
+      callback_args:
+        Checkpoint:
+          monitor: val_accuracy
+        EarlyStopping:
+          monitor: val_loss
+          min_delta: 0.0
+          patience: 3
+          mode: min
+        WandbCallback:
+          log_batch_frequency: 10
+        WandbImageLogger:
+          num_examples: 4
+        OneCycleLR:
+          null
+      verbosity: 1 # 0, 1, 2
       resume_experiment: null

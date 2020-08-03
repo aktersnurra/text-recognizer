@@ -11,10 +11,9 @@ from text_recognizer.util import read_image
 class CharacterPredictor:
     """Recognizes the character in handwritten character images."""
 
-    def __init__(self, network_fn: Type[nn.Module], network_args: Dict) -> None:
+    def __init__(self, network_fn: Type[nn.Module]) -> None:
         """Intializes the CharacterModel and load the pretrained weights."""
-        self.model = CharacterModel(network_fn=network_fn, network_args=network_args)
-        self.model.load_weights()
+        self.model = CharacterModel(network_fn=network_fn)
         self.model.eval()
 
     def predict(self, image_or_filename: Union[np.ndarray, str]) -> Tuple[str, float]:

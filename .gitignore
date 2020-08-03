@@ -138,3 +138,5 @@ data/EMNIST/raw/*
 
 src/training/experiments/*
 !src/training/experiments/sample_experiment.yml
+
+wandb/*

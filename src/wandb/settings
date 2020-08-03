@@ -1,0 +1,4 @@
+[default]
+entity = aktersnurra
+project = text-recognizer
+base_url = https://api.wandb.ai
