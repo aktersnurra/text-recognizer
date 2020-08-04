@@ -37,5 +37,5 @@ TBC
 - [x] Lift out Emnist dataset out of Emnist dataloaders
 - [x] Finish Emnist line dataset
 - [x] SentenceGenerator
-- [ ] Write a Emnist line data loader
+- [x] Write a Emnist line data loader
 - [ ] Implement ctc line model
