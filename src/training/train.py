@@ -106,7 +106,7 @@ class Trainer:
         # Running average for the loss.
         loss_avg = RunningAverage()
 
-        data_loader = self.model.data_loaders("train")
+        data_loader = self.model.data_loaders["train"]
 
         with tqdm(
             total=len(data_loader),
@@ -164,7 +164,7 @@ class Trainer:
         self.model.eval()
 
         # Running average for the loss.
-        data_loader = self.model.data_loaders("val")
+        data_loader = self.model.data_loaders["val"]
 
         # Running average for the loss.
         loss_avg = RunningAverage()
