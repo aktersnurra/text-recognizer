@@ -46,6 +46,7 @@ def fetch_data_loaders(
     """
 
     def check_dataset_args(args: Dict, split: str) -> Dict:
+        """Adds train flag to the dataset args."""
         args["train"] = True if split == "train" else False
         return args
 

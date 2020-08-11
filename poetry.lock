@@ -289,6 +289,14 @@ toml = "*"
 pipenv = ["pipenv"]
 
 [[package]]
+category = "main"
+description = "A new flavour of deep learning operations"
+name = "einops"
+optional = false
+python-versions = "*"
+version = "0.2.0"
+
+[[package]]
 category = "dev"
 description = "Discover and load entry points from installed packages."
 name = "entrypoints"
@@ -1923,7 +1931,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "d0f8f6b2229d6a05ab4d28205dd2c559d1a38818e4654aa40706e8001196d202"
+content-hash = "90078f3c0d16b4e2e67b4f5ad22219067d8936dfca527d130ec0a179d2c55cb0"
 lock-version = "1.0"
 python-versions = "^3.7"
 
@@ -2068,6 +2076,10 @@ docutils = [
 dparse = [
     {file = "dparse-0.5.1-py3-none-any.whl", hash = "sha256:e953a25e44ebb60a5c6efc2add4420c177f1d8404509da88da9729202f306994"},
     {file = "dparse-0.5.1.tar.gz", hash = "sha256:a1b5f169102e1c894f9a7d5ccf6f9402a836a5d24be80a986c7ce9eaed78f367"},
+]
+einops = [
+    {file = "einops-0.2.0-py2.py3-none-any.whl", hash = "sha256:96b1bac57ddb591cccb927d24934d7601c3cdf3343a79a43d316a118d66e1043"},
+    {file = "einops-0.2.0.tar.gz", hash = "sha256:165ee28bcb60e5c2cbb801b5c78e181548ff8daa7c8fcabae5b251e55f7fe614"},
 ]
 entrypoints = [
     {file = "entrypoints-0.3-py2.py3-none-any.whl", hash = "sha256:589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19"},

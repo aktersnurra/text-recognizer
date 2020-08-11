@@ -29,7 +29,7 @@ TBC
 - [ ] Implement population based training
 - [ ] Implement Bayesian hyperparameter search (with W&B maybe)
 - [x] Try to fix shell cmd security issues S404, S602
-- [ ] Change prepare_experiment.py to print statements st it can be run with tasks/prepare_sample_experiments.sh | parallel -j1
+- [x] Change prepare_experiment.py to print statements st it can be run with tasks/prepare_sample_experiments.sh | parallel -j1
 - [x] Fix caption in WandbImageLogger
 - [x] Rename val_accuracy in metric
 - [x] Start implementing callback list stuff in train.py
@@ -39,3 +39,9 @@ TBC
 - [x] SentenceGenerator
 - [x] Write a Emnist line data loader
 - [ ] Implement ctc line model
+    - [ ] Implement CNN encoder (ResNet style)
+    - [ ] Implement the RNN + output layer
+    - [ ] Construct/implement the CTC loss
+- [ ] Sweep base config yaml file
+- [ ] sweep.py
+- [ ] sweep.yaml
