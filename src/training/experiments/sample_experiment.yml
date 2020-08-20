@@ -26,8 +26,8 @@ experiments:
       network_args:
         in_channels: 1
         num_classes: 80
-        depths: [1, 1]
-        block_sizes: [128, 256]
+        depths: [2, 1]
+        block_sizes: [96, 32]
       # network: LeNet
       # network_args:
       #   output_size: 62

@@ -139,10 +139,10 @@ class Model(ABC):
         else:
             _optimizer = None
 
-        if self._optimizer and lr_scheduler is not None:
+        if _optimizer and lr_scheduler is not None:
             if "OneCycleLR" in str(lr_scheduler):
                 lr_scheduler_args["steps_per_epoch"] = len(self._data_loaders["train"])
-            _lr_scheduler = lr_scheduler(self._optimizer, **lr_scheduler_args)
+            _lr_scheduler = lr_scheduler(_optimizer, **lr_scheduler_args)
         else:
             _lr_scheduler = None
 
