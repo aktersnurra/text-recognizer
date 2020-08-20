@@ -9,25 +9,32 @@ experiments:
         seed: 4711
       data_loader_args:
         splits: [train, val]
-        batch_size: 256
         shuffle: true
         num_workers: 8
         cuda: true
       model: CharacterModel
       metrics: [accuracy]
-      network: MLP
+      # network: MLP
+      # network_args:
+      #   input_size: 784
+      #   hidden_size: 512
+      #   output_size: 80
+      #   num_layers: 3
+      #   dropout_rate: 0
+      #   activation_fn: SELU
+      network: ResidualNetwork
       network_args:
-        input_size: 784
-        output_size: 62
-        num_layers: 3
-        activation_fn: GELU
+        in_channels: 1
+        num_classes: 80
+        depths: [1, 1]
+        block_sizes: [128, 256]
       # network: LeNet
       # network_args:
       #   output_size: 62
       #   activation_fn: GELU
       train_args:
         batch_size: 256
-        epochs: 16
+        epochs: 32
       criterion: CrossEntropyLoss
       criterion_args:
         weight: null
@@ -43,20 +50,24 @@ experiments:
       #   centered: false
       optimizer: AdamW
       optimizer_args:
-        lr: 1.e-2
+        lr: 1.e-03
         betas: [0.9, 0.999]
         eps: 1.e-08
-        weight_decay: 0
+        # weight_decay: 5.e-4
         amsgrad: false
       # lr_scheduler: null
       lr_scheduler: OneCycleLR
       lr_scheduler_args:
-        max_lr: 1.e-3
-        epochs: 16
-      callbacks: [Checkpoint, EarlyStopping, WandbCallback, WandbImageLogger, OneCycleLR]
+        max_lr: 1.e-03
+        epochs: 32
+        anneal_strategy: linear
+      callbacks: [Checkpoint, ProgressBar, EarlyStopping, WandbCallback, WandbImageLogger, OneCycleLR]
       callback_args:
         Checkpoint:
           monitor: val_accuracy
+        ProgressBar:
+          epochs: 32
+          log_batch_frequency: 100
         EarlyStopping:
           monitor: val_loss
           min_delta: 0.0
@@ -68,5 +79,5 @@ experiments:
           num_examples: 4
         OneCycleLR:
           null
-      verbosity: 2 # 0, 1, 2
+      verbosity: 1 # 0, 1, 2
       resume_experiment: null

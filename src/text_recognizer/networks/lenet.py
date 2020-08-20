@@ -5,6 +5,8 @@ from einops.layers.torch import Rearrange
 import torch
 from torch import nn
 
+from text_recognizer.networks.misc import activation_function
+
 
 class LeNet(nn.Module):
     """LeNet network."""
@@ -16,8 +18,7 @@ class LeNet(nn.Module):
         hidden_size: Tuple[int, ...] = (9216, 128),
         dropout_rate: float = 0.2,
         output_size: int = 10,
-        activation_fn: Optional[Callable] = None,
-        activation_fn_args: Optional[Dict] = None,
+        activation_fn: Optional[str] = "relu",
     ) -> None:
         """The LeNet network.
 
@@ -28,18 +29,12 @@ class LeNet(nn.Module):
                 Defaults to (9216, 128).
             dropout_rate (float): The dropout rate. Defaults to 0.2.
             output_size (int): Number of classes. Defaults to 10.
-            activation_fn (Optional[Callable]): The non-linear activation function. Defaults to
-                nn.ReLU(inplace).
-            activation_fn_args (Optional[Dict]): The arguments for the activation function. Defaults to None.
+            activation_fn (Optional[str]): The name of non-linear activation function. Defaults to relu.
 
         """
         super().__init__()
 
-        if activation_fn is not None:
-            activation_fn_args = activation_fn_args or {}
-            activation_fn = getattr(nn, activation_fn)(**activation_fn_args)
-        else:
-            activation_fn = nn.ReLU(inplace=True)
+        activation_fn = activation_function(activation_fn)
 
         self.layers = [
             nn.Conv2d(
@@ -66,7 +61,7 @@ class LeNet(nn.Module):
         self.layers = nn.Sequential(*self.layers)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """The feedforward."""
+        """The feedforward pass."""
         # If batch dimenstion is missing, it needs to be added.
         if len(x.shape) == 3:
             x = x.unsqueeze(0)

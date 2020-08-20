@@ -8,6 +8,7 @@ import h5py
 from loguru import logger
 import numpy as np
 import torch
+from torch import Tensor
 from torch.utils.data import DataLoader, Dataset
 from torchvision.transforms import Compose, Normalize, ToTensor
 
@@ -87,16 +88,14 @@ class EmnistLinesDataset(Dataset):
         """Returns the length of the dataset."""
         return len(self.data)
 
-    def __getitem__(
-        self, index: Union[int, torch.Tensor]
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
+    def __getitem__(self, index: Union[int, Tensor]) -> Tuple[Tensor, Tensor]:
         """Fetches data, target pair of the dataset for a given and index or indices.
 
         Args:
-            index (Union[int, torch.Tensor]): Either a list or int of indices/index.
+            index (Union[int, Tensor]): Either a list or int of indices/index.
 
         Returns:
-            Tuple[torch.Tensor, torch.Tensor]: Data target pair.
+            Tuple[Tensor, Tensor]: Data target pair.
 
         """
         if torch.is_tensor(index):

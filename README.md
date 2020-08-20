@@ -22,7 +22,7 @@ TBC
     - [x] Implement wandb
     - [x] Implement lr scheduler as a callback
     - [x] Implement save checkpoint callback
-    - [ ] Implement TQDM progress bar (Low priority)
+    - [x] Implement TQDM progress bar (Low priority)
 - [ ] Check that dataset exists, otherwise download it form the web. Do this in run_experiment.py.
 - [x] Create repr func for data loaders
 - [ ] Be able to restart with lr scheduler (May skip this BS)

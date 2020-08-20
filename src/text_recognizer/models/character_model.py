@@ -44,6 +44,7 @@ class CharacterModel(Model):
         self.tensor_transform = ToTensor()
         self.softmax = nn.Softmax(dim=0)
 
+    @torch.no_grad()
     def predict_on_image(
         self, image: Union[np.ndarray, torch.Tensor]
     ) -> Tuple[str, float]:
@@ -64,10 +65,9 @@ class CharacterModel(Model):
             # If the image is an unscaled tensor.
             image = image.type("torch.FloatTensor") / 255
 
-        with torch.no_grad():
-            # Put the image tensor on the device the model weights are on.
-            image = image.to(self.device)
-            logits = self.network(image)
+        # Put the image tensor on the device the model weights are on.
+        image = image.to(self.device)
+        logits = self.network(image)
 
         prediction = self.softmax(logits.data.squeeze())
 
