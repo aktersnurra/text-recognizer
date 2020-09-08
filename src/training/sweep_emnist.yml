@@ -1,0 +1,26 @@
+program: training/run_sweep.py
+method: bayes
+metric:
+  name: val_loss
+  goal: minimize
+parameters:
+  dataset:
+    value: EmnistDataset
+  model:
+    value: CharacterModel
+  network:
+    value: MLP
+  network_args.hidden_size:
+    values: [128, 256]
+  network_args.dropout_rate:
+    values: [0.2, 0.4]
+  network_args.num_layers:
+    values: [3, 6]
+  optimizer_args.lr:
+    values: [1.e-1, 1.e-5]
+  lr_scheduler_args.max_lr:
+    values: [1.0e-1, 1.0e-5]
+  train_args.batch_size:
+    values: [64, 128]
+  train_args.epochs:
+    value: 5

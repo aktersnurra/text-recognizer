@@ -257,7 +257,7 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*"
 version = "4.4.2"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "XML bomb protection for Python stdlib modules"
 name = "defusedxml"
 optional = false
@@ -1331,6 +1331,17 @@ version = "2.8.1"
 six = ">=1.5"
 
 [[package]]
+category = "main"
+description = "Python extension for computing string edit distances and similarities."
+name = "python-levenshtein"
+optional = false
+python-versions = "*"
+version = "0.12.0"
+
+[package.dependencies]
+setuptools = "*"
+
+[[package]]
 category = "dev"
 description = "Python type inferencer"
 marker = "python_version == \"3.7\""
@@ -1747,11 +1758,11 @@ numpy = "*"
 
 [[package]]
 category = "main"
-description = "Model summary in PyTorch similar to `model.summary()` in Keras"
-name = "torchsummary"
+description = "Model summary in PyTorch, based off of the original torchsummary."
+name = "torch-summary"
 optional = false
-python-versions = "*"
-version = "1.5.1"
+python-versions = ">=3.5"
+version = "1.4.2"
 
 [[package]]
 category = "main"
@@ -1863,7 +1874,7 @@ description = "A CLI and library for interacting with the Weights and Biases API
 name = "wandb"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "0.9.5"
+version = "0.9.6"
 
 [package.dependencies]
 Click = ">=7.0"
@@ -1970,7 +1981,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "8aea4adc15683cb4bdd650d199725418e7778687d311bcb6a02db94fa05719f7"
+content-hash = "d2554d5ea2a2de69322438b76e2dc21566d82b0aeb0c5e8a0ebcd69c0a057dba"
 lock-version = "1.0"
 python-versions = "^3.7"
 
@@ -2653,6 +2664,9 @@ python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
     {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
 ]
+python-levenshtein = [
+    {file = "python-Levenshtein-0.12.0.tar.gz", hash = "sha256:033a11de5e3d19ea25c9302d11224e1a1898fe5abd23c61c7c360c25195e3eb1"},
+]
 pytype = [
     {file = "pytype-2020.8.10-cp35-cp35m-macosx_10_14_x86_64.whl", hash = "sha256:da1977a1aa74fbd237e889c1d29421d490e0be9a91a22efd96fbca2570ef9165"},
     {file = "pytype-2020.8.10-cp35-cp35m-manylinux2014_x86_64.whl", hash = "sha256:e0909b99aff8eff0ece91fd64e00b935f0e4fecb51359d83d742b27db160dd00"},
@@ -2869,9 +2883,9 @@ torch = [
     {file = "torch-1.6.0-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:5357873e243bcfa804c32dc341f564e9a4c12addfc9baae4ee857fcc09a0a216"},
     {file = "torch-1.6.0-cp38-none-macosx_10_9_x86_64.whl", hash = "sha256:4f9a4ad7947cef566afb0a323d99009fe8524f0b0f2ca1fb7ad5de0400381a5b"},
 ]
-torchsummary = [
-    {file = "torchsummary-1.5.1-py3-none-any.whl", hash = "sha256:10f41d1743fb918f83293f13183f532ab1bb8f6639a1b89e5f8592ec1919a976"},
-    {file = "torchsummary-1.5.1.tar.gz", hash = "sha256:981bf689e22e0cf7f95c746002f20a24ad26aa6b9d861134a14bc6ce92230590"},
+torch-summary = [
+    {file = "torch-summary-1.4.2.tar.gz", hash = "sha256:ff26a3b08fe6c763c4dcc7c2a44b110f572f026ea2ed877ea619533cd3c0fd9f"},
+    {file = "torch_summary-1.4.2-py3-none-any.whl", hash = "sha256:4123284856c10248632ee533fa13063ed965e6af77540326fb02d7b81d491763"},
 ]
 torchvision = [
     {file = "torchvision-0.7.0-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:a70d80bb8749c1e4a46fa56dc2fc857e98d14600841e02cc2fed766daf96c245"},
@@ -2942,8 +2956,8 @@ urllib3 = [
     {file = "urllib3-1.25.10.tar.gz", hash = "sha256:91056c15fa70756691db97756772bb1eb9678fa585d9184f24534b100dc60f4a"},
 ]
 wandb = [
-    {file = "wandb-0.9.5-py2.py3-none-any.whl", hash = "sha256:f8aa54c75736aafdea600b2d3b803d4d3f999d1ac2568c253552dd557b767d9a"},
-    {file = "wandb-0.9.5.tar.gz", hash = "sha256:251ac7bcf9acc1b4ed08b1f3ea9172ed02d1e55a1a9033785e544f009208958e"},
+    {file = "wandb-0.9.6-py2.py3-none-any.whl", hash = "sha256:0da3f73992cbb181bbb3080a233c387e28d92c7f6f0be9c67401a941d15402cb"},
+    {file = "wandb-0.9.6.tar.gz", hash = "sha256:6d712c3744e4af0d91f3872be0fc96b338706136a6980a653565c381ac3f4550"},
 ]
 watchdog = [
     {file = "watchdog-0.10.3.tar.gz", hash = "sha256:4214e1379d128b0588021880ccaf40317ee156d4603ac388b9adcf29165e0c04"},

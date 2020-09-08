@@ -9,14 +9,14 @@ import yaml
 
 def run_experiments(experiments_filename: str) -> None:
     """Run experiment from file."""
-    with open(experiments_filename) as f:
+    with open(experiments_filename, "r") as f:
         experiments_config = yaml.safe_load(f)
 
     num_experiments = len(experiments_config["experiments"])
     for index in range(num_experiments):
         experiment_config = experiments_config["experiments"][index]
         experiment_config["experiment_group"] = experiments_config["experiment_group"]
-        cmd = f"python training/run_experiment.py --gpu=-1 --save --experiment_config='{json.dumps(experiment_config)}'"
+        cmd = f"python training/run_experiment.py --gpu=-1 --save '{json.dumps(experiment_config)}'"
         print(cmd)
 
 

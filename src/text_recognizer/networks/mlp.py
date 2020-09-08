@@ -14,7 +14,7 @@ class MLP(nn.Module):
     def __init__(
         self,
         input_size: int = 784,
-        output_size: int = 10,
+        num_classes: int = 10,
         hidden_size: Union[int, List] = 128,
         num_layers: int = 3,
         dropout_rate: float = 0.2,
@@ -24,7 +24,7 @@ class MLP(nn.Module):
 
         Args:
             input_size (int): The input shape of the network. Defaults to 784.
-            output_size (int): Number of classes in the dataset. Defaults to 10.
+            num_classes (int): Number of classes in the dataset. Defaults to 10.
             hidden_size (Union[int, List]): The number of `neurons` in each hidden layer. Defaults to 128.
             num_layers (int): The number of hidden layers. Defaults to 3.
             dropout_rate (float): The dropout rate at each layer. Defaults to 0.2.
@@ -55,7 +55,7 @@ class MLP(nn.Module):
                 self.layers.append(nn.Dropout(p=dropout_rate))
 
         self.layers.append(
-            nn.Linear(in_features=hidden_size[-1], out_features=output_size)
+            nn.Linear(in_features=hidden_size[-1], out_features=num_classes)
         )
 
         self.layers = nn.Sequential(*self.layers)

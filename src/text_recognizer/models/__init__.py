@@ -1,6 +1,7 @@
 """Model modules."""
 from .base import Model
 from .character_model import CharacterModel
-from .metrics import accuracy
+from .line_ctc_model import LineCTCModel
+from .metrics import accuracy, cer, wer
 
-__all__ = ["Model", "CharacterModel", "accuracy"]
+__all__ = ["Model", "cer", "CharacterModel", "LineCTCModel", "accuracy", "wer"]

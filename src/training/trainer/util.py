@@ -1,4 +1,13 @@
 """Utility functions for training neural networks."""
+from typing import Dict, Optional
+
+from loguru import logger
+
+
+def log_val_metric(metrics_mean: Dict, epoch: Optional[int] = None) -> None:
+    """Logging of val metrics to file/terminal."""
+    log_str = "Validation metrics " + (f"at epoch {epoch} - " if epoch else " - ")
+    logger.debug(log_str + " - ".join(f"{k}: {v:.4f}" for k, v in metrics_mean.items()))
 
 
 class RunningAverage:
