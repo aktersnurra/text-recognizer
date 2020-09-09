@@ -9,7 +9,7 @@ import nltk
 from nltk.corpus.reader.util import ConcatenatedCorpusView
 import numpy as np
 
-from text_recognizer.datasets import DATA_DIRNAME
+from text_recognizer.datasets.util import DATA_DIRNAME
 
 NLTK_DATA_DIRNAME = DATA_DIRNAME / "raw" / "nltk"
 

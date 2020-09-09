@@ -5,7 +5,7 @@ from einops import rearrange
 import torch
 from torch import Tensor
 
-from text_recognizer.datasets import EmnistMapper
+from text_recognizer.datasets.util import EmnistMapper
 
 
 def greedy_decoder(

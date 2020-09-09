@@ -1,10 +1,5 @@
 """Dataset modules."""
-from .emnist_dataset import (
-    DATA_DIRNAME,
-    EmnistDataset,
-    EmnistMapper,
-    ESSENTIALS_FILENAME,
-)
+from .emnist_dataset import EmnistDataset, Transpose
 from .emnist_lines_dataset import (
     construct_image_from_string,
     EmnistLinesDataset,
@@ -13,7 +8,14 @@ from .emnist_lines_dataset import (
 from .iam_dataset import IamDataset
 from .iam_lines_dataset import IamLinesDataset
 from .iam_paragraphs_dataset import IamParagraphsDataset
-from .util import _download_raw_dataset, compute_sha256, download_url, Transpose
+from .util import (
+    _download_raw_dataset,
+    compute_sha256,
+    DATA_DIRNAME,
+    download_url,
+    EmnistMapper,
+    ESSENTIALS_FILENAME,
+)
 
 __all__ = [
     "_download_raw_dataset",

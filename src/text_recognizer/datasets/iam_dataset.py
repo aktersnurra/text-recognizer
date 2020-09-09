@@ -7,10 +7,8 @@ from boltons.cacheutils import cachedproperty
 import defusedxml.ElementTree as ET
 from loguru import logger
 import toml
-from torch.utils.data import Dataset
 
-from text_recognizer.datasets import DATA_DIRNAME
-from text_recognizer.datasets.util import _download_raw_dataset
+from text_recognizer.datasets.util import _download_raw_dataset, DATA_DIRNAME
 
 RAW_DATA_DIRNAME = DATA_DIRNAME / "raw" / "iam"
 METADATA_FILENAME = RAW_DATA_DIRNAME / "metadata.toml"
@@ -20,7 +18,7 @@ DOWNSAMPLE_FACTOR = 2  # If images were downsampled, the regions must also be.
 LINE_REGION_PADDING = 0  # Add this many pixels around the exact coordinates.
 
 
-class IamDataset(Dataset):
+class IamDataset:
     """IAM dataset.
 
     "The IAM Lines dataset, first published at the ICDAR 1999, contains forms of unconstrained handwritten text,

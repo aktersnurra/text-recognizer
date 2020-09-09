@@ -140,6 +140,7 @@ class Model(ABC):
         if not self.data_prepared:
             # Load train dataset.
             train_dataset = self.dataset(train=True, **self.dataset_args["args"])
+            train_dataset.load_or_generate_data()
 
             # Set input shape.
             self._input_shape = train_dataset.input_shape
@@ -156,6 +157,7 @@ class Model(ABC):
 
             # Load test dataset.
             self.test_dataset = self.dataset(train=False, **self.dataset_args["args"])
+            self.test_dataset.load_or_generate_data()
 
             # Set the flag to true to disable ability to load data agian.
             self.data_prepared = True
