@@ -28,10 +28,10 @@ def conv_init(module: Type[nn.Module]) -> None:
     classname = module.__class__.__name__
     if classname.find("Conv") != -1:
         nn.init.xavier_uniform_(module.weight, gain=np.sqrt(2))
-        nn.init.constant(module.bias, 0)
+        nn.init.constant_(module.bias, 0)
     elif classname.find("BatchNorm") != -1:
-        nn.init.constant(module.weight, 1)
-        nn.init.constant(module.bias, 0)
+        nn.init.constant_(module.weight, 1)
+        nn.init.constant_(module.bias, 0)
 
 
 class WideBlock(nn.Module):
@@ -183,7 +183,7 @@ class WideResidualNetwork(nn.Module):
             else None
         )
 
-        self.apply(conv_init)
+        # self.apply(conv_init)
 
     def _configure_wide_layer(
         self, in_planes: int, out_planes: int, stride: int, activation: str

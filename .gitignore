@@ -138,5 +138,8 @@ data/EMNIST/raw/*
 
 src/training/experiments/*
 !src/training/experiments/sample_experiment.yml
+!src/training/experiments/iam_line_ctc_experiment.yml
+!src/training/experiments/line_ctc_experiment.yml
+!src/training/experiments/default_config_emnist.yml
 
 wandb/*

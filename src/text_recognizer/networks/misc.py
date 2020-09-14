@@ -34,6 +34,7 @@ def activation_function(activation: str) -> Type[nn.Module]:
     """Returns the callable activation function."""
     activation_fns = nn.ModuleDict(
         [
+            ["elu", nn.ELU(inplace=True)],
             ["gelu", nn.GELU()],
             ["leaky_relu", nn.LeakyReLU(negative_slope=1.0e-2, inplace=True)],
             ["none", nn.Identity()],

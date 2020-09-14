@@ -51,13 +51,10 @@ TBC
 - [x] IAM dataset
 - [x] IAM Lines dataset
 - [x] IAM paragraphs dataset
-- [ ] Visual attention:
-    - [ ] Enriched Deep Recurrent Visual Attention Model for Multiple Object Recognition
-    - [ ] DRAM (maybe)
-    - [ ] Dynamic Capacity Network
 - [ ] CNN + Transformer
 - [ ] fix nosec problem
 - [x] common Dataset class
+- [x] Fix CTC blank stuff and varying length
 
 ## Run Sweeps
  Run the following commands to execute hyperparameter search with W&B:

@@ -1,0 +1,98 @@
+experiment_group: Sample Experiments
+experiments:
+    - train_args:
+        batch_size: 64
+        max_epochs: 32
+      dataset:
+        type: EmnistLinesDataset
+        args:
+          subsample_fraction: 0.33
+          max_length: 34
+          min_overlap: 0
+          max_overlap: 0.33
+          num_samples: 10000
+          seed: 4711
+          blank: true
+        train_args:
+          num_workers: 6
+          train_fraction: 0.85
+      model: LineCTCModel
+      metrics: [cer, wer]
+      network:
+        type: LineRecurrentNetwork
+        args:
+          # encoder: ResidualNetworkEncoder
+          # encoder_args:
+          #   in_channels: 1
+          #   num_classes: 81
+          #   depths: [2, 2]
+          #   block_sizes: [64, 128]
+          #   activation: SELU
+          #   stn: false
+          encoder: WideResidualNetwork
+          encoder_args:
+            in_channels: 1
+            num_classes: 81
+            depth: 16
+            num_layers: 4
+            width_factor: 2
+            dropout_rate: 0.2
+            activation: selu
+            use_decoder: false
+          flatten: true
+          input_size: 256
+          hidden_size: 128
+          num_layers: 2
+          num_classes: 81
+          patch_size: [28, 14]
+          stride: [1, 5]
+      criterion:
+        type: CTCLoss
+        args:
+          blank: 80
+      optimizer:
+        type: AdamW
+        args:
+          lr: 1.e-02
+          betas: [0.9, 0.999]
+          eps: 1.e-08
+          weight_decay: 5.e-4
+          amsgrad: false
+      # lr_scheduler:
+      #   type: OneCycleLR
+      #   args:
+      #     max_lr: 1.e-03
+      #     epochs: null
+      #     anneal_strategy: linear
+      lr_scheduler:
+        type: CosineAnnealingLR
+        args:
+          T_max: null
+      swa_args:
+        start: 4
+        lr: 5.e-2
+      callbacks: [Checkpoint, ProgressBar, WandbCallback, WandbImageLogger, SWA] # EarlyStopping, OneCycleLR]
+      callback_args:
+        Checkpoint:
+          monitor: val_loss
+          mode: min
+        ProgressBar:
+          epochs: null
+          log_batch_frequency: 100
+        # EarlyStopping:
+        #   monitor: val_loss
+        #   min_delta: 0.0
+        #   patience: 5
+        #   mode: min
+        WandbCallback:
+          log_batch_frequency: 10
+        WandbImageLogger:
+          num_examples: 6
+        # OneCycleLR:
+        #   null
+        SWA:
+          null
+      verbosity: 1 # 0, 1, 2
+      resume_experiment: null
+      test: true
+      test_metric: test_cer

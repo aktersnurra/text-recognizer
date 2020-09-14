@@ -24,7 +24,7 @@ def greedy_decoder(
         target_lengths (Optional[Tensor]): Length of each target tensor. Defaults to None.
         character_mapper (Optional[Callable]): A emnist/character mapper for mapping integers to characters.  Defaults
             to None.
-        blank_label (int): The blank character to be ignored. Defaults to 79.
+        blank_label (int): The blank character to be ignored. Defaults to 80.
         collapse_repeated (bool): Collapase consecutive predictions of the same character. Defaults to True.
 
     Returns:

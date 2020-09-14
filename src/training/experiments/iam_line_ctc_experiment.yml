@@ -1,0 +1,94 @@
+experiment_group: Sample Experiments
+experiments:
+    - train_args:
+        batch_size: 24
+        max_epochs: 128
+      dataset:
+        type: IamLinesDataset
+        args:
+          subsample_fraction: null
+          transform: null
+          target_transform: null
+        train_args:
+          num_workers: 6
+          train_fraction: 0.85
+      model: LineCTCModel
+      metrics: [cer, wer]
+      network:
+        type: LineRecurrentNetwork
+        args:
+          # encoder: ResidualNetworkEncoder
+          # encoder_args:
+          #   in_channels: 1
+          #   num_classes: 80
+          #   depths: [2, 2]
+          #   block_sizes: [128, 128]
+          #   activation: SELU
+          #   stn: false
+          encoder: WideResidualNetwork
+          encoder_args:
+            in_channels: 1
+            num_classes: 80
+            depth: 16
+            num_layers: 4
+            width_factor: 2
+            dropout_rate: 0.2
+            activation: selu
+            use_decoder: false
+          flatten: true
+          input_size: 256
+          hidden_size: 128
+          num_layers: 2
+          num_classes: 80
+          patch_size: [28, 14]
+          stride: [1, 5]
+      criterion:
+        type: CTCLoss
+        args:
+          blank: 79
+      optimizer:
+        type: AdamW
+        args:
+          lr: 1.e-03
+          betas: [0.9, 0.999]
+          eps: 1.e-08
+          weight_decay: false
+          amsgrad: false
+      # lr_scheduler:
+      #   type: OneCycleLR
+      #   args:
+      #     max_lr: 1.e-02
+      #     epochs: null
+      #     anneal_strategy: linear
+      lr_scheduler:
+        type: CosineAnnealingLR
+        args:
+          T_max: null
+      swa_args:
+        start: 75
+        lr: 5.e-2
+      callbacks: [Checkpoint, ProgressBar, WandbCallback, WandbImageLogger, SWA] # EarlyStopping, OneCycleLR]
+      callback_args:
+        Checkpoint:
+          monitor: val_loss
+          mode: min
+        ProgressBar:
+          epochs: null
+        #   log_batch_frequency: 100
+        # EarlyStopping:
+        #   monitor: val_loss
+        #   min_delta: 0.0
+        #   patience: 7
+        #   mode: min
+        WandbCallback:
+          log_batch_frequency: 10
+        WandbImageLogger:
+          num_examples: 6
+        # OneCycleLR:
+        #   null
+        SWA:
+          null
+      verbosity: 1 # 0, 1, 2
+      resume_experiment: null
+      test: true
+      test_metric: test_cer

@@ -33,8 +33,9 @@ class LineRecurrentNetwork(nn.Module):
         self.hidden_size = hidden_size
         self.encoder = self._configure_encoder(encoder)
         self.flatten = flatten
+        self.fc = nn.Linear(in_features=self.input_size, out_features=self.hidden_size)
         self.rnn = nn.LSTM(
-            input_size=self.input_size,
+            input_size=self.hidden_size,
             hidden_size=self.hidden_size,
             num_layers=num_layers,
         )
@@ -72,6 +73,9 @@ class LineRecurrentNetwork(nn.Module):
 
         # Avgerage pooling.
         x = reduce(x, "(b t) c h w -> t b c", "mean", b=b, t=t) if self.flatten else x
+
+        # Linear layer between CNN and RNN
+        x = self.fc(x)
 
         # Sequence predictions.
         x, _ = self.rnn(x)

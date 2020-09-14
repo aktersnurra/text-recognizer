@@ -1,0 +1,69 @@
+dataset: EmnistDataset
+dataset_args:
+  sample_to_balance: true
+  subsample_fraction: 0.33
+  transform: null
+  target_transform: null
+  seed: 4711
+
+data_loader_args:
+  splits: [train, val]
+  shuffle: true
+  num_workers: 8
+  cuda: true
+
+model: CharacterModel
+metrics: [accuracy]
+
+network_args:
+  in_channels: 1
+  num_classes: 80
+  depths: [2]
+  block_sizes: [256]
+
+train_args:
+  batch_size: 256
+  epochs: 5
+
+criterion: CrossEntropyLoss
+criterion_args:
+  weight: null
+  ignore_index: -100
+  reduction: mean
+
+optimizer: AdamW
+optimizer_args:
+  lr: 1.e-03
+  betas: [0.9, 0.999]
+  eps: 1.e-08
+  # weight_decay: 5.e-4
+  amsgrad: false
+
+lr_scheduler: OneCycleLR
+lr_scheduler_args:
+  max_lr: 1.e-03
+  epochs: 5
+  anneal_strategy: linear
+
+
+callbacks: [Checkpoint, ProgressBar, EarlyStopping, WandbCallback, WandbImageLogger, OneCycleLR]
+callback_args:
+  Checkpoint:
+    monitor: val_accuracy
+  ProgressBar:
+    epochs: 5
+    log_batch_frequency: 100
+  EarlyStopping:
+    monitor: val_loss
+    min_delta: 0.0
+    patience: 3
+    mode: min
+  WandbCallback:
+    log_batch_frequency: 10
+  WandbImageLogger:
+    num_examples: 4
+  OneCycleLR:
+    null
+verbosity: 1 # 0, 1, 2
+resume_experiment: null
+validation_metric: val_accuracy

@@ -13,15 +13,8 @@ from torchvision.datasets import EMNIST
 from torchvision.transforms import Compose, ToTensor
 
 from text_recognizer.datasets.dataset import Dataset
+from text_recognizer.datasets.transforms import Transpose
 from text_recognizer.datasets.util import DATA_DIRNAME
-
-
-class Transpose:
-    """Transposes the EMNIST image to the correct orientation."""
-
-    def __call__(self, image: Image) -> np.ndarray:
-        """Swaps axis."""
-        return np.array(image).swapaxes(0, 1)
 
 
 class EmnistDataset(Dataset):

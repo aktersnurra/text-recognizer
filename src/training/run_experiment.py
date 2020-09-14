@@ -211,7 +211,7 @@ def run_experiment(
     experiment_config: Dict, save_weights: bool, device: str, use_wandb: bool = False
 ) -> None:
     """Runs an experiment."""
-    logger.info(f"Experiment config: {json.dumps(experiment_config)}")
+    logger.info(f"Experiment config: {json.dumps(experiment_config, indent=2)}")
 
     # Create new experiment.
     experiment_dir, log_dir, model_dir = create_experiment_dir(experiment_config)

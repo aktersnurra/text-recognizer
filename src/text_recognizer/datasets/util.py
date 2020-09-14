@@ -126,7 +126,7 @@ class EmnistMapper:
             "?",
         ]
 
-        # padding symbol
+        # padding symbol, and acts as blank symbol as well.
         extra_symbols.append("_")
 
         max_key = max(mapping.keys())
