@@ -278,7 +278,8 @@ class ResidualNetworkEncoder(nn.Module):
         if self.stn is not None:
             x = self.stn(x)
         x = self.gate(x)
-        return self.blocks(x)
+        x = self.blocks(x)
+        return x
 
 
 class ResidualNetworkDecoder(nn.Module):

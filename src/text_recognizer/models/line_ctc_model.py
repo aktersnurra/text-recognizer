@@ -98,16 +98,12 @@ class LineCTCModel(Model):
 
         # Put the image tensor on the device the model weights are on.
         image = image.to(self.device)
-        log_probs = (
-            self.swa_network(image)
-            if self.swa_network is not None
-            else self.network(image)
-        )
+        log_probs = self.forward(image)
 
         raw_pred, _ = greedy_decoder(
             predictions=log_probs,
             character_mapper=self.mapper,
-            blank_label=80,
+            blank_label=79,
             collapse_repeated=True,
         )
 

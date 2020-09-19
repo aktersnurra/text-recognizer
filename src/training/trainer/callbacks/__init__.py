@@ -3,12 +3,7 @@ from .base import Callback, CallbackList
 from .checkpoint import Checkpoint
 from .early_stopping import EarlyStopping
 from .lr_schedulers import (
-    CosineAnnealingLR,
-    CyclicLR,
-    MultiStepLR,
-    OneCycleLR,
-    ReduceLROnPlateau,
-    StepLR,
+    LRScheduler,
     SWA,
 )
 from .progress_bar import ProgressBar
@@ -18,15 +13,10 @@ __all__ = [
     "Callback",
     "CallbackList",
     "Checkpoint",
-    "CosineAnnealingLR",
     "EarlyStopping",
+    "LRScheduler",
     "WandbCallback",
     "WandbImageLogger",
-    "CyclicLR",
-    "MultiStepLR",
-    "OneCycleLR",
     "ProgressBar",
-    "ReduceLROnPlateau",
-    "StepLR",
     "SWA",
 ]

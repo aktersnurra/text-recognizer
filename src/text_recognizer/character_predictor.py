@@ -15,6 +15,7 @@ class CharacterPredictor:
         """Intializes the CharacterModel and load the pretrained weights."""
         self.model = CharacterModel(network_fn=network_fn)
         self.model.eval()
+        self.model.use_swa_model()
 
     def predict(self, image_or_filename: Union[np.ndarray, str]) -> Tuple[str, float]:
         """Predict on a single images contianing a handwritten character."""

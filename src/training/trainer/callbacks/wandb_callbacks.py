@@ -32,6 +32,7 @@ class WandbCallback(Callback):
     def on_train_batch_end(self, batch: int, logs: Optional[Dict] = None) -> None:
         """Logs training metrics."""
         if logs is not None:
+            logs["lr"] = self.model.optimizer.param_groups[0]["lr"]
             self._on_batch_end(batch, logs)
 
     def on_validation_batch_end(self, batch: int, logs: Optional[Dict] = None) -> None:

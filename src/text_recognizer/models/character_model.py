@@ -75,11 +75,7 @@ class CharacterModel(Model):
 
         # Put the image tensor on the device the model weights are on.
         image = image.to(self.device)
-        logits = (
-            self.swa_network(image)
-            if self.swa_network is not None
-            else self.network(image)
-        )
+        logits = self.forward(image)
 
         prediction = self.softmax(logits.squeeze(0))
 

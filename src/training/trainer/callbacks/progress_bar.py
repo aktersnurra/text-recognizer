@@ -11,6 +11,7 @@ class ProgressBar(Callback):
     def __init__(self, epochs: int, log_batch_frequency: int = None) -> None:
         """Initializes the tqdm callback."""
         self.epochs = epochs
+        print(epochs, type(epochs))
         self.log_batch_frequency = log_batch_frequency
         self.progress_bar = None
         self.val_metrics = {}

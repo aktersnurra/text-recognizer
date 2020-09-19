@@ -1,55 +1,46 @@
-experiment_group: Sample Experiments
+experiment_group: Lines Experiments
 experiments:
     - train_args:
-        batch_size: 64
-        max_epochs: 32
+        batch_size: 42
+        max_epochs: &max_epochs 32
       dataset:
-        type: EmnistLinesDataset
+        type: IamLinesDataset
         args:
-          subsample_fraction: 0.33
-          max_length: 34
-          min_overlap: 0
-          max_overlap: 0.33
-          num_samples: 10000
-          seed: 4711
-          blank: true
+          subsample_fraction: null
+          transform: null
+          target_transform: null
         train_args:
-          num_workers: 6
+          num_workers: 8
           train_fraction: 0.85
       model: LineCTCModel
       metrics: [cer, wer]
       network:
         type: LineRecurrentNetwork
         args:
-          # encoder: ResidualNetworkEncoder
-          # encoder_args:
-          #   in_channels: 1
-          #   num_classes: 81
-          #   depths: [2, 2]
-          #   block_sizes: [64, 128]
-          #   activation: SELU
-          #   stn: false
-          encoder: WideResidualNetwork
-          encoder_args:
+          backbone: ResidualNetwork
+          backbone_args:
             in_channels: 1
-            num_classes: 81
-            depth: 16
-            num_layers: 4
-            width_factor: 2
-            dropout_rate: 0.2
+            num_classes: 64 # Embedding
+            depths: [2,2]
+            block_sizes: [32,64]
             activation: selu
-            use_decoder: false
-          flatten: true
-          input_size: 256
-          hidden_size: 128
+            stn: false
+          # encoder: ResidualNetwork
+          # encoder_args:
+          #   pretrained: training/experiments/CharacterModel_EmnistDataset_ResidualNetwork/0917_203601/model/best.pt
+          #   freeze: false
+          flatten: false
+          input_size: 64
+          hidden_size: 64
+          bidirectional: true
           num_layers: 2
-          num_classes: 81
-          patch_size: [28, 14]
-          stride: [1, 5]
+          num_classes: 80
+          patch_size: [28, 18]
+          stride: [1, 4]
       criterion:
         type: CTCLoss
         args:
-          blank: 80
+          blank: 79
       optimizer:
         type: AdamW
         args:
@@ -58,40 +49,42 @@ experiments:
           eps: 1.e-08
           weight_decay: 5.e-4
           amsgrad: false
-      # lr_scheduler:
-      #   type: OneCycleLR
-      #   args:
-      #     max_lr: 1.e-03
-      #     epochs: null
-      #     anneal_strategy: linear
       lr_scheduler:
-        type: CosineAnnealingLR
+        type: OneCycleLR
         args:
-          T_max: null
+          max_lr: 1.e-02
+          epochs: *max_epochs
+          anneal_strategy: cos
+          pct_start: 0.475
+          cycle_momentum: true
+          base_momentum: 0.85
+          max_momentum: 0.9
+          div_factor: 10
+          final_div_factor: 10000
+          interval: step
+      # lr_scheduler:
+      #   type: CosineAnnealingLR
+      #   args:
+      #     T_max: *max_epochs
       swa_args:
-        start: 4
+        start: 24
         lr: 5.e-2
-      callbacks: [Checkpoint, ProgressBar, WandbCallback, WandbImageLogger, SWA] # EarlyStopping, OneCycleLR]
+      callbacks: [Checkpoint, ProgressBar, WandbCallback, WandbImageLogger] # EarlyStopping]
       callback_args:
         Checkpoint:
           monitor: val_loss
           mode: min
         ProgressBar:
-          epochs: null
-          log_batch_frequency: 100
+          epochs: *max_epochs
         # EarlyStopping:
         #   monitor: val_loss
         #   min_delta: 0.0
-        #   patience: 5
+        #   patience: 10
         #   mode: min
         WandbCallback:
           log_batch_frequency: 10
         WandbImageLogger:
           num_examples: 6
-        # OneCycleLR:
-        #   null
-        SWA:
-          null
       verbosity: 1 # 0, 1, 2
       resume_experiment: null
       test: true

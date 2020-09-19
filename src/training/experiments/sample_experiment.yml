@@ -2,7 +2,7 @@ experiment_group: Sample Experiments
 experiments:
     - train_args:
         batch_size: 256
-        max_epochs: 32
+        max_epochs: &max_epochs 32
       dataset:
         type: EmnistDataset
         args:
@@ -66,16 +66,17 @@ experiments:
       #   type: OneCycleLR
       #   args:
       #     max_lr: 1.e-03
-      #     epochs: null
+      #     epochs: *max_epochs
       #     anneal_strategy: linear
       lr_scheduler:
         type: CosineAnnealingLR
         args:
-          T_max: null
+          T_max: *max_epochs
+          interval: epoch
       swa_args:
         start: 2
         lr: 5.e-2
-      callbacks: [Checkpoint, ProgressBar, WandbCallback, WandbImageLogger, EarlyStopping, SWA] # OneCycleLR]
+      callbacks: [Checkpoint, ProgressBar, WandbCallback, WandbImageLogger, EarlyStopping]
       callback_args:
         Checkpoint:
           monitor: val_accuracy
@@ -92,10 +93,6 @@ experiments:
         WandbImageLogger:
           num_examples: 4
           use_transpose: true
-        # OneCycleLR:
-        #   null
-        SWA:
-          null
       verbosity: 0 # 0, 1, 2
       resume_experiment: null
       test: true
