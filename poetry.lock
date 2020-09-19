@@ -334,6 +334,17 @@ version = "0.3"
 
 [[package]]
 category = "main"
+description = "A library for efficient similarity search and clustering of dense vectors."
+name = "faiss-gpu"
+optional = false
+python-versions = "*"
+version = "1.6.3"
+
+[package.dependencies]
+numpy = "*"
+
+[[package]]
+category = "main"
 description = "the modular source code checker: pep8 pyflakes and co"
 name = "flake8"
 optional = false
@@ -1030,6 +1041,18 @@ version = "7.352.0"
 
 [[package]]
 category = "main"
+description = "A flexible configuration library"
+name = "omegaconf"
+optional = false
+python-versions = ">=3.6"
+version = "2.0.2"
+
+[package.dependencies]
+PyYAML = ">=5.1"
+typing-extensions = "*"
+
+[[package]]
+category = "main"
 description = "Wrapper package for OpenCV python bindings."
 name = "opencv-python"
 optional = false
@@ -1342,6 +1365,34 @@ version = "0.12.0"
 setuptools = "*"
 
 [[package]]
+category = "main"
+description = "PyTorch extension for fast block sparse matrices computation, drop in replacement for torch.nn.Linear."
+name = "pytorch-block-sparse"
+optional = false
+python-versions = "*"
+version = "0.1.2"
+
+[[package]]
+category = "main"
+description = "The easiest way to use deep metric learning in your application. Modular, flexible, and extensible. Written in PyTorch."
+name = "pytorch-metric-learning"
+optional = false
+python-versions = ">=3.0"
+version = "0.9.92"
+
+[package.dependencies]
+numpy = "*"
+scikit-learn = "*"
+torch = ">=1.6.0"
+torchvision = "*"
+tqdm = "*"
+
+[package.extras]
+dev = ["pytest (>3.8)", "pytest-cov (>=2.8,<3.0)"]
+with-hooks = ["record-keeper (>=0.9.29)", "faiss-gpu (>=1.6.3)", "tensorboard"]
+with-hooks-cpu = ["record-keeper (>=0.9.29)", "faiss-cpu (>=1.6.3)", "tensorboard"]
+
+[[package]]
 category = "dev"
 description = "Python type inferencer"
 marker = "python_version == \"3.7\""
@@ -1492,6 +1543,34 @@ dparse = ">=0.5.1"
 packaging = "*"
 requests = "*"
 setuptools = "*"
+
+[[package]]
+category = "main"
+description = "A set of python modules for machine learning and data mining"
+name = "scikit-learn"
+optional = false
+python-versions = ">=3.6"
+version = "0.23.2"
+
+[package.dependencies]
+joblib = ">=0.11"
+numpy = ">=1.13.3"
+scipy = ">=0.19.1"
+threadpoolctl = ">=2.0.0"
+
+[package.extras]
+alldeps = ["numpy (>=1.13.3)", "scipy (>=0.19.1)"]
+
+[[package]]
+category = "main"
+description = "SciPy: Scientific Library for Python"
+name = "scipy"
+optional = false
+python-versions = ">=3.6"
+version = "1.5.2"
+
+[package.dependencies]
+numpy = ">=1.14.5"
 
 [[package]]
 category = "dev"
@@ -1738,6 +1817,14 @@ test = ["pathlib2"]
 
 [[package]]
 category = "main"
+description = "threadpoolctl"
+name = "threadpoolctl"
+optional = false
+python-versions = ">=3.5"
+version = "2.1.0"
+
+[[package]]
+category = "main"
 description = "Python Library for Tom's Obvious, Minimal Language"
 name = "toml"
 optional = false
@@ -1981,7 +2068,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "d2554d5ea2a2de69322438b76e2dc21566d82b0aeb0c5e8a0ebcd69c0a057dba"
+content-hash = "c8511d6e4ae5708277c07f553830c11d3dc5cd77ca7f99bb47cd94dbb21d4b13"
 lock-version = "1.0"
 python-versions = "^3.7"
 
@@ -2182,6 +2269,13 @@ einops = [
 entrypoints = [
     {file = "entrypoints-0.3-py2.py3-none-any.whl", hash = "sha256:589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19"},
     {file = "entrypoints-0.3.tar.gz", hash = "sha256:c70dd71abe5a8c85e55e12c19bd91ccfeec11a6e99044204511f9ed547d48451"},
+]
+faiss-gpu = [
+    {file = "faiss-gpu-1.6.3.tar.gz", hash = "sha256:46092bcf20789353d9ffc45b0b10df6fdc1d2078983be2d97e78203b71827986"},
+    {file = "faiss_gpu-1.6.3-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:e17178990518bd55e91c8364ef57dc4e3b4d20691c15e4eba6c88fd31e2e0c3a"},
+    {file = "faiss_gpu-1.6.3-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:45f702846168d9b3a9435745c21fb6786684cbfa849a2e01cd79c2224eff4698"},
+    {file = "faiss_gpu-1.6.3-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:cfdfe6681e24b69f429dcdec33d3a25ee2465a5e691d851218482ba8ad6892ee"},
+    {file = "faiss_gpu-1.6.3-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:70b3ebe0fdd8438e8d385684de00e7605b562a7680abba72fad4ef5c7f955fbf"},
 ]
 flake8 = [
     {file = "flake8-3.8.3-py2.py3-none-any.whl", hash = "sha256:15e351d19611c887e482fb960eae4d44845013cc142d42896e9862f775d8cf5c"},
@@ -2504,6 +2598,10 @@ numpy = [
 nvidia-ml-py3 = [
     {file = "nvidia-ml-py3-7.352.0.tar.gz", hash = "sha256:390f02919ee9d73fe63a98c73101061a6b37fa694a793abf56673320f1f51277"},
 ]
+omegaconf = [
+    {file = "omegaconf-2.0.2-py3-none-any.whl", hash = "sha256:3892d6a6848e1f54869d6ea3720f7208e4bb4276774f97dbb899fb540ac84506"},
+    {file = "omegaconf-2.0.2.tar.gz", hash = "sha256:dede7746b3dc18c5670dcec4ce283593d229a055a1c9cf089e2663545396fba0"},
+]
 opencv-python = [
     {file = "opencv-python-4.4.0.42.tar.gz", hash = "sha256:0039506845d7076e6871c0075227881a84de69799d70ed37c8704d203b740911"},
     {file = "opencv_python-4.4.0.42-cp35-cp35m-macosx_10_13_x86_64.whl", hash = "sha256:608dae0444065669fc26fa6bf1653072e40735b33dfa514c74a6165563a99e97"},
@@ -2667,6 +2765,13 @@ python-dateutil = [
 python-levenshtein = [
     {file = "python-Levenshtein-0.12.0.tar.gz", hash = "sha256:033a11de5e3d19ea25c9302d11224e1a1898fe5abd23c61c7c360c25195e3eb1"},
 ]
+pytorch-block-sparse = [
+    {file = "pytorch_block_sparse-0.1.2.tar.gz", hash = "sha256:ca4a5c1dde96ac01c007f209067b2bbaee311a8699eba1eef712faef7f97df1f"},
+]
+pytorch-metric-learning = [
+    {file = "pytorch-metric-learning-0.9.92.tar.gz", hash = "sha256:d46eb3edfcae3f5dc2cf1b4478c108665a7205ba59e36c131b76d6909670737d"},
+    {file = "pytorch_metric_learning-0.9.92-py3-none-any.whl", hash = "sha256:a2583da7d442da26ca2af4932591c5812994874ff0320fe0ade20a4c56126f6d"},
+]
 pytype = [
     {file = "pytype-2020.8.10-cp35-cp35m-macosx_10_14_x86_64.whl", hash = "sha256:da1977a1aa74fbd237e889c1d29421d490e0be9a91a22efd96fbca2570ef9165"},
     {file = "pytype-2020.8.10-cp35-cp35m-manylinux2014_x86_64.whl", hash = "sha256:e0909b99aff8eff0ece91fd64e00b935f0e4fecb51359d83d742b27db160dd00"},
@@ -2795,6 +2900,42 @@ safety = [
     {file = "safety-1.9.0-py2.py3-none-any.whl", hash = "sha256:86c1c4a031fe35bd624fce143fbe642a0234d29f7cbf7a9aa269f244a955b087"},
     {file = "safety-1.9.0.tar.gz", hash = "sha256:23bf20690d4400edc795836b0c983c2b4cbbb922233108ff925b7dd7750f00c9"},
 ]
+scikit-learn = [
+    {file = "scikit-learn-0.23.2.tar.gz", hash = "sha256:20766f515e6cd6f954554387dfae705d93c7b544ec0e6c6a5d8e006f6f7ef480"},
+    {file = "scikit_learn-0.23.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:98508723f44c61896a4e15894b2016762a55555fbf09365a0bb1870ecbd442de"},
+    {file = "scikit_learn-0.23.2-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:a64817b050efd50f9abcfd311870073e500ae11b299683a519fbb52d85e08d25"},
+    {file = "scikit_learn-0.23.2-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:daf276c465c38ef736a79bd79fc80a249f746bcbcae50c40945428f7ece074f8"},
+    {file = "scikit_learn-0.23.2-cp36-cp36m-win32.whl", hash = "sha256:cb3e76380312e1f86abd20340ab1d5b3cc46a26f6593d3c33c9ea3e4c7134028"},
+    {file = "scikit_learn-0.23.2-cp36-cp36m-win_amd64.whl", hash = "sha256:0a127cc70990d4c15b1019680bfedc7fec6c23d14d3719fdf9b64b22d37cdeca"},
+    {file = "scikit_learn-0.23.2-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:2aa95c2f17d2f80534156215c87bee72b6aa314a7f8b8fe92a2d71f47280570d"},
+    {file = "scikit_learn-0.23.2-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:6c28a1d00aae7c3c9568f61aafeaad813f0f01c729bee4fd9479e2132b215c1d"},
+    {file = "scikit_learn-0.23.2-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:da8e7c302003dd765d92a5616678e591f347460ac7b53e53d667be7dfe6d1b10"},
+    {file = "scikit_learn-0.23.2-cp37-cp37m-win32.whl", hash = "sha256:d9a1ce5f099f29c7c33181cc4386660e0ba891b21a60dc036bf369e3a3ee3aec"},
+    {file = "scikit_learn-0.23.2-cp37-cp37m-win_amd64.whl", hash = "sha256:914ac2b45a058d3f1338d7736200f7f3b094857758895f8667be8a81ff443b5b"},
+    {file = "scikit_learn-0.23.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:7671bbeddd7f4f9a6968f3b5442dac5f22bf1ba06709ef888cc9132ad354a9ab"},
+    {file = "scikit_learn-0.23.2-cp38-cp38-manylinux1_i686.whl", hash = "sha256:d0dcaa54263307075cb93d0bee3ceb02821093b1b3d25f66021987d305d01dce"},
+    {file = "scikit_learn-0.23.2-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:5ce7a8021c9defc2b75620571b350acc4a7d9763c25b7593621ef50f3bd019a2"},
+    {file = "scikit_learn-0.23.2-cp38-cp38-win32.whl", hash = "sha256:0d39748e7c9669ba648acf40fb3ce96b8a07b240db6888563a7cb76e05e0d9cc"},
+    {file = "scikit_learn-0.23.2-cp38-cp38-win_amd64.whl", hash = "sha256:1b8a391de95f6285a2f9adffb7db0892718950954b7149a70c783dc848f104ea"},
+]
+scipy = [
+    {file = "scipy-1.5.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:cca9fce15109a36a0a9f9cfc64f870f1c140cb235ddf27fe0328e6afb44dfed0"},
+    {file = "scipy-1.5.2-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:1c7564a4810c1cd77fcdee7fa726d7d39d4e2695ad252d7c86c3ea9d85b7fb8f"},
+    {file = "scipy-1.5.2-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:07e52b316b40a4f001667d1ad4eb5f2318738de34597bd91537851365b6c61f1"},
+    {file = "scipy-1.5.2-cp36-cp36m-win32.whl", hash = "sha256:d56b10d8ed72ec1be76bf10508446df60954f08a41c2d40778bc29a3a9ad9bce"},
+    {file = "scipy-1.5.2-cp36-cp36m-win_amd64.whl", hash = "sha256:8e28e74b97fc8d6aa0454989db3b5d36fc27e69cef39a7ee5eaf8174ca1123cb"},
+    {file = "scipy-1.5.2-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:6e86c873fe1335d88b7a4bfa09d021f27a9e753758fd75f3f92d714aa4093768"},
+    {file = "scipy-1.5.2-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:a0afbb967fd2c98efad5f4c24439a640d39463282040a88e8e928db647d8ac3d"},
+    {file = "scipy-1.5.2-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:eecf40fa87eeda53e8e11d265ff2254729d04000cd40bae648e76ff268885d66"},
+    {file = "scipy-1.5.2-cp37-cp37m-win32.whl", hash = "sha256:315aa2165aca31375f4e26c230188db192ed901761390be908c9b21d8b07df62"},
+    {file = "scipy-1.5.2-cp37-cp37m-win_amd64.whl", hash = "sha256:ec5fe57e46828d034775b00cd625c4a7b5c7d2e354c3b258d820c6c72212a6ec"},
+    {file = "scipy-1.5.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:fc98f3eac993b9bfdd392e675dfe19850cc8c7246a8fd2b42443e506344be7d9"},
+    {file = "scipy-1.5.2-cp38-cp38-manylinux1_i686.whl", hash = "sha256:a785409c0fa51764766840185a34f96a0a93527a0ff0230484d33a8ed085c8f8"},
+    {file = "scipy-1.5.2-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:0a0e9a4e58a4734c2eba917f834b25b7e3b6dc333901ce7784fd31aefbd37b2f"},
+    {file = "scipy-1.5.2-cp38-cp38-win32.whl", hash = "sha256:dac09281a0eacd59974e24525a3bc90fa39b4e95177e638a31b14db60d3fa806"},
+    {file = "scipy-1.5.2-cp38-cp38-win_amd64.whl", hash = "sha256:92eb04041d371fea828858e4fff182453c25ae3eaa8782d9b6c32b25857d23bc"},
+    {file = "scipy-1.5.2.tar.gz", hash = "sha256:066c513d90eb3fd7567a9e150828d39111ebd88d3e924cdfc9f8ce19ab6f90c9"},
+]
 send2trash = [
     {file = "Send2Trash-1.5.0-py3-none-any.whl", hash = "sha256:f1691922577b6fa12821234aeb57599d887c4900b9ca537948d2dac34aea888b"},
     {file = "Send2Trash-1.5.0.tar.gz", hash = "sha256:60001cc07d707fe247c94f74ca6ac0d3255aabcb930529690897ca2a39db28b2"},
@@ -2870,6 +3011,10 @@ terminado = [
 testpath = [
     {file = "testpath-0.4.4-py2.py3-none-any.whl", hash = "sha256:bfcf9411ef4bf3db7579063e0546938b1edda3d69f4e1fb8756991f5951f85d4"},
     {file = "testpath-0.4.4.tar.gz", hash = "sha256:60e0a3261c149755f4399a1fff7d37523179a70fdc3abdf78de9fc2604aeec7e"},
+]
+threadpoolctl = [
+    {file = "threadpoolctl-2.1.0-py3-none-any.whl", hash = "sha256:38b74ca20ff3bb42caca8b00055111d74159ee95c4370882bbff2b93d24da725"},
+    {file = "threadpoolctl-2.1.0.tar.gz", hash = "sha256:ddc57c96a38beb63db45d6c159b5ab07b6bced12c45a1f07b2b92f272aebfa6b"},
 ]
 toml = [
     {file = "toml-0.10.1-py2.py3-none-any.whl", hash = "sha256:bda89d5935c2eac546d648028b9901107a595863cb36bae0c73ac804a9b4ce88"},
