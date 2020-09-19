@@ -2,7 +2,7 @@ experiment_group: Lines Experiments
 experiments:
     - train_args:
         batch_size: 64
-        max_epochs: &max_epochs 32
+        max_epochs: &max_epochs 64
       dataset:
         type: IamLinesDataset
         args:
