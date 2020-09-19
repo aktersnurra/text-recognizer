@@ -1,7 +1,7 @@
 experiment_group: Lines Experiments
 experiments:
     - train_args:
-        batch_size: 42
+        batch_size: 64
         max_epochs: &max_epochs 32
       dataset:
         type: IamLinesDataset
@@ -17,18 +17,18 @@ experiments:
       network:
         type: LineRecurrentNetwork
         args:
+          # backbone: ResidualNetwork
+          # backbone_args:
+          #   in_channels: 1
+          #   num_classes: 64 # Embedding
+          #   depths: [2,2]
+          #   block_sizes: [32, 64]
+          #   activation: selu
+          #   stn: false
           backbone: ResidualNetwork
           backbone_args:
-            in_channels: 1
-            num_classes: 64 # Embedding
-            depths: [2,2]
-            block_sizes: [32,64]
-            activation: selu
-            stn: false
-          # encoder: ResidualNetwork
-          # encoder_args:
-          #   pretrained: training/experiments/CharacterModel_EmnistDataset_ResidualNetwork/0917_203601/model/best.pt
-          #   freeze: false
+            pretrained: training/experiments/CharacterModel_EmnistDataset_ResidualNetwork/0920_010806/model/best.pt
+            freeze: false
           flatten: false
           input_size: 64
           hidden_size: 64
@@ -67,20 +67,20 @@ experiments:
       #   args:
       #     T_max: *max_epochs
       swa_args:
-        start: 24
+        start: 48
         lr: 5.e-2
-      callbacks: [Checkpoint, ProgressBar, WandbCallback, WandbImageLogger] # EarlyStopping]
+      callbacks: [Checkpoint, ProgressBar, WandbCallback, WandbImageLogger, EarlyStopping]
       callback_args:
         Checkpoint:
           monitor: val_loss
           mode: min
         ProgressBar:
           epochs: *max_epochs
-        # EarlyStopping:
-        #   monitor: val_loss
-        #   min_delta: 0.0
-        #   patience: 10
-        #   mode: min
+        EarlyStopping:
+          monitor: val_loss
+          min_delta: 0.0
+          patience: 10
+          mode: min
         WandbCallback:
           log_batch_frequency: 10
         WandbImageLogger:

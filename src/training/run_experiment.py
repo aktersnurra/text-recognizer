@@ -116,7 +116,7 @@ def load_modules_and_arguments(experiment_config: Dict) -> Tuple[Callable, Dict]
     # Learning rate scheduler
     lr_scheduler_ = None
     lr_scheduler_args = None
-    if experiment_config["lr_scheduler"] is not None:
+    if "lr_scheduler" in experiment_config:
         lr_scheduler_ = getattr(
             torch.optim.lr_scheduler, experiment_config["lr_scheduler"]["type"]
         )
