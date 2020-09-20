@@ -149,6 +149,7 @@ class EmnistLinesDataset(Dataset):
 
         # Load emnist dataset.
         emnist = EmnistDataset(train=self.train, sample_to_balance=True)
+        emnist.load_or_generate_data()
 
         samples_by_character = get_samples_by_character(
             emnist.data.numpy(), emnist.targets.numpy(), self.mapper.mapping,
@@ -306,17 +307,13 @@ def create_datasets(
     num_test: int = 1000,
 ) -> None:
     """Creates a training an validation dataset of Emnist lines."""
-    emnist_train = EmnistDataset(train=True, sample_to_balance=True)
-    emnist_test = EmnistDataset(train=False, sample_to_balance=True)
-    datasets = [emnist_train, emnist_test]
     num_samples = [num_train, num_test]
-    for num, train, dataset in zip(num_samples, [True, False], datasets):
+    for num, train in zip(num_samples, [True, False]):
         emnist_lines = EmnistLinesDataset(
             train=train,
-            emnist=dataset,
             max_length=max_length,
             min_overlap=min_overlap,
             max_overlap=max_overlap,
             num_samples=num,
         )
-        emnist_lines._load_or_generate_data()
+        emnist_lines.load_or_generate_data()

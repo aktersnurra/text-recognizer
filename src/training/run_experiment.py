@@ -273,7 +273,8 @@ def run_experiment(
     )
 
     # Train the model.
-    trainer.fit(model)
+    if experiment_config["train"]:
+        trainer.fit(model)
 
     # Run inference over test set.
     if experiment_config["test"]:

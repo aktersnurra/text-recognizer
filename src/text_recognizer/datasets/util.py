@@ -26,7 +26,7 @@ def save_emnist_essentials(emnsit_dataset: type = EMNIST) -> None:
     mapping = [(i, str(label)) for i, label in enumerate(labels)]
     essentials = {
         "mapping": mapping,
-        "input_shape": tuple(emnsit_dataset[0][0].shape[:]),
+        "input_shape": tuple(np.array(emnsit_dataset[0][0]).shape[:]),
     }
     logger.info("Saving emnist essentials...")
     with open(ESSENTIALS_FILENAME, "w") as f:

@@ -92,7 +92,7 @@ class CallbackList:
 
     def append(self, callback: Type[Callback]) -> None:
         """Append new callback to callback list."""
-        self.callbacks.append(callback)
+        self._callbacks.append(callback)
 
     def on_fit_begin(self) -> None:
         """Called when fit begins."""

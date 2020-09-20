@@ -141,5 +141,7 @@ src/training/experiments/*
 !src/training/experiments/iam_line_ctc_experiment.yml
 !src/training/experiments/line_ctc_experiment.yml
 !src/training/experiments/default_config_emnist.yml
+!src/training/experiments/embedding_experiment.yml
 
-wandb/*
+src/wandb/*
+!src/wandb/settings

@@ -1,0 +1,58 @@
+experiment_group: Embedding Experiments
+experiments:
+    - train_args:
+        batch_size: 256
+        max_epochs: &max_epochs 8
+      dataset:
+        type: EmnistDataset
+        args:
+          sample_to_balance: true
+          subsample_fraction: null
+          transform: null
+          target_transform: null
+          seed: 4711
+        train_args:
+          num_workers: 8
+          train_fraction: 0.85
+      model: CharacterModel
+      metrics: []
+      network:
+        type: ResidualNetwork
+        args:
+          in_channels: 1
+          num_classes: 64 # Embedding
+          depths: [2,2]
+          block_sizes: [32, 64]
+          activation: selu
+          stn: false
+      criterion:
+        type: EmbeddingLoss
+        args:
+          margin: 0.2
+          type_of_triplets: semihard
+      optimizer:
+        type: AdamW
+        args:
+          lr: 1.e-02
+          betas: [0.9, 0.999]
+          eps: 1.e-08
+          weight_decay: 5.e-4
+          amsgrad: false
+      lr_scheduler:
+        type: CosineAnnealingLR
+        args:
+          T_max: *max_epochs
+      callbacks: [Checkpoint, ProgressBar, WandbCallback]
+      callback_args:
+        Checkpoint:
+          monitor: val_loss
+          mode: min
+        ProgressBar:
+          epochs: *max_epochs
+        WandbCallback:
+          log_batch_frequency: 10
+      verbosity: 1 # 0, 1, 2
+      resume_experiment: null
+      train: true
+      test: true
+      test_metric: mean_average_precision_at_r

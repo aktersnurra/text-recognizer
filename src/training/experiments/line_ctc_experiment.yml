@@ -27,7 +27,7 @@ experiments:
           #   stn: false
           backbone: ResidualNetwork
           backbone_args:
-            pretrained: training/experiments/CharacterModel_EmnistDataset_ResidualNetwork/0920_010806/model/best.pt
+            pretrained: training/experiments/CharacterModel_EmnistDataset_ResidualNetwork/0920_025816/model/best.pt
             freeze: false
           flatten: false
           input_size: 64
@@ -87,5 +87,6 @@ experiments:
           num_examples: 6
       verbosity: 1 # 0, 1, 2
       resume_experiment: null
+      train: true
       test: true
       test_metric: test_cer
