@@ -4,6 +4,9 @@ from torch import nn
 from torch import Tensor
 
 
+__all__ = ["EmbeddingLoss"]
+
+
 class EmbeddingLoss:
     """Metric loss for training encoders to produce information-rich latent embeddings."""
 

@@ -1,8 +1,10 @@
 experiment_group: Embedding Experiments
 experiments:
     - train_args:
-        batch_size: 256
-        max_epochs: &max_epochs 8
+        transformer_model: false
+        batch_size: &batch_size 256
+        max_epochs: &max_epochs 32
+        input_shape: [[1, 28, 28]]
       dataset:
         type: EmnistDataset
         args:
@@ -14,17 +16,21 @@ experiments:
         train_args:
           num_workers: 8
           train_fraction: 0.85
+          batch_size: *batch_size
       model: CharacterModel
       metrics: []
       network:
-        type: ResidualNetwork
+        type: DenseNet
         args:
+          growth_rate: 4
+          block_config: [4, 4]
           in_channels: 1
-          num_classes: 64 # Embedding
-          depths: [2,2]
-          block_sizes: [32, 64]
-          activation: selu
-          stn: false
+          base_channels: 24
+          num_classes: 128
+          bn_size: 4
+          dropout_rate: 0.1
+          classifier: true
+          activation: elu
       criterion:
         type: EmbeddingLoss
         args:

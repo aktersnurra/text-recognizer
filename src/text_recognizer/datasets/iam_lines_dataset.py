@@ -32,12 +32,18 @@ class IamLinesDataset(Dataset):
         subsample_fraction: float = None,
         transform: Optional[Callable] = None,
         target_transform: Optional[Callable] = None,
+        init_token: Optional[str] = None,
+        pad_token: Optional[str] = None,
+        eos_token: Optional[str] = None,
     ) -> None:
         super().__init__(
             train=train,
             subsample_fraction=subsample_fraction,
             transform=transform,
             target_transform=target_transform,
+            init_token=init_token,
+            pad_token=pad_token,
+            eos_token=eos_token,
         )
 
     @property

@@ -1,15 +1,19 @@
-"""Defines the MLP network."""
+"""Defines the Sparse MLP network."""
 from typing import Callable, Dict, List, Optional, Union
+import warnings
 
 from einops.layers.torch import Rearrange
+from pytorch_block_sparse import BlockSparseLinear
 import torch
 from torch import nn
 
 from text_recognizer.networks.util import activation_function
 
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-class MLP(nn.Module):
-    """Multi layered perceptron network."""
+
+class SparseMLP(nn.Module):
+    """Sparse multi layered perceptron network."""
 
     def __init__(
         self,
@@ -17,7 +21,7 @@ class MLP(nn.Module):
         num_classes: int = 10,
         hidden_size: Union[int, List] = 128,
         num_layers: int = 3,
-        dropout_rate: float = 0.2,
+        density: float = 0.1,
         activation_fn: str = "relu",
     ) -> None:
         """Initialization of the MLP network.
@@ -27,7 +31,7 @@ class MLP(nn.Module):
             num_classes (int): Number of classes in the dataset. Defaults to 10.
             hidden_size (Union[int, List]): The number of `neurons` in each hidden layer. Defaults to 128.
             num_layers (int): The number of hidden layers. Defaults to 3.
-            dropout_rate (float): The dropout rate at each layer. Defaults to 0.2.
+            density (float): The density of activation at each layer. Default to 0.1.
             activation_fn (str): Name of the activation function in the hidden layers. Defaults to
                 relu.
 
@@ -47,12 +51,13 @@ class MLP(nn.Module):
 
         for i in range(num_layers - 1):
             self.layers += [
-                nn.Linear(in_features=hidden_size[i], out_features=hidden_size[i + 1]),
+                BlockSparseLinear(
+                    in_features=hidden_size[i],
+                    out_features=hidden_size[i + 1],
+                    density=density,
+                ),
                 activation_fn,
             ]
-
-            if dropout_rate:
-                self.layers.append(nn.Dropout(p=dropout_rate))
 
         self.layers.append(
             nn.Linear(in_features=hidden_size[-1], out_features=num_classes)

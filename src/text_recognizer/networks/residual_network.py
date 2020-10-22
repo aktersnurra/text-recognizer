@@ -7,8 +7,8 @@ import torch
 from torch import nn
 from torch import Tensor
 
-from text_recognizer.networks.misc import activation_function
 from text_recognizer.networks.stn import SpatialTransformerNetwork
+from text_recognizer.networks.util import activation_function
 
 
 class Conv2dAuto(nn.Conv2d):
@@ -225,8 +225,8 @@ class ResidualNetworkEncoder(nn.Module):
                 in_channels=in_channels,
                 out_channels=self.block_sizes[0],
                 kernel_size=3,
-                stride=2,
-                padding=3,
+                stride=1,
+                padding=1,
                 bias=False,
             ),
             nn.BatchNorm2d(self.block_sizes[0]),

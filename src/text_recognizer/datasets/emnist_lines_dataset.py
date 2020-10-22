@@ -37,6 +37,9 @@ class EmnistLinesDataset(Dataset):
         max_overlap: float = 0.33,
         num_samples: int = 10000,
         seed: int = 4711,
+        init_token: Optional[str] = None,
+        pad_token: Optional[str] = None,
+        eos_token: Optional[str] = None,
     ) -> None:
         """Set attributes and loads the dataset.
 
@@ -50,6 +53,9 @@ class EmnistLinesDataset(Dataset):
             max_overlap (float): The maximum overlap between concatenated images. Defaults to 0.33.
             num_samples (int): Number of samples to generate. Defaults to 10000.
             seed (int): Seed number. Defaults to 4711.
+            init_token (Optional[str]): String representing the start of sequence token. Defaults to None.
+            pad_token (Optional[str]): String representing the pad token. Defaults to None.
+            eos_token (Optional[str]): String representing the end of sequence token. Defaults to None.
 
         """
         super().__init__(
@@ -57,6 +63,9 @@ class EmnistLinesDataset(Dataset):
             transform=transform,
             target_transform=target_transform,
             subsample_fraction=subsample_fraction,
+            init_token=init_token,
+            pad_token=pad_token,
+            eos_token=eos_token,
         )
 
         # Extract dataset information.

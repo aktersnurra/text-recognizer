@@ -53,9 +53,6 @@ class EmnistDataset(Dataset):
         if transform is None:
             self.transform = Compose([Transpose(), ToTensor()])
 
-        # The EMNIST dataset is already casted to tensors.
-        self.target_transform = target_transform
-
         self.seed = seed
 
     def __getitem__(self, index: Union[int, Tensor]) -> Tuple[Tensor, Tensor]:

@@ -62,6 +62,14 @@ class Callback:
         """Called at the end of an epoch."""
         pass
 
+    def on_test_begin(self) -> None:
+        """Called at the beginning of test."""
+        pass
+
+    def on_test_end(self) -> None:
+        """Called at the end of test."""
+        pass
+
 
 class CallbackList:
     """Container for abstracting away callback calls."""
@@ -103,6 +111,16 @@ class CallbackList:
         """Called when fit ends."""
         for callback in self._callbacks:
             callback.on_fit_end()
+
+    def on_test_begin(self) -> None:
+        """Called when test begins."""
+        for callback in self._callbacks:
+            callback.on_test_begin()
+
+    def on_test_end(self) -> None:
+        """Called when test ends."""
+        for callback in self._callbacks:
+            callback.on_test_end()
 
     def on_epoch_begin(self, epoch: int, logs: Optional[Dict] = None) -> None:
         """Called at the beginning of an epoch."""

@@ -8,7 +8,7 @@ import torch
 from torch import nn
 from torch import Tensor
 
-from text_recognizer.networks.misc import activation_function
+from text_recognizer.networks.util import activation_function
 
 
 def conv3x3(in_planes: int, out_planes: int, stride: int = 1) -> nn.Conv2d:
@@ -206,8 +206,8 @@ class WideResidualNetwork(nn.Module):
 
     def forward(self, x: Tensor) -> Tensor:
         """Feedforward pass."""
-        if len(x.shape) == 3:
-            x = x.unsqueeze(0)
+        if len(x.shape) < 4:
+            x = x[(None,) * int(4 - len(x.shape))]
         x = self.encoder(x)
         if self.decoder is not None:
             x = self.decoder(x)

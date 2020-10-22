@@ -1,5 +1,5 @@
-"""Defines the LineCTCModel class."""
-from typing import Callable, Dict, Optional, Tuple, Type, Union
+"""Defines the CNN-Transformer class."""
+from typing import Callable, Dict, List, Optional, Tuple, Type, Union
 
 import numpy as np
 import torch
@@ -13,8 +13,8 @@ from text_recognizer.models.base import Model
 from text_recognizer.networks import greedy_decoder
 
 
-class LineCTCModel(Model):
-    """Model for predicting a sequence of characters from an image of a text line."""
+class VisionTransformerModel(Model):
+    """Model for predicting a sequence of characters from an image of a text line with a cnn-transformer."""
 
     def __init__(
         self,
@@ -47,42 +47,53 @@ class LineCTCModel(Model):
             swa_args,
             device,
         )
+        self.init_token = dataset_args["args"]["init_token"]
+        self.pad_token = dataset_args["args"]["pad_token"]
+        self.eos_token = dataset_args["args"]["eos_token"]
+        if network_args is not None:
+            self.max_len = network_args["max_len"]
+        else:
+            self.max_len = 128
+
         if self._mapper is None:
-            self._mapper = EmnistMapper()
+            self._mapper = EmnistMapper(
+                init_token=self.init_token,
+                pad_token=self.pad_token,
+                eos_token=self.eos_token,
+            )
         self.tensor_transform = ToTensor()
 
-    def criterion(self, output: Tensor, targets: Tensor) -> Tensor:
-        """Computes the CTC loss.
+        self.softmax = nn.Softmax(dim=2)
 
-        Args:
-            output (Tensor): Model predictions.
-            targets (Tensor): Correct output sequence.
+    @torch.no_grad()
+    def _generate_sentence(self, image: Tensor) -> Tuple[List, float]:
+        src = self.network.preprocess_input(image)
+        memory = self.network.encoder(src)
 
-        Returns:
-            Tensor: The CTC loss.
+        confidence_of_predictions = []
+        trg_indices = [self.mapper(self.init_token)]
 
-        """
+        for _ in range(self.max_len):
+            trg = torch.tensor(trg_indices, device=self.device)[None, :].long()
+            trg, trg_mask = self.network.preprocess_target(trg)
+            logits = self.network.decoder(trg=trg, memory=memory, trg_mask=trg_mask)
 
-        # Input lengths on the form [T, B]
-        input_lengths = torch.full(
-            size=(output.shape[1],), fill_value=output.shape[0], dtype=torch.long,
-        )
+            # Convert logits to probabilities.
+            probs = self.softmax(logits)
 
-        # Configure target tensors for ctc loss.
-        targets_ = Tensor([]).to(self.device)
-        target_lengths = []
-        for t in targets:
-            # Remove padding symbol as it acts as the blank symbol.
-            t = t[t < 79]
-            targets_ = torch.cat([targets_, t])
-            target_lengths.append(len(t))
+            pred_token = probs.argmax(2)[:, -1].item()
+            confidence = probs.max(2).values[:, -1].item()
 
-        targets = targets_.type(dtype=torch.long)
-        target_lengths = (
-            torch.Tensor(target_lengths).type(dtype=torch.long).to(self.device)
-        )
+            trg_indices.append(pred_token)
+            confidence_of_predictions.append(confidence)
 
-        return self._criterion(output, targets, input_lengths, target_lengths)
+            if pred_token == self.mapper(self.eos_token):
+                break
+
+        confidence = np.min(confidence_of_predictions)
+        predicted_characters = "".join([self.mapper(x) for x in trg_indices[1:]])
+
+        return predicted_characters, confidence
 
     @torch.no_grad()
     def predict_on_image(self, image: Union[np.ndarray, Tensor]) -> Tuple[str, float]:
@@ -100,18 +111,7 @@ class LineCTCModel(Model):
 
         # Put the image tensor on the device the model weights are on.
         image = image.to(self.device)
-        log_probs = self.forward(image)
 
-        raw_pred, _ = greedy_decoder(
-            predictions=log_probs,
-            character_mapper=self.mapper,
-            blank_label=79,
-            collapse_repeated=True,
-        )
-
-        log_probs, _ = log_probs.max(dim=2)
-
-        predicted_characters = "".join(raw_pred[0])
-        confidence_of_prediction = torch.exp(-log_probs.sum()).item()
+        predicted_characters, confidence_of_prediction = self._generate_sentence(image)
 
         return predicted_characters, confidence_of_prediction

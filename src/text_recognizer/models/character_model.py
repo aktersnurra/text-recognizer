@@ -65,6 +65,7 @@ class CharacterModel(Model):
             Tuple[str, float]: The predicted character and the confidence in the prediction.
 
         """
+        self.eval()
 
         if image.dtype == np.uint8:
             # Converts an image with range [0, 255] with to Pytorch Tensor with range [0, 1].
