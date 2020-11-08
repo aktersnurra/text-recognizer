@@ -1,8 +1,7 @@
 """A DETR style transfomers but for text recognition."""
-from typing import Dict, Optional, Tuple, Type
+from typing import Dict, Optional, Tuple
 
-from einops.layers.torch import Rearrange
-from loguru import logger
+from einops import rearrange
 import torch
 from torch import nn
 from torch import Tensor
@@ -21,23 +20,32 @@ class CNNTransformer(nn.Module):
         hidden_dim: int,
         vocab_size: int,
         num_heads: int,
-        max_len: int,
+        adaptive_pool_dim: Tuple,
         expansion_dim: int,
         dropout_rate: float,
         trg_pad_index: int,
         backbone: str,
+        out_channels: int,
+        max_len: int,
         backbone_args: Optional[Dict] = None,
         activation: str = "gelu",
     ) -> None:
         super().__init__()
         self.trg_pad_index = trg_pad_index
-        self.backbone_args = backbone_args
+
         self.backbone = configure_backbone(backbone, backbone_args)
         self.character_embedding = nn.Embedding(vocab_size, hidden_dim)
-        self.position_encoding = PositionalEncoding(hidden_dim, dropout_rate, max_len)
-        self.collapse_spatial_dim = nn.Sequential(
-            Rearrange("b t h w -> b t (h w)"), nn.AdaptiveAvgPool2d((None, hidden_dim))
+
+        # self.conv = nn.Conv2d(out_channels, max_len, kernel_size=1)
+
+        self.position_encoding = PositionalEncoding(hidden_dim, dropout_rate)
+        self.row_embed = nn.Parameter(torch.rand(max_len, max_len // 2))
+        self.col_embed = nn.Parameter(torch.rand(max_len, max_len // 2))
+
+        self.adaptive_pool = (
+            nn.AdaptiveAvgPool2d((adaptive_pool_dim)) if adaptive_pool_dim else None
         )
+
         self.transformer = Transformer(
             num_encoder_layers,
             num_decoder_layers,
@@ -47,7 +55,8 @@ class CNNTransformer(nn.Module):
             dropout_rate,
             activation,
         )
-        self.head = nn.Linear(hidden_dim, vocab_size)
+
+        self.head = nn.Sequential(nn.Linear(hidden_dim, vocab_size),)
 
     def _create_trg_mask(self, trg: Tensor) -> Tensor:
         # Move this outside the transformer.
@@ -83,8 +92,22 @@ class CNNTransformer(nn.Module):
         if len(src.shape) < 4:
             src = src[(None,) * (4 - len(src.shape))]
         src = self.backbone(src)
-        src = self.collapse_spatial_dim(src)
-        src = self.position_encoding(src)
+        # src = self.conv(src)
+        if self.adaptive_pool is not None:
+            src = self.adaptive_pool(src)
+        H, W = src.shape[-2:]
+        src = rearrange(src, "b t h w -> b t (h w)")
+
+        # construct positional encodings
+        pos = torch.cat(
+            [
+                self.col_embed[:W].unsqueeze(0).repeat(H, 1, 1),
+                self.row_embed[:H].unsqueeze(1).repeat(1, W, 1),
+            ],
+            dim=-1,
+        ).unsqueeze(0)
+        pos = rearrange(pos, "b h w l -> b l (h w)")
+        src = pos + 0.1 * src
         return src
 
     def preprocess_target(self, trg: Tensor) -> Tuple[Tensor, Tensor]:
@@ -97,15 +120,16 @@ class CNNTransformer(nn.Module):
             Tuple[Tensor, Tensor]: Encoded target tensor and target mask.
 
         """
-        trg_mask = self._create_trg_mask(trg)
         trg = self.character_embedding(trg.long())
         trg = self.position_encoding(trg)
-        return trg, trg_mask
+        return trg
 
-    def forward(self, x: Tensor, trg: Tensor) -> Tensor:
+    def forward(self, x: Tensor, trg: Optional[Tensor] = None) -> Tensor:
         """Forward pass with CNN transfomer."""
-        src = self.preprocess_input(x)
-        trg, trg_mask = self.preprocess_target(trg)
-        out = self.transformer(src, trg, trg_mask=trg_mask)
+        h = self.preprocess_input(x)
+        trg_mask = self._create_trg_mask(trg)
+        trg = self.preprocess_target(trg)
+        out = self.transformer(h, trg, trg_mask=trg_mask)
+
         logits = self.head(out)
         return logits

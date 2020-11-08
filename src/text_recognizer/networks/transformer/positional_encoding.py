@@ -13,6 +13,7 @@ class PositionalEncoding(nn.Module):
     ) -> None:
         super().__init__()
         self.dropout = nn.Dropout(p=dropout_rate)
+        self.max_len = max_len
 
         pe = torch.zeros(max_len, hidden_dim)
         position = torch.arange(0, max_len).unsqueeze(1)

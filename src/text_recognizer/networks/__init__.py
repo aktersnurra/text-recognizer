@@ -1,5 +1,6 @@
 """Network modules."""
 from .cnn_transformer import CNNTransformer
+from .cnn_transformer_encoder import CNNTransformerEncoder
 from .crnn import ConvolutionalRecurrentNetwork
 from .ctc import greedy_decoder
 from .densenet import DenseNet
@@ -15,6 +16,7 @@ from .wide_resnet import WideResidualNetwork
 
 __all__ = [
     "CNNTransformer",
+    "CNNTransformerEncoder",
     "ConvolutionalRecurrentNetwork",
     "DenseNet",
     "EmbeddingLoss",

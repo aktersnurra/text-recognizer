@@ -47,8 +47,9 @@ class CharacterModel(Model):
             swa_args,
             device,
         )
+        self.pad_token = dataset_args["args"]["pad_token"]
         if self._mapper is None:
-            self._mapper = EmnistMapper()
+            self._mapper = EmnistMapper(pad_token=self.pad_token,)
         self.tensor_transform = ToTensor()
         self.softmax = nn.Softmax(dim=0)
 

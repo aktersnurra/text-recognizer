@@ -141,11 +141,12 @@ class Model(ABC):
             "transform" in self.dataset_args["args"]
             and self.dataset_args["args"]["transform"] is not None
         ):
-            transform_ = [
-                getattr(transforms_module, t["type"])()
-                for t in self.dataset_args["args"]["transform"]
-            ]
+            transform_ = []
+            for t in self.dataset_args["args"]["transform"]:
+                args = t["args"] or {}
+                transform_.append(getattr(transforms_module, t["type"])(**args))
             self.dataset_args["args"]["transform"] = Compose(transform_)
+
         if (
             "target_transform" in self.dataset_args["args"]
             and self.dataset_args["args"]["target_transform"] is not None

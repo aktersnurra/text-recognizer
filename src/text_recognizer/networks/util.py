@@ -28,7 +28,7 @@ def sliding_window(
     c = images.shape[1]
     patches = unfold(images)
     patches = rearrange(
-        patches, "b (c h w) t -> b t c h w", c=c, h=patch_size[0], w=patch_size[1]
+        patches, "b (c h w) t -> b t c h w", c=c, h=patch_size[0], w=patch_size[1],
     )
     return patches
 
@@ -77,7 +77,7 @@ def configure_backbone(backbone: str, backbone_args: Dict) -> Type[nn.Module]:
 
     if "remove_layers" in backbone_args and backbone_args["remove_layers"] is not None:
         backbone = nn.Sequential(
-            *list(backbone.children())[0][: -backbone_args["remove_layers"]]
+            *list(backbone.children())[:][: -backbone_args["remove_layers"]]
         )
 
     return backbone

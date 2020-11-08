@@ -111,7 +111,7 @@ class WandbImageLogger(Callback):
                     ]
                 ).rstrip("_")
             else:
-                ground_truth = self.targets[i]
+                ground_truth = self.model.mapper(int(self.targets[i]))
             caption = f"Prediction: {pred} Confidence: {conf:.3f} Ground Truth: {ground_truth}"
             images.append(wandb.Image(image, caption=caption))
 

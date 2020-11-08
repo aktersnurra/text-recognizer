@@ -72,7 +72,7 @@ class _DenseBlock(nn.Module):
     ) -> None:
         super().__init__()
         self.dense_block = self._build_dense_blocks(
-            num_layers, in_channels, bn_size, growth_rate, dropout_rate, activation
+            num_layers, in_channels, bn_size, growth_rate, dropout_rate, activation,
         )
 
     def _build_dense_blocks(
@@ -219,7 +219,7 @@ class DenseNet(nn.Module):
 
     def forward(self, x: Tensor) -> Tensor:
         """Forward pass of Densenet."""
-        # If batch dimenstion is missing, it needs to be added.
+        # If batch dimenstion is missing, it will be added.
         if len(x.shape) < 4:
             x = x[(None,) * (4 - len(x.shape))]
         return self.densenet(x)

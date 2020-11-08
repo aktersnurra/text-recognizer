@@ -62,6 +62,6 @@ then
     train_command="${train_command} -$verbose"
 fi
 
-
-echo $train_command $notrain $test
-eval $train_command $notrain $test
+train_command="${train_command} $test $notrain"
+echo $train_command
+eval $train_command

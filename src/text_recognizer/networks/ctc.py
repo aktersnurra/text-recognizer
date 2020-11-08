@@ -33,7 +33,7 @@ def greedy_decoder(
     """
 
     if character_mapper is None:
-        character_mapper = EmnistMapper()
+        character_mapper = EmnistMapper(pad_token="_")  # noqa: S106
 
     predictions = rearrange(torch.argmax(predictions, dim=2), "t b -> b t")
     decoded_predictions = []

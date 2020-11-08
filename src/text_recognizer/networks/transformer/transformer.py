@@ -230,6 +230,7 @@ class Transformer(nn.Module):
     ) -> Tensor:
         """Forward pass through the transformer."""
         if src.shape[0] != trg.shape[0]:
+            print(trg.shape)
             raise RuntimeError("The batch size of the src and trg must be the same.")
         if src.shape[2] != trg.shape[2]:
             raise RuntimeError(
