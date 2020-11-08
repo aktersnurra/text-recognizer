@@ -141,5 +141,7 @@ src/training/experiments/*
 !src/training/experiments/iam_line_ctc_experiment.yml
 !src/training/experiments/line_ctc_experiment.yml
 !src/training/experiments/default_config_emnist.yml
-
-wandb/*
+!src/training/experiments/embedding_experiment.yml
+src/text_recognizer/weights/*Transformer*.pt
+src/wandb/*
+!src/wandb/settings

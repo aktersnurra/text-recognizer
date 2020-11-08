@@ -66,4 +66,5 @@ callback_args:
     null
 verbosity: 1 # 0, 1, 2
 resume_experiment: null
+train: true
 validation_metric: val_accuracy

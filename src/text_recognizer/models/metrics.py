@@ -17,7 +17,10 @@ def accuracy(outputs: Tensor, labels: Tensor) -> float:
         float: The accuracy for the batch.
 
     """
-    _, predicted = torch.max(outputs.data, dim=1)
+    # eos_index = torch.nonzero(labels == eos, as_tuple=False)
+    # eos_index = eos_index[0].item() if eos_index.nelement() else -1
+
+    _, predicted = torch.max(outputs, dim=-1)
     acc = (predicted == labels).sum().float() / labels.shape[0]
     acc = acc.item()
     return acc

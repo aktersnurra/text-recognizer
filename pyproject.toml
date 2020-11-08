@@ -35,6 +35,10 @@ wandb = "^0.9.6"
 torch-summary = "^1.4.2"
 python-Levenshtein = "^0.12.0"
 defusedxml = "^0.6.0"
+pytorch-block-sparse = "^0.1.2"
+pytorch-metric-learning = "^0.9.92"
+faiss-gpu = "^1.6.3"
+omegaconf = "^2.0.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.2"
@@ -62,12 +66,14 @@ wandb = "^0.9.4"
 fail_under = 50
 
 [tool.poetry.scripts]
-download-emnist = "text_recognizer.datasets.emnist_dataset:download_emnist"
+download-emnist = "text_recognizer.datasets.util:download_emnist"
+download-iam = "text_recognizer.datasets.iam_dataset:main"
 create-emnist-support-files = "text_recognizer.tests.support.create_emnist_support_files:create_emnist_support_files"
-run-experiment = "training.run_experiment:main"
-run-experiments = "training.prepare_experiments:main"
-# mlp = "text_recognizer.networks.mlp:test"
-# lenet = "text_recognizer.networks.lenet:test"
+create-emnist-lines-datasets = "text_recognizer.datasets.emnist_lines_dataset:create_datasets"
+create-iam-paragraphs = "text_recognizer.datasets.iam_paragraphs_dataset:main"
+prepare-experiments = "training.prepare_experiments:run_cli"
+
+
 
 [build-system]
 requires = ["poetry>=0.12"]

@@ -22,7 +22,10 @@ class LRScheduler(Callback):
     def on_epoch_end(self, epoch: int, logs: Optional[Dict] = None) -> None:
         """Takes a step at the end of every epoch."""
         if self.interval == "epoch":
-            self.lr_scheduler.step()
+            if "ReduceLROnPlateau" in self.lr_scheduler.__class__.__name__:
+                self.lr_scheduler.step(logs["val_loss"])
+            else:
+                self.lr_scheduler.step()
 
     def on_train_batch_end(self, batch: int, logs: Optional[Dict] = None) -> None:
         """Takes a step at the end of every training batch."""

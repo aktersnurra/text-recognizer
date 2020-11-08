@@ -1,9 +1,7 @@
 """Run a experiment from a config file."""
 import json
-from subprocess import run
 
 import click
-from loguru import logger
 import yaml
 
 

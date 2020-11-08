@@ -266,11 +266,16 @@ def _load_iam_paragraphs() -> None:
 @click.option(
     "--subsample_fraction",
     type=float,
-    default=0.0,
+    default=None,
     help="The subsampling factor of the dataset.",
 )
 def main(subsample_fraction: float) -> None:
     """Load dataset and print info."""
+    logger.info("Creating train set...")
+    dataset = IamParagraphsDataset(train=True, subsample_fraction=subsample_fraction)
+    dataset.load_or_generate_data()
+    print(dataset)
+    logger.info("Creating test set...")
     dataset = IamParagraphsDataset(subsample_fraction=subsample_fraction)
     dataset.load_or_generate_data()
     print(dataset)

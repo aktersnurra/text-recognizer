@@ -21,7 +21,7 @@ class Checkpoint(Callback):
 
     def __init__(
         self,
-        checkpoint_path: Path,
+        checkpoint_path: Union[str, Path],
         monitor: str = "accuracy",
         mode: str = "auto",
         min_delta: float = 0.0,
@@ -29,14 +29,14 @@ class Checkpoint(Callback):
         """Monitors a quantity that will allow us to determine the best model weights.
 
         Args:
-            checkpoint_path (Path): Path to the experiment with the checkpoint.
+            checkpoint_path (Union[str, Path]): Path to the experiment with the checkpoint.
             monitor (str): Name of the quantity to monitor. Defaults to "accuracy".
             mode (str): Description of parameter `mode`. Defaults to "auto".
             min_delta (float): Description of parameter `min_delta`. Defaults to 0.0.
 
         """
         super().__init__()
-        self.checkpoint_path = checkpoint_path
+        self.checkpoint_path = Path(checkpoint_path)
         self.monitor = monitor
         self.mode = mode
         self.min_delta = torch.tensor(min_delta)

@@ -51,10 +51,13 @@ TBC
 - [x] IAM dataset
 - [x] IAM Lines dataset
 - [x] IAM paragraphs dataset
-- [ ] CNN + Transformer
+- [ ] CNN + Transformer (!!)
+- [ ] CNN + GPT
 - [ ] fix nosec problem
 - [x] common Dataset class
 - [x] Fix CTC blank stuff and varying length
+- [x] Metric Learning for backbone training
+
 
 ## Run Sweeps
  Run the following commands to execute hyperparameter search with W&B:

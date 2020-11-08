@@ -5,7 +5,7 @@ from einops.layers.torch import Rearrange
 import torch
 from torch import nn
 
-from text_recognizer.networks.misc import activation_function
+from text_recognizer.networks.util import activation_function
 
 
 class MLP(nn.Module):
@@ -63,8 +63,8 @@ class MLP(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """The feedforward pass."""
         # If batch dimenstion is missing, it needs to be added.
-        if len(x.shape) == 3:
-            x = x.unsqueeze(0)
+        if len(x.shape) < 4:
+            x = x[(None,) * (4 - len(x.shape))]
         return self.layers(x)
 
     @property
