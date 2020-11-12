@@ -2,7 +2,7 @@
 from functools import partial
 from typing import Callable, Dict, List, Optional, Type, Union
 
-from einops.layers.torch import Rearrange, Reduce
+from einops.layers.torch import Reduce
 import numpy as np
 import torch
 from torch import nn

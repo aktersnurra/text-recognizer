@@ -13,7 +13,7 @@ from text_recognizer.models.base import Model
 from text_recognizer.networks import greedy_decoder
 
 
-class VisionTransformerModel(Model):
+class TransformerModel(Model):
     """Model for predicting a sequence of characters from an image of a text line with a cnn-transformer."""
 
     def __init__(
@@ -50,10 +50,7 @@ class VisionTransformerModel(Model):
         self.init_token = dataset_args["args"]["init_token"]
         self.pad_token = dataset_args["args"]["pad_token"]
         self.eos_token = dataset_args["args"]["eos_token"]
-        if network_args is not None:
-            self.max_len = network_args["max_len"]
-        else:
-            self.max_len = 120
+        self.max_len = 120
 
         if self._mapper is None:
             self._mapper = EmnistMapper(
@@ -67,7 +64,7 @@ class VisionTransformerModel(Model):
 
     @torch.no_grad()
     def _generate_sentence(self, image: Tensor) -> Tuple[List, float]:
-        src = self.network.preprocess_input(image)
+        src = self.network.extract_image_features(image)
         memory = self.network.encoder(src)
 
         confidence_of_predictions = []
@@ -75,7 +72,7 @@ class VisionTransformerModel(Model):
 
         for _ in range(self.max_len - 1):
             trg = torch.tensor(trg_indices, device=self.device)[None, :].long()
-            trg = self.network.preprocess_target(trg)
+            trg = self.network.target_embedding(trg)
             logits = self.network.decoder(trg=trg, memory=memory, trg_mask=None)
 
             # Convert logits to probabilities.
@@ -101,7 +98,7 @@ class VisionTransformerModel(Model):
         self.eval()
 
         if image.dtype == np.uint8:
-            # Converts an image with range [0, 255] with to Pytorch Tensor with range [0, 1].
+            # Converts an image with range [0, 255] with to PyTorch Tensor with range [0, 1].
             image = self.tensor_transform(image)
 
         # Rescale image between 0 and 1.

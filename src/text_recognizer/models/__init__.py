@@ -2,18 +2,16 @@
 from .base import Model
 from .character_model import CharacterModel
 from .crnn_model import CRNNModel
-from .metrics import accuracy, cer, wer
-from .transformer_encoder_model import TransformerEncoderModel
-from .vision_transformer_model import VisionTransformerModel
+from .metrics import accuracy, accuracy_ignore_pad, cer, wer
+from .transformer_model import TransformerModel
 
 __all__ = [
-    "Model",
+    "accuracy",
+    "accuracy_ignore_pad",
     "cer",
     "CharacterModel",
     "CRNNModel",
-    "CNNTransfromerModel",
-    "accuracy",
-    "TransformerEncoderModel",
-    "VisionTransformerModel",
+    "Model",
+    "TransformerModel",
     "wer",
 ]

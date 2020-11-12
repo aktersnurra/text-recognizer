@@ -13,7 +13,7 @@ class SpatialTransformerNetwork(nn.Module):
     Network that learns how to perform spatial transformations on the input image in order to enhance the
     geometric invariance of the model.
 
-    # TODO: add arguements to make it more general.
+    # TODO: add arguments to make it more general.
 
     """
 

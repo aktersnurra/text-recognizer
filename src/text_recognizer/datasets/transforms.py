@@ -3,7 +3,8 @@ import numpy as np
 from PIL import Image
 import torch
 from torch import Tensor
-from torchvision.transforms import Compose, Resize, ToPILImage, ToTensor
+import torch.nn.functional as F
+from torchvision.transforms import Compose, ToPILImage, ToTensor
 
 from text_recognizer.datasets.util import EmnistMapper
 
@@ -14,6 +15,18 @@ class Transpose:
     def __call__(self, image: Image) -> np.ndarray:
         """Swaps axis."""
         return np.array(image).swapaxes(0, 1)
+
+
+class Resize:
+    """Resizes a tensor to a specified width."""
+
+    def __init__(self, width: int = 952) -> None:
+        # The default is 952 because of the IAM dataset.
+        self.width = width
+
+    def __call__(self, image: Tensor) -> Tensor:
+        """Resize tensor in the last dimension."""
+        return F.interpolate(image, size=self.width, mode="nearest")
 
 
 class AddTokens:

@@ -1,0 +1,5 @@
+text_recognizer/weights/CharacterModel_EmnistDataset_DenseNet_weights.pt filter=lfs diff=lfs merge=lfs -text
+text_recognizer/weights/CharacterModel_EmnistDataset_WideResidualNetwork_weights.pt filter=lfs diff=lfs merge=lfs -text
+text_recognizer/weights/CRNNModel_IamLinesDataset_ConvolutionalRecurrentNetwork_weights.pt filter=lfs diff=lfs merge=lfs -text
+text_recognizer/weights/LineCTCModel_EmnistLinesDataset_LineRecurrentNetwork_weights.pt filter=lfs diff=lfs merge=lfs -text
+text_recognizer/weights/LineCTCModel_IamLinesDataset_LineRecurrentNetwork_weights.pt filter=lfs diff=lfs merge=lfs -text

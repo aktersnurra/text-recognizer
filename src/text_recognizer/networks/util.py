@@ -24,7 +24,7 @@ def sliding_window(
 
     """
     unfold = nn.Unfold(kernel_size=patch_size, stride=stride)
-    # Preform the slidning window, unsqueeze as the channel dimesion is lost.
+    # Preform the sliding window, unsqueeze as the channel dimesion is lost.
     c = images.shape[1]
     patches = unfold(images)
     patches = rearrange(
