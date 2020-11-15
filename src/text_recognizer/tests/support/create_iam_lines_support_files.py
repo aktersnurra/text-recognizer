@@ -1,4 +1,5 @@
 """Module for creating IAM Lines test support files."""
+# flake8: noqa
 from pathlib import Path
 import shutil
 
@@ -17,23 +18,31 @@ def create_emnist_lines_support_files() -> None:
     SUPPORT_DIRNAME.mkdir()
 
     # TODO: maybe have to add args to dataset.
-    dataset = IamLinesDataset()
+    dataset = IamLinesDataset(
+        init_token="<sos>",
+        pad_token="_",
+        eos_token="<eos>",
+        transform=[{"type": "ToTensor", "args": {}}],
+        target_transform=[
+            {
+                "type": "AddTokens",
+                "args": {"init_token": "<sos>", "pad_token": "_", "eos_token": "<eos>"},
+            }
+        ],
+    )
     dataset.load_or_generate_data()
 
     for index in [0, 1, 3]:
         image, target = dataset[index]
+        if len(image.shape) == 3:
+            image = image.squeeze(0)
         print(image.sum(), image.dtype)
 
-        label = (
-            "".join(
-                dataset.mapper[label]
-                for label in np.argmax(target[1:], dim=-1).flatten()
-            )
-            .stip()
-            .strip(dataset.mapper.pad_token)
+        label = "".join(dataset.mapper(label) for label in target[1:]).strip(
+            dataset.mapper.pad_token
         )
-
         print(label)
+        image = image.numpy()
         util.write_image(image, str(SUPPORT_DIRNAME / f"{label}.png"))
 
 

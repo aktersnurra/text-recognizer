@@ -74,8 +74,7 @@ def _load_modules_and_arguments(experiment_config: Dict,) -> Tuple[Callable, Dic
     """Loads all modules and arguments."""
     # Load the dataset module.
     dataset_args = experiment_config.get("dataset", {})
-    datasets_module = importlib.import_module("text_recognizer.datasets")
-    dataset_ = getattr(datasets_module, dataset_args["type"])
+    dataset_ = dataset_args["type"]
 
     # Import the model module and model arguments.
     models_module = importlib.import_module("text_recognizer.models")
@@ -92,8 +91,7 @@ def _load_modules_and_arguments(experiment_config: Dict,) -> Tuple[Callable, Dic
     )
 
     # Import network module and arguments.
-    network_module = importlib.import_module("text_recognizer.networks")
-    network_fn_ = getattr(network_module, experiment_config["network"]["type"])
+    network_fn_ = experiment_config["network"]["type"]
     network_args = experiment_config["network"].get("args", {})
 
     # Criterion

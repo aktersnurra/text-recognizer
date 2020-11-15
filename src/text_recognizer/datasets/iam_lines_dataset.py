@@ -36,6 +36,8 @@ class IamLinesDataset(Dataset):
         pad_token: Optional[str] = None,
         eos_token: Optional[str] = None,
     ) -> None:
+        self.pad_token = "_" if pad_token is None else pad_token
+
         super().__init__(
             train=train,
             subsample_fraction=subsample_fraction,
