@@ -2,6 +2,8 @@
 from pathlib import Path
 import shutil
 
+import numpy as np
+
 from text_recognizer.datasets import IamLinesDataset
 import text_recognizer.util as util
 
@@ -10,6 +12,7 @@ SUPPORT_DIRNAME = Path(__file__).parents[0].resolve() / "iam_lines"
 
 
 def create_emnist_lines_support_files() -> None:
+    """Create IAM Lines test images."""
     shutil.rmtree(SUPPORT_DIRNAME, ignore_errors=True)
     SUPPORT_DIRNAME.mkdir()
 
@@ -27,7 +30,7 @@ def create_emnist_lines_support_files() -> None:
                 for label in np.argmax(target[1:], dim=-1).flatten()
             )
             .stip()
-            .strip(self.mapper.pad_token)
+            .strip(dataset.mapper.pad_token)
         )
 
         print(label)
