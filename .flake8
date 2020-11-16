@@ -1,9 +1,9 @@
 [flake8]
 select = ANN,B,B9,BLK,C,D,DAR,E,F,I,S,W
-ignore = E203,E501,W503,ANN101,ANN002,ANN003,F401,D202,S404,D107,S607,S603,S310
+ignore = E203,E501,W503,ANN101,ANN002,ANN003,F401,D202,S404,D107,S607,S603,S310,S106
 max-line-length = 120
 max-complexity = 10
 application-import-names = text_recognizer,tests
 import-order-style = google
 docstring-convention = google
-per-file-ignores = tests/*:S101,src/text_recognizer/datasets/*:S110,src/training/callbacks/*:B006
+per-file-ignores = tests/*:S101,tests/*:S106,src/text_recognizer/datasets/*:S110,src/training/callbacks/*:B006

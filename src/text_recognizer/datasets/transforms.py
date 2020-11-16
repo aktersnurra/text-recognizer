@@ -64,3 +64,11 @@ class AddTokens:
             target = torch.cat([sos, target], dim=0)
 
         return target
+
+
+class Whitening:
+    """Whitening of Tensor, i.e. set mean to zero and std to one."""
+
+    def __call__(self, x: Tensor) -> Tensor:
+        """Apply the whitening."""
+        return (x - x.mean()) / x.std()
