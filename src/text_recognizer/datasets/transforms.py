@@ -4,7 +4,7 @@ from PIL import Image
 import torch
 from torch import Tensor
 import torch.nn.functional as F
-from torchvision.transforms import Compose, ToPILImage, ToTensor
+from torchvision.transforms import Compose, RandomAffine, ToTensor
 
 from text_recognizer.datasets.util import EmnistMapper
 
@@ -66,9 +66,14 @@ class AddTokens:
         return target
 
 
-class Whitening:
-    """Whitening of Tensor, i.e. set mean to zero and std to one."""
+class ApplyContrast:
+    """Sets everything below a threshold to zero, i.e. increase contrast."""
+
+    def __init__(self, low: float = 0.0, high: float = 0.25) -> None:
+        self.low = low
+        self.high = high
 
     def __call__(self, x: Tensor) -> Tensor:
-        """Apply the whitening."""
-        return (x - x.mean()) / x.std()
+        """Apply mask binary mask to input tensor."""
+        mask = x > np.random.RandomState().uniform(low=self.low, high=self.high)
+        return x * mask

@@ -6,7 +6,7 @@ import numpy as np
 from torch import nn
 
 from text_recognizer import datasets, networks
-from text_recognizer.models import VisionTransformerModel
+from text_recognizer.models import TransformerModel
 from text_recognizer.util import read_image
 
 
@@ -16,7 +16,7 @@ class LinePredictor:
     def __init__(self, dataset: str, network_fn: str) -> None:
         network_fn = getattr(networks, network_fn)
         dataset = getattr(datasets, dataset)
-        self.model = VisionTransformerModel(network_fn=network_fn, dataset=dataset)
+        self.model = TransformerModel(network_fn=network_fn, dataset=dataset)
         self.model.eval()
 
     def predict(self, image_or_filename: Union[np.ndarray, str]) -> Tuple[str, float]:
