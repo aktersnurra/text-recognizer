@@ -1,5 +1,5 @@
 """UNet for segmentation."""
-from typing import List, Tuple
+from typing import List, Optional, Tuple, Union
 
 import torch
 from torch import nn
@@ -39,16 +39,23 @@ class DownSamplingBlock(nn.Module):
     """Basic down sampling block."""
 
     def __init__(
-        self, channels: List[int], activation: str, pooling_kernel: int = 2
+        self,
+        channels: List[int],
+        activation: str,
+        pooling_kernel: Union[int, bool] = 2,
     ) -> None:
         super().__init__()
         self.conv_block = ConvBlock(channels, activation)
-        self.down_sampling = nn.MaxPool2d(pooling_kernel)
+        self.down_sampling = nn.MaxPool2d(pooling_kernel) if pooling_kernel else None
 
     def forward(self, x: Tensor) -> Tuple[Tensor, Tensor]:
         """Return the convolutional block output and a down sampled tensor."""
         x = self.conv_block(x)
-        return self.down_sampling(x), x
+        if self.down_sampling is not None:
+            x_down = self.down_sampling(x)
+        else:
+            x_down = None
+        return x_down, x
 
 
 class UpSamplingBlock(nn.Module):
@@ -63,10 +70,11 @@ class UpSamplingBlock(nn.Module):
             scale_factor=scale_factor, mode="bilinear", align_corners=True
         )
 
-    def forward(self, x: Tensor, x_skip: Tensor) -> Tensor:
+    def forward(self, x: Tensor, x_skip: Optional[Tensor] = None) -> Tensor:
         """Apply the up sampling and convolutional block."""
         x = self.up_sampling(x)
-        x = torch.cat((x, x_skip), dim=1)
+        if x_skip is not None:
+            x = torch.cat((x, x_skip), dim=1)
         return self.conv_block(x)
 
 
@@ -77,6 +85,7 @@ class UNet(nn.Module):
         self,
         in_channels: int = 1,
         base_channels: int = 64,
+        num_classes: int = 3,
         depth: int = 4,
         out_channels: int = 3,
         activation: str = "relu",
@@ -84,27 +93,32 @@ class UNet(nn.Module):
         scale_factor: int = 2,
     ) -> None:
         super().__init__()
-        channels = [base_channels * 2 ** i for i in range(depth)]
-        self.down_sampling_blocks = self._configure_down_sampling_blocks(
+        self.depth = depth
+        channels = [1] + [base_channels * 2 ** i for i in range(depth)]
+        self.encoder_blocks = self._configure_down_sampling_blocks(
             channels, activation, pooling_kernel
         )
-        self.up_sampling_blocks = self._configure_up_sampling_blocks(
+        self.decoder_blocks = self._configure_up_sampling_blocks(
             channels, activation, scale_factor
         )
+
+        self.head = nn.Conv2d(base_channels, num_classes, kernel_size=1)
 
     def _configure_down_sampling_blocks(
         self, channels: List[int], activation: str, pooling_kernel: int
     ) -> nn.ModuleList:
-        return nn.ModuleList(
-            [
+        blocks = nn.ModuleList([])
+        for i in range(len(channels) - 1):
+            pooling_kernel = pooling_kernel if i < self.depth - 1 else False
+            blocks += [
                 DownSamplingBlock(
                     [channels[i], channels[i + 1], channels[i + 1]],
                     activation,
                     pooling_kernel,
                 )
-                for i in range(len(channels))
             ]
-        )
+
+        return blocks
 
     def _configure_up_sampling_blocks(
         self,
@@ -112,23 +126,33 @@ class UNet(nn.Module):
         activation: str,
         scale_factor: int,
     ) -> nn.ModuleList:
+        channels.reverse()
         return nn.ModuleList(
             [
                 UpSamplingBlock(
-                    [channels[i], channels[i + 1], channels[i + 1]],
+                    [channels[i] + channels[i + 1], channels[i + 1], channels[i + 1]],
                     activation,
                     scale_factor,
                 )
+                for i in range(len(channels) - 2)
             ]
-            for i in range(len(channels))
         )
 
-    def down_sampling(self, x: Tensor) -> List[Tensor]:
+    def encode(self, x: Tensor) -> Tuple[Tensor, List[Tensor]]:
         x_skips = []
-        for block in self.down_sampling_blocks:
+        for block in self.encoder_blocks:
             x, x_skip = block(x)
-            x_skips.append(x_skip)
+            if x_skip is not None:
+                x_skips.append(x_skip)
         return x, x_skips
 
-    def up_sampling(self, x: Tensor, x_skips: List[Tensor]) -> Tensor:
-        pass
+    def decode(self, x: Tensor, x_skips: List[Tensor]) -> Tensor:
+        x = x_skips[-1]
+        for i, block in enumerate(self.decoder_blocks):
+            x = block(x, x_skips[-(i + 2)])
+        return x
+
+    def forward(self, x: Tensor) -> Tensor:
+        x, x_skips = self.encode(x)
+        x = self.decode(x, x_skips)
+        return self.head(x)
