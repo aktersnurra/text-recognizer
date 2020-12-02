@@ -4,6 +4,7 @@ from .crnn import ConvolutionalRecurrentNetwork
 from .ctc import greedy_decoder
 from .densenet import DenseNet
 from .lenet import LeNet
+from .metrics import accuracy, accuracy_ignore_pad, cer, wer
 from .mlp import MLP
 from .residual_network import ResidualNetwork, ResidualNetworkEncoder
 from .transformer import Transformer
@@ -11,6 +12,9 @@ from .util import sliding_window
 from .wide_resnet import WideResidualNetwork
 
 __all__ = [
+    "accuracy",
+    "accuracy_ignore_pad",
+    "cer",
     "CNNTransformer",
     "ConvolutionalRecurrentNetwork",
     "DenseNet",
@@ -21,5 +25,6 @@ __all__ = [
     "ResidualNetworkEncoder",
     "sliding_window",
     "Transformer",
+    "wer",
     "WideResidualNetwork",
 ]

@@ -3,6 +3,7 @@
 from pathlib import Path
 import time
 from typing import Dict, List, Optional, Tuple, Type
+import warnings
 
 from einops import rearrange
 from loguru import logger
@@ -21,6 +22,9 @@ torch.backends.cudnn.benchmark = True
 np.random.seed(4711)
 torch.manual_seed(4711)
 torch.cuda.manual_seed(4711)
+
+
+warnings.filterwarnings("ignore")
 
 
 class Trainer:

@@ -4,7 +4,7 @@ from PIL import Image
 import torch
 from torch import Tensor
 import torch.nn.functional as F
-from torchvision.transforms import Compose, ToPILImage, ToTensor
+from torchvision.transforms import Compose, RandomAffine, ToTensor
 
 from text_recognizer.datasets.util import EmnistMapper
 
@@ -64,3 +64,16 @@ class AddTokens:
             target = torch.cat([sos, target], dim=0)
 
         return target
+
+
+class ApplyContrast:
+    """Sets everything below a threshold to zero, i.e. increase contrast."""
+
+    def __init__(self, low: float = 0.0, high: float = 0.25) -> None:
+        self.low = low
+        self.high = high
+
+    def __call__(self, x: Tensor) -> Tensor:
+        """Apply mask binary mask to input tensor."""
+        mask = x > np.random.RandomState().uniform(low=self.low, high=self.high)
+        return x * mask

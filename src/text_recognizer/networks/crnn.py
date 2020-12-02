@@ -1,4 +1,4 @@
-"""LSTM with CTC for handwritten text recognition within a line."""
+"""CRNN for handwritten text recognition."""
 from typing import Dict, Tuple
 
 from einops import rearrange, reduce
@@ -89,20 +89,22 @@ class ConvolutionalRecurrentNetwork(nn.Module):
 
             x = self.backbone(x)
 
-            # Avgerage pooling.
+            # Average pooling.
             if self.avg_pool:
                 x = reduce(x, "(b t) c h w -> t b c", "mean", b=b, t=t)
             else:
                 x = rearrange(x, "(b t) h -> t b h", b=b, t=t)
         else:
             # Encode the entire image with a CNN, and use the channels as temporal dimension.
-            b = x.shape[0]
             x = self.backbone(x)
-            x = rearrange(x, "b c h w -> c b (h w)", b=b)
+            x = rearrange(x, "b c h w -> b w c h")
+            if self.adaptive_pool is not None:
+                x = self.adaptive_pool(x)
+            x = x.squeeze(3)
 
         # Sequence predictions.
         x, _ = self.rnn(x)
 
-        # Sequence to classifcation layer.
+        # Sequence to classification layer.
         x = self.decoder(x)
         return x
