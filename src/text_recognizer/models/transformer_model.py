@@ -18,8 +18,8 @@ class TransformerModel(Model):
 
     def __init__(
         self,
-        network_fn: Type[nn.Module],
-        dataset: Type[Dataset],
+        network_fn: str,
+        dataset: str,
         network_args: Optional[Dict] = None,
         dataset_args: Optional[Dict] = None,
         metrics: Optional[Dict] = None,

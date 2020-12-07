@@ -88,10 +88,14 @@ class CNNTransformer(nn.Module):
         if len(src.shape) < 4:
             src = src[(None,) * (4 - len(src.shape))]
         src = self.backbone(src)
-        src = rearrange(src, "b c h w -> b w c h")
+
         if self.adaptive_pool is not None:
+            src = rearrange(src, "b c h w -> b w c h")
             src = self.adaptive_pool(src)
-        src = src.squeeze(3)
+            src = src.squeeze(3)
+        else:
+            src = rearrange(src, "b c h w -> b (w h) c")
+
         src = self.position_encoding(src)
 
         return src
@@ -110,12 +114,17 @@ class CNNTransformer(nn.Module):
         trg = self.position_encoding(trg)
         return trg
 
-    def forward(self, x: Tensor, trg: Optional[Tensor] = None) -> Tensor:
-        """Forward pass with CNN transfomer."""
-        h = self.extract_image_features(x)
+    def decode_image_features(self, h: Tensor, trg: Optional[Tensor] = None) -> Tensor:
+        """Takes images features from the backbone and decodes them with the transformer."""
         trg_mask = self._create_trg_mask(trg)
         trg = self.target_embedding(trg)
         out = self.transformer(h, trg, trg_mask=trg_mask)
 
         logits = self.head(out)
+        return logits
+
+    def forward(self, x: Tensor, trg: Optional[Tensor] = None) -> Tensor:
+        """Forward pass with CNN transfomer."""
+        h = self.extract_image_features(x)
+        logits = self.decode_image_features(h, trg)
         return logits

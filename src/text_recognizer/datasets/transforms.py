@@ -4,7 +4,7 @@ from PIL import Image
 import torch
 from torch import Tensor
 import torch.nn.functional as F
-from torchvision.transforms import Compose, RandomAffine, ToTensor
+from torchvision.transforms import Compose, RandomAffine, RandomHorizontalFlip, ToTensor
 
 from text_recognizer.datasets.util import EmnistMapper
 
@@ -77,3 +77,19 @@ class ApplyContrast:
         """Apply mask binary mask to input tensor."""
         mask = x > np.random.RandomState().uniform(low=self.low, high=self.high)
         return x * mask
+
+
+class Unsqueeze:
+    """Add a dimension to the tensor."""
+
+    def __call__(self, x: Tensor) -> Tensor:
+        """Adds dim."""
+        return x.unsqueeze(0)
+
+
+class Squeeze:
+    """Removes the first dimension of a tensor."""
+
+    def __call__(self, x: Tensor) -> Tensor:
+        """Removes first dim."""
+        return x.squeeze(0)

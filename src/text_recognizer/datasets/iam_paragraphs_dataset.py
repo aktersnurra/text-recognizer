@@ -1,4 +1,5 @@
 """IamParagraphsDataset class and functions for data processing."""
+import random
 from typing import Callable, Dict, List, Optional, Tuple, Union
 
 import click
@@ -71,13 +72,18 @@ class IamParagraphsDataset(Dataset):
         data = self.data[index]
         targets = self.targets[index]
 
+        seed = np.random.randint(SEED)
+        random.seed(seed)  # apply this seed to target tranfsorms
+        torch.manual_seed(seed)  # needed for torchvision 0.7
         if self.transform:
             data = self.transform(data)
 
+        random.seed(seed)  # apply this seed to target tranfsorms
+        torch.manual_seed(seed)  # needed for torchvision 0.7
         if self.target_transform:
             targets = self.target_transform(targets)
 
-        return data, targets
+        return data, targets.long()
 
     @property
     def ids(self) -> Tensor:

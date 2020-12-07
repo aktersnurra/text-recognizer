@@ -21,20 +21,21 @@ def read_image(image_uri: Union[Path, str], grayscale: bool = False) -> np.ndarr
             return cv2.imdecode(image_array, imread_flag)
         else:
             raise ValueError(
-                "Url does not start with http, therfore not safe to open..."
+                "Url does not start with http, therefore not safe to open..."
             ) from None
 
     imread_flag = cv2.IMREAD_GRAYSCALE if grayscale else cv2.IMREAD_COLOR
     local_file = os.path.exists(image_uri)
-    try:
-        image = None
-        if local_file:
-            image = read_image_from_filename(image_uri, imread_flag)
-        else:
-            image = read_image_from_url(image_uri, imread_flag)
-        assert image is not None
-    except Exception as e:
-        raise ValueError(f"Could not load image at {image_uri}: {e}")
+    image = None
+
+    if local_file:
+        image = read_image_from_filename(image_uri, imread_flag)
+    else:
+        image = read_image_from_url(image_uri, imread_flag)
+
+    if image is None:
+        raise ValueError(f"Could not load image at {image_uri}")
+
     return image
 
 

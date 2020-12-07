@@ -10,6 +10,7 @@ from loguru import logger
 import numpy as np
 import torch
 from torch import Tensor
+import torch.nn.functional as F
 from torchvision.transforms import ToTensor
 
 from text_recognizer.datasets.dataset import Dataset
@@ -22,6 +23,8 @@ from text_recognizer.datasets.util import (
 )
 
 DATA_DIRNAME = DATA_DIRNAME / "processed" / "emnist_lines"
+
+MAX_WIDTH = 952
 
 
 class EmnistLinesDataset(Dataset):
@@ -254,6 +257,14 @@ def construct_image_from_string(
     for image in sampled_images:
         concatenated_image[:, x : (x + width)] += image
         x += next_overlap_width
+
+    if concatenated_image.shape[-1] > MAX_WIDTH:
+        concatenated_image = Tensor(concatenated_image).unsqueeze(0)
+        concatenated_image = F.interpolate(
+            concatenated_image, size=MAX_WIDTH, mode="nearest"
+        )
+        concatenated_image = concatenated_image.squeeze(0).numpy()
+
     return np.minimum(255, concatenated_image)
 
 

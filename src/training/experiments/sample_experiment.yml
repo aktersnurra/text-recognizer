@@ -33,7 +33,6 @@ experiments:
           depths: [2, 2]
           block_sizes: [64, 64]
           activation: leaky_relu
-          stn: true
       # network:
       #   type: WideResidualNetwork
       #   args:

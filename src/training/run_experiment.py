@@ -286,6 +286,7 @@ def run_experiment(
         callbacks=callbacks,
         transformer_model=experiment_config["train_args"]["transformer_model"],
         max_norm=experiment_config["train_args"]["max_norm"],
+        freeze_backbone=experiment_config["train_args"]["freeze_backbone"],
     )
 
     # Train the model.

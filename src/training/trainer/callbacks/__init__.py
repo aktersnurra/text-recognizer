@@ -7,7 +7,7 @@ from .lr_schedulers import (
     SWA,
 )
 from .progress_bar import ProgressBar
-from .wandb_callbacks import WandbCallback, WandbImageLogger
+from .wandb_callbacks import WandbCallback, WandbImageLogger, WandbSegmentationLogger
 
 __all__ = [
     "Callback",
@@ -17,6 +17,7 @@ __all__ = [
     "LRScheduler",
     "WandbCallback",
     "WandbImageLogger",
+    "WandbSegmentationLogger",
     "ProgressBar",
     "SWA",
 ]
