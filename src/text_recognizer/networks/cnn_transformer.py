@@ -109,18 +109,6 @@ class CNNTransformer(nn.Module):
 
         b, t, _ = src.shape
 
-        # Insert sos and eos token.
-        # sos_token = self.character_embedding(
-        #    torch.Tensor([self.vocab_size - 2]).long().to(src.device)
-        # )
-        # eos_token = self.character_embedding(
-        #    torch.Tensor([self.vocab_size - 1]).long().to(src.device)
-        # )
-
-        # sos_tokens = repeat(sos_token, "() h -> b h", b=b).unsqueeze(1)
-        # eos_tokens = repeat(eos_token, "() h -> b h", b=b).unsqueeze(1)
-        # src = torch.cat((sos_tokens, src, eos_tokens), dim=1)
-        # src = torch.cat((sos_tokens, src), dim=1)
         src += self.src_position_embedding[:, :t]
 
         return src
