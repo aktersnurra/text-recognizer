@@ -50,13 +50,15 @@ class TransformerModel(Model):
         self.init_token = dataset_args["args"]["init_token"]
         self.pad_token = dataset_args["args"]["pad_token"]
         self.eos_token = dataset_args["args"]["eos_token"]
-        self.max_len = 120
+        self.lower = dataset_args["args"]["lower"]
+        self.max_len = 100
 
         if self._mapper is None:
             self._mapper = EmnistMapper(
                 init_token=self.init_token,
                 pad_token=self.pad_token,
                 eos_token=self.eos_token,
+                lower=self.lower,
             )
         self.tensor_transform = ToTensor()
 

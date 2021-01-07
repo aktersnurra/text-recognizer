@@ -221,8 +221,8 @@ class ResidualNetworkEncoder(nn.Module):
             nn.Conv2d(
                 in_channels=in_channels,
                 out_channels=self.block_sizes[0],
-                kernel_size=3,
-                stride=1,
+                kernel_size=7,
+                stride=2,
                 padding=1,
                 bias=False,
             ),

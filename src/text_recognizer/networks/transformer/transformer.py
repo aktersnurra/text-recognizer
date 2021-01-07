@@ -6,9 +6,23 @@ import numpy as np
 import torch
 from torch import nn
 from torch import Tensor
+import torch.nn.functional as F
 
 from text_recognizer.networks.transformer.attention import MultiHeadAttention
 from text_recognizer.networks.util import activation_function
+
+
+class GEGLU(nn.Module):
+    """GLU activation for improving feedforward activations."""
+
+    def __init__(self, dim_in: int, dim_out: int) -> None:
+        super().__init__()
+        self.proj = nn.Linear(dim_in, dim_out * 2)
+
+    def forward(self, x: Tensor) -> Tensor:
+        """Forward propagation."""
+        x, gate = self.proj(x).chunk(2, dim=-1)
+        return x * F.gelu(gate)
 
 
 def _get_clones(module: Type[nn.Module], num_layers: int) -> nn.ModuleList:
@@ -36,9 +50,17 @@ class _ConvolutionalLayer(nn.Module):
         activation: str = "relu",
     ) -> None:
         super().__init__()
+
+        in_projection = (
+            nn.Sequential(
+                nn.Linear(hidden_dim, expansion_dim), activation_function(activation)
+            )
+            if activation != "glu"
+            else GEGLU(hidden_dim, expansion_dim)
+        )
+
         self.layer = nn.Sequential(
-            nn.Linear(in_features=hidden_dim, out_features=expansion_dim),
-            activation_function(activation),
+            in_projection,
             nn.Dropout(p=dropout_rate),
             nn.Linear(in_features=expansion_dim, out_features=hidden_dim),
         )

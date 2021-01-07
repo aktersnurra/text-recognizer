@@ -44,6 +44,7 @@ class EmnistLinesDataset(Dataset):
         init_token: Optional[str] = None,
         pad_token: Optional[str] = None,
         eos_token: Optional[str] = None,
+        lower: bool = False,
     ) -> None:
         """Set attributes and loads the dataset.
 
@@ -60,6 +61,7 @@ class EmnistLinesDataset(Dataset):
             init_token (Optional[str]): String representing the start of sequence token. Defaults to None.
             pad_token (Optional[str]): String representing the pad token. Defaults to None.
             eos_token (Optional[str]): String representing the end of sequence token. Defaults to None.
+            lower (bool): If True, convert uppercase letters to lowercase. Otherwise, use both upper and lowercase.
 
         """
         self.pad_token = "_" if pad_token is None else pad_token
@@ -72,6 +74,7 @@ class EmnistLinesDataset(Dataset):
             init_token=init_token,
             pad_token=self.pad_token,
             eos_token=eos_token,
+            lower=lower,
         )
 
         # Extract dataset information.

@@ -1,18 +1,21 @@
-"""A CNN-Transformer for image to text recognition."""
-from typing import Dict, Optional, Tuple
+"""A Vision Transformer.
+
+Inspired by:
+https://openreview.net/pdf?id=YicbFdNTTy
+
+"""
+from typing import Optional, Tuple
 
 from einops import rearrange, repeat
 import torch
 from torch import nn
 from torch import Tensor
 
-from text_recognizer.networks.transformer import PositionalEncoding, Transformer
-from text_recognizer.networks.util import activation_function
-from text_recognizer.networks.util import configure_backbone
+from text_recognizer.networks.transformer import Transformer
 
 
-class CNNTransformer(nn.Module):
-    """CNN+Transfomer for image to sequence prediction."""
+class ViT(nn.Module):
+    """Transfomer for image to sequence prediction."""
 
     def __init__(
         self,
@@ -21,29 +24,29 @@ class CNNTransformer(nn.Module):
         hidden_dim: int,
         vocab_size: int,
         num_heads: int,
-        adaptive_pool_dim: Tuple,
         expansion_dim: int,
+        patch_dim: Tuple[int, int],
+        image_size: Tuple[int, int],
         dropout_rate: float,
         trg_pad_index: int,
         max_len: int,
-        backbone: str,
-        backbone_args: Optional[Dict] = None,
         activation: str = "gelu",
     ) -> None:
         super().__init__()
+
         self.trg_pad_index = trg_pad_index
-        self.vocab_size = vocab_size
-        self.backbone = configure_backbone(backbone, backbone_args)
-        self.character_embedding = nn.Embedding(self.vocab_size, hidden_dim)
+        self.patch_dim = patch_dim
+        self.num_patches = image_size[-1] // self.patch_dim[1]
 
-        self.src_position_embedding = nn.Parameter(torch.randn(1, max_len, hidden_dim))
-        self.trg_position_encoding = PositionalEncoding(hidden_dim, dropout_rate)
-
-        nn.init.normal_(self.character_embedding.weight, std=0.02)
-
-        self.adaptive_pool = (
-            nn.AdaptiveAvgPool2d((adaptive_pool_dim)) if adaptive_pool_dim else None
+        # Encoder
+        self.patch_to_embedding = nn.Linear(
+            self.patch_dim[0] * self.patch_dim[1], hidden_dim
         )
+        self.cls_token = nn.Parameter(torch.randn(1, 1, hidden_dim))
+        self.character_embedding = nn.Embedding(vocab_size, hidden_dim)
+        self.pos_embedding = nn.Parameter(torch.randn(1, max_len, hidden_dim))
+        self.dropout = nn.Dropout(dropout_rate)
+        self._init()
 
         self.transformer = Transformer(
             num_encoder_layers,
@@ -55,11 +58,11 @@ class CNNTransformer(nn.Module):
             activation,
         )
 
-        self.head = nn.Sequential(
-            # nn.Linear(hidden_dim, hidden_dim * 2),
-            # activation_function(activation),
-            nn.Linear(hidden_dim, vocab_size),
-        )
+        self.head = nn.Sequential(nn.Linear(hidden_dim, vocab_size),)
+
+    def _init(self) -> None:
+        nn.init.normal_(self.character_embedding.weight, std=0.02)
+        # nn.init.normal_(self.pos_embedding.weight, std=0.02)
 
     def _create_trg_mask(self, trg: Tensor) -> Tensor:
         # Move this outside the transformer.
@@ -98,32 +101,23 @@ class CNNTransformer(nn.Module):
         # If batch dimension is missing, it needs to be added.
         if len(src.shape) < 4:
             src = src[(None,) * (4 - len(src.shape))]
-        src = self.backbone(src)
 
-        if self.adaptive_pool is not None:
-            src = rearrange(src, "b c h w -> b w c h")
-            src = self.adaptive_pool(src)
-            src = src.squeeze(3)
-        else:
-            src = rearrange(src, "b c h w -> b (w h) c")
+        patches = rearrange(
+            src,
+            "b c (h p1) (w p2) -> b (h w) (p1 p2 c)",
+            p1=self.patch_dim[0],
+            p2=self.patch_dim[1],
+        )
 
-        b, t, _ = src.shape
+        # From patches to encoded sequence.
+        x = self.patch_to_embedding(patches)
+        b, n, _ = x.shape
+        cls_tokens = repeat(self.cls_token, "() n d -> b n d", b=b)
+        x = torch.cat((cls_tokens, x), dim=1)
+        x += self.pos_embedding[:, : (n + 1)]
+        x = self.dropout(x)
 
-        # Insert sos and eos token.
-        # sos_token = self.character_embedding(
-        #    torch.Tensor([self.vocab_size - 2]).long().to(src.device)
-        # )
-        # eos_token = self.character_embedding(
-        #    torch.Tensor([self.vocab_size - 1]).long().to(src.device)
-        # )
-
-        # sos_tokens = repeat(sos_token, "() h -> b h", b=b).unsqueeze(1)
-        # eos_tokens = repeat(eos_token, "() h -> b h", b=b).unsqueeze(1)
-        # src = torch.cat((sos_tokens, src, eos_tokens), dim=1)
-        # src = torch.cat((sos_tokens, src), dim=1)
-        src += self.src_position_embedding[:, :t]
-
-        return src
+        return x
 
     def target_embedding(self, trg: Tensor) -> Tuple[Tensor, Tensor]:
         """Encodes target tensor with embedding and postion.
@@ -135,23 +129,22 @@ class CNNTransformer(nn.Module):
             Tuple[Tensor, Tensor]: Encoded target tensor and target mask.
 
         """
+        _, n = trg.shape
         trg = self.character_embedding(trg.long())
-        trg = self.trg_position_encoding(trg)
+        trg += self.pos_embedding[:, :n]
         return trg
 
-    def decode_image_features(
-        self, image_features: Tensor, trg: Optional[Tensor] = None
-    ) -> Tensor:
+    def decode_image_features(self, h: Tensor, trg: Optional[Tensor] = None) -> Tensor:
         """Takes images features from the backbone and decodes them with the transformer."""
         trg_mask = self._create_trg_mask(trg)
         trg = self.target_embedding(trg)
-        out = self.transformer(image_features, trg, trg_mask=trg_mask)
+        out = self.transformer(h, trg, trg_mask=trg_mask)
 
         logits = self.head(out)
         return logits
 
     def forward(self, x: Tensor, trg: Optional[Tensor] = None) -> Tensor:
         """Forward pass with CNN transfomer."""
-        image_features = self.extract_image_features(x)
-        logits = self.decode_image_features(image_features, trg)
+        h = self.extract_image_features(x)
+        logits = self.decode_image_features(h, trg)
         return logits

@@ -110,7 +110,9 @@ class WandbImageLogger(Callback):
             if isinstance(self.targets[i], list):
                 ground_truth = "".join(
                     [
-                        self.model.mapper(int(target_index))
+                        self.model.mapper(int(target_index) - 26)
+                        if target_index > 35
+                        else self.model.mapper(int(target_index))
                         for target_index in self.targets[i]
                     ]
                 ).rstrip("_")

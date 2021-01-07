@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 # Add checkpoint and resume experiment
 usage() {
     cat << EOF
@@ -45,7 +46,7 @@ then
 fi
 
 experiments_filename="training/experiments/${experiment_config}"
-train_command=$(./tasks/prepare_experiments.sh $experiments_filename)
+train_command=$(bash tasks/prepare_experiments.sh $experiments_filename)
 
 if [ ${checkpoint} ];
 then

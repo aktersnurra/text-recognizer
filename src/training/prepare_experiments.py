@@ -14,7 +14,7 @@ def run_experiments(experiments_filename: str) -> None:
     for index in range(num_experiments):
         experiment_config = experiments_config["experiments"][index]
         experiment_config["experiment_group"] = experiments_config["experiment_group"]
-        cmd = f"python training/run_experiment.py --gpu=-1 --save '{json.dumps(experiment_config)}'"
+        cmd = f"poetry run run-experiment --gpu=-1 --save '{json.dumps(experiment_config)}'"
         print(cmd)
 
 

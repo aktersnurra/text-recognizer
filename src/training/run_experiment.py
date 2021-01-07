@@ -256,7 +256,7 @@ def run_experiment(
     # Load from checkpoint if resuming an experiment.
     resume = False
     if checkpoint is not None or pretrained_weights is not None:
-        resume = True
+        # resume = True
         _load_from_checkpoint(model, model_dir, pretrained_weights)
 
     logger.info(f"The class mapping is {model.mapping}")

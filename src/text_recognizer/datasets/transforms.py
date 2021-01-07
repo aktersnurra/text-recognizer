@@ -93,3 +93,12 @@ class Squeeze:
     def __call__(self, x: Tensor) -> Tensor:
         """Removes first dim."""
         return x.squeeze(0)
+
+
+class ToLower:
+    """Converts target to lower case."""
+
+    def __call__(self, target: Tensor) -> Tensor:
+        """Corrects index value in target tensor."""
+        device = target.device
+        return torch.stack([x - 26 if x > 35 else x for x in target]).to(device)

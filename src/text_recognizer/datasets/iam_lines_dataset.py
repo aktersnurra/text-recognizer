@@ -35,6 +35,7 @@ class IamLinesDataset(Dataset):
         init_token: Optional[str] = None,
         pad_token: Optional[str] = None,
         eos_token: Optional[str] = None,
+        lower: bool = False,
     ) -> None:
         self.pad_token = "_" if pad_token is None else pad_token
 
@@ -46,6 +47,7 @@ class IamLinesDataset(Dataset):
             init_token=init_token,
             pad_token=pad_token,
             eos_token=eos_token,
+            lower=lower,
         )
 
     @property
