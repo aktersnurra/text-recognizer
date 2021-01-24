@@ -5,6 +5,7 @@ from .crnn_model import CRNNModel
 from .ctc_transformer_model import CTCTransformerModel
 from .segmentation_model import SegmentationModel
 from .transformer_model import TransformerModel
+from .vqvae_model import VQVAEModel
 
 __all__ = [
     "CharacterModel",
@@ -13,4 +14,5 @@ __all__ = [
     "Model",
     "SegmentationModel",
     "TransformerModel",
+    "VQVAEModel",
 ]

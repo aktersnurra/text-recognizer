@@ -332,7 +332,7 @@ class Model(ABC):
     def summary(
         self,
         input_shape: Optional[Union[List, Tuple]] = None,
-        depth: int = 4,
+        depth: int = 3,
         device: Optional[str] = None,
     ) -> None:
         """Prints a summary of the network architecture."""

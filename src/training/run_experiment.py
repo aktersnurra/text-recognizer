@@ -296,7 +296,12 @@ def run_experiment(
     # Run inference over test set.
     if test:
         logger.info("Loading checkpoint with the best weights.")
-        model.load_from_checkpoint(model_dir / "best.pt")
+        if "checkpoint" in experiment_config["train_args"]:
+            model.load_from_checkpoint(
+                model_dir / experiment_config["train_args"]["checkpoint"]
+            )
+        else:
+            model.load_from_checkpoint(model_dir / "best.pt")
 
         logger.info("Running inference on test set.")
         if experiment_config["criterion"]["type"] == "EmbeddingLoss":

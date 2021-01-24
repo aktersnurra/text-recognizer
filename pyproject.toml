@@ -10,7 +10,7 @@ repository = "https://github.com/aktersnurra/text-recognizer"
 keywords = ["text recognizer, deep learning, pytorch"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 click = "^7.1.2"
 flake8-annotations = "^2.1.0"
 flake8-docstrings = "^1.5.0"
@@ -30,14 +30,16 @@ tqdm = "^4.46.1"
 pytest = "^5.4.3"
 opencv-python = "^4.3.0"
 nltk = "^3.5"
-einops = "^0.2.0"
-wandb = "^0.9.6"
 torch-summary = "^1.4.2"
 python-Levenshtein = "^0.12.0"
 defusedxml = "^0.6.0"
-pytorch-block-sparse = "^0.1.2"
 pytorch-metric-learning = "^0.9.92"
 omegaconf = "^2.0.2"
+jupyterthemes = "^0.20.0"
+wandb = "^0.10.12"
+einops = "^0.3.0"
+gtn = "^0.0.0"
+sentencepiece = "^0.1.95"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.2"
@@ -59,7 +61,8 @@ sphinx = "^3.0.4"
 jupyter = "^1.0.0"
 gpustat = "^0.6.0"
 redlock-py = "^1.0.8"
-wandb = "^0.9.4"
+wandb = "^0.10.11"
+graphviz = "^0.16"
 
 [tool.coverage.report]
 fail_under = 50
@@ -71,6 +74,7 @@ create-emnist-support-files = "text_recognizer.tests.support.create_emnist_suppo
 create-emnist-lines-datasets = "text_recognizer.datasets.emnist_lines_dataset:create_datasets"
 create-iam-paragraphs = "text_recognizer.datasets.iam_paragraphs_dataset:main"
 prepare-experiments = "training.prepare_experiments:run_cli"
+run-experiment = "training.run_experiment:run_cli"
 
 
 

@@ -26,7 +26,7 @@ class VectorQuantizer(nn.Module):
         self.embedding = nn.Embedding(self.K, self.D)
 
         # Initialize the codebook.
-        self.embedding.weight.uniform_(-1 / self.K, 1 / self.K)
+        nn.init.uniform_(self.embedding.weight, -1 / self.K, 1 / self.K)
 
     def discretization_bottleneck(self, latent: Tensor) -> Tensor:
         """Computes the code nearest to the latent representation.

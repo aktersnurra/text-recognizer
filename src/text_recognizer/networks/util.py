@@ -65,13 +65,18 @@ def configure_backbone(backbone: str, backbone_args: Dict) -> Type[nn.Module]:
         network_args = state_dict["network_args"]
         weights = state_dict["model_state"]
 
+        freeze = False
+        if "freeze" in backbone_args and backbone_args["freeze"] is True:
+            backbone_args.pop("freeze")
+            freeze = True
+        network_args = backbone_args
+
         # Initializes the network with trained weights.
         backbone = backbone_(**network_args)
         backbone.load_state_dict(weights)
-        if "freeze" in backbone_args and backbone_args["freeze"] is True:
+        if freeze:
             for params in backbone.parameters():
                 params.requires_grad = False
-
     else:
         backbone_ = getattr(network_module, backbone)
         backbone = backbone_(**backbone_args)

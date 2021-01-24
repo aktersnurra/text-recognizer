@@ -8,6 +8,7 @@ from .emnist_lines_dataset import (
 from .iam_dataset import IamDataset
 from .iam_lines_dataset import IamLinesDataset
 from .iam_paragraphs_dataset import IamParagraphsDataset
+from .iam_preprocessor import load_metadata, Preprocessor
 from .transforms import AddTokens, Transpose
 from .util import (
     _download_raw_dataset,
@@ -29,8 +30,10 @@ __all__ = [
     "EmnistMapper",
     "EmnistLinesDataset",
     "get_samples_by_character",
+    "load_metadata",
     "IamDataset",
     "IamLinesDataset",
     "IamParagraphsDataset",
+    "Preprocessor",
     "Transpose",
 ]
