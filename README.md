@@ -11,17 +11,29 @@ TBC
 
 
 ## Todo
-- [ ] create wordpieces
+- [x] create wordpieces
   - [x] make_wordpieces.py
   - [x] build_transitions.py
-  - [ ] transform that encodes iam targets to wordpieces
-  - [ ] transducer loss function
+  - [x] transform that encodes iam targets to wordpieces
+  - [x] transducer loss function
+- [  ] Train with word pieces
+  - [  ] implement wandb callback for logging
+- [  ] Implement CPC
+  - [  ] Window images
+  - [  ] Train backbone
+- [  ] Bert training, how?
+
+
 - [ ] Predictive coding
   - https://arxiv.org/pdf/1807.03748.pdf
   - https://arxiv.org/pdf/1904.05862.pdf
   - https://arxiv.org/pdf/1910.05453.pdf
   - https://blog.evjang.com/2016/11/tutorial-categorical-variational.html
-  - [ ]
+
+
+
+
+
 
 ## Run Sweeps
  Run the following commands to execute hyperparameter search with W&B:
