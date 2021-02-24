@@ -7,3 +7,4 @@ application-import-names = text_recognizer,tests
 import-order-style = google
 docstring-convention = google
 per-file-ignores = tests/*:S101,tests/*:S106,src/text_recognizer/datasets/*:S110,src/training/callbacks/*:B006,src/tasks/build_transitions.py:C901
+exclude = src/text_recognizer/networks/transducer/*

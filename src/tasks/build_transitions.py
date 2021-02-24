@@ -9,7 +9,7 @@ Most code stolen from here:
 import collections
 import itertools
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 import click
 import gtn
@@ -18,7 +18,7 @@ from loguru import logger
 
 START_IDX = -1
 END_IDX = -2
-WORDSEP = "_"
+WORDSEP = "▁"
 
 
 def build_graph(ngrams: List, disable_backoff: bool = False) -> gtn.Graph:
@@ -27,7 +27,7 @@ def build_graph(ngrams: List, disable_backoff: bool = False) -> gtn.Graph:
     ngram = len(ngrams)
     state_to_node = {}
 
-    def get_node(state: Optional[List]) -> gtn.node:
+    def get_node(state: Optional[List]) -> Any:
         node = state_to_node.get(state, None)
 
         if node is not None:

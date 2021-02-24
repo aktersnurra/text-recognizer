@@ -30,7 +30,7 @@ def iamdb_pieces(
         user_symbols=["/"],  # added so token is in the output set
     )
 
-    vocab = sorted(set(w for t in text for w in t.split("_") if w))
+    vocab = sorted(set(w for t in text for w in t.split("▁") if w))
     if "move" not in vocab:
         raise RuntimeError("`MOVE` not in vocab")
 

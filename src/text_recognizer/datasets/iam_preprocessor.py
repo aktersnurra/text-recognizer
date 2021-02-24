@@ -59,7 +59,7 @@ class Preprocessor:
         use_words: bool = False,
         prepend_wordsep: bool = False,
     ) -> None:
-        self.wordsep = "_"
+        self.wordsep = "▁"
         self._use_word = use_words
         self._prepend_wordsep = prepend_wordsep
 

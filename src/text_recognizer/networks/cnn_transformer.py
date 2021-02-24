@@ -112,11 +112,11 @@ class CNNTransformer(nn.Module):
         if self.max_pool is not None:
             src = self.max_pool(src)
 
-        if self.adaptive_pool is not None:
+        if self.adaptive_pool is not None and len(src.shape) == 4:
             src = rearrange(src, "b c h w -> b w c h")
             src = self.adaptive_pool(src)
             src = src.squeeze(3)
-        else:
+        elif len(src.shape) == 4:
             src = rearrange(src, "b c h w -> b (h w) c")
 
         b, t, _ = src.shape

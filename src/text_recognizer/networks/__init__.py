@@ -8,7 +8,7 @@ from .lenet import LeNet
 from .metrics import accuracy, cer, wer
 from .mlp import MLP
 from .residual_network import ResidualNetwork, ResidualNetworkEncoder
-from .transducer import TDS2d
+from .transducer import load_transducer_loss, TDS2d
 from .transformer import Transformer
 from .unet import UNet
 from .util import sliding_window
@@ -28,6 +28,7 @@ __all__ = [
     "greedy_decoder",
     "MLP",
     "LeNet",
+    "load_transducer_loss",
     "ResidualNetwork",
     "ResidualNetworkEncoder",
     "sliding_window",
