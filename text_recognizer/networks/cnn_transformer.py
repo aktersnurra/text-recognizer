@@ -1,7 +1,7 @@
 """A CNN-Transformer for image to text recognition."""
 from typing import Dict, Optional, Tuple
 
-from einops import rearrange, repeat
+from einops import rearrange
 import torch
 from torch import nn
 from torch import Tensor

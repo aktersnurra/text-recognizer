@@ -13,6 +13,7 @@ from text_recognizer.datasets.util import _download_raw_dataset, DATA_DIRNAME
 RAW_DATA_DIRNAME = DATA_DIRNAME / "raw" / "iam"
 METADATA_FILENAME = RAW_DATA_DIRNAME / "metadata.toml"
 EXTRACTED_DATASET_DIRNAME = RAW_DATA_DIRNAME / "iamdb"
+RAW_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
 
 DOWNSAMPLE_FACTOR = 2  # If images were downsampled, the regions must also be.
 LINE_REGION_PADDING = 0  # Add this many pixels around the exact coordinates.
