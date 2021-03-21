@@ -40,6 +40,7 @@ wandb = "^0.10.12"
 einops = "^0.3.0"
 gtn = "^0.0.0"
 sentencepiece = "^0.1.95"
+pytorch-lightning = "^1.2.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.2"
