@@ -63,11 +63,11 @@ def download_dataset(metadata: Dict, dl_dir: Path) -> Optional[Path]:
     if filename.exists():
         return
     logger.info(f"Downloading raw dataset from {metadata['url']} to {filename}...")
-    _download_url(metadata["url"], filename) 
+    _download_url(metadata["url"], filename)
     logger.info("Computing the SHA-256...")
     sha256 = _compute_sha256(filename)
     if sha256 != metadata["sha256"]:
         raise ValueError(
-                "Downloaded data file SHA-256 does not match that listed in metadata document."
-                )
+            "Downloaded data file SHA-256 does not match that listed in metadata document."
+        )
     return filename

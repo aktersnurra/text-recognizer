@@ -8,7 +8,14 @@ from nox.sessions import Session
 
 package = "text-recognizer"
 nox.options.sessions = "lint", "mypy", "pytype", "safety", "tests"
-locations = "src", "tests", "noxfile.py", "docs/conf.py", "src/text_recognizer/tests"
+locations = (
+    "text_recognizer",
+    "training",
+    "tasks",
+    "tests",
+    "noxfile.py",
+    "docs/conf.py",
+)
 
 
 def install_with_constraints(session: Session, *args: str, **kwargs: Any) -> None:
