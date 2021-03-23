@@ -71,6 +71,7 @@ fail_under = 50
 
 [tool.poetry.scripts]
 download-emnist = "text_recognizer.datasets.emnist:download_emnist"
+generate-emnist-lines = "text_recognizer.datasets.emnist_lines:generate_emnist_lines"
 download-iam = "text_recognizer.datasets.iam_dataset:main"
 create-emnist-support-files = "text_recognizer.tests.support.create_emnist_support_files:create_emnist_support_files"
 create-emnist-lines-datasets = "text_recognizer.datasets.emnist_lines_dataset:create_datasets"
