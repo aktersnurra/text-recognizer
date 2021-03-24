@@ -11,13 +11,13 @@ import torch
 from torchvision import transforms
 from torchvision.transforms.functional import InterpolationMode
 
-from text_recognizer.datasets.base_dataset import BaseDataset, convert_strings_to_labels
-from text_recognizer.datasets.base_data_module import (
+from text_recognizer.data.base_dataset import BaseDataset, convert_strings_to_labels
+from text_recognizer.data.base_data_module import (
     BaseDataModule,
     load_and_print_info,
 )
-from text_recognizer.datasets.emnist import EMNIST
-from text_recognizer.datasets.sentence_generator import SentenceGenerator
+from text_recognizer.data.emnist import EMNIST
+from text_recognizer.data.sentence_generator import SentenceGenerator
 
 
 DATA_DIRNAME = BaseDataModule.data_dirname() / "processed" / "emnist_lines"

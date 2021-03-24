@@ -14,12 +14,12 @@ import torch
 from torch.utils.data import random_split
 from torchvision import transforms
 
-from text_recognizer.datasets.base_dataset import BaseDataset
-from text_recognizer.datasets.base_data_module import (
+from text_recognizer.data.base_dataset import BaseDataset
+from text_recognizer.data.base_data_module import (
     BaseDataModule,
     load_and_print_info,
 )
-from text_recognizer.datasets.download_utils import download_dataset
+from text_recognizer.data.download_utils import download_dataset
 
 
 SEED = 4711
