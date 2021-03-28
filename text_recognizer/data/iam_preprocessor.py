@@ -5,7 +5,6 @@ The code is mostly stolen from:
     https://github.com/facebookresearch/gtn_applications/blob/master/datasets/iamdb.py
 
 """
-
 import collections
 import itertools
 from pathlib import Path

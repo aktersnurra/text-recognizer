@@ -1,5 +1,4 @@
 """Downloading the Brown corpus with NLTK for sentence generating."""
-
 import itertools
 import re
 import string
@@ -9,9 +8,9 @@ import nltk
 from nltk.corpus.reader.util import ConcatenatedCorpusView
 import numpy as np
 
-from text_recognizer.datasets.util import DATA_DIRNAME
+from text_recognizer.data.base_data_module import BaseDataModule
 
-NLTK_DATA_DIRNAME = DATA_DIRNAME / "downloaded" / "nltk"
+NLTK_DATA_DIRNAME = BaseDataModule.data_dirname() / "downloaded" / "nltk"
 
 
 class SentenceGenerator:
@@ -47,7 +46,7 @@ class SentenceGenerator:
             raise ValueError(
                 "Must provide max_length to this method or when making this object."
             )
-        
+
         for _ in range(10):
             try:
                 index = np.random.randint(0, len(self.word_start_indices) - 1)

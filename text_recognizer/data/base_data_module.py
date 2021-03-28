@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 
 
 def load_and_print_info(data_module_class: type) -> None:
-    """Load EMNISTLines and prints info."""
+    """Load dataset and print dataset information."""
     dataset = data_module_class()
     dataset.prepare_data()
     dataset.setup()
