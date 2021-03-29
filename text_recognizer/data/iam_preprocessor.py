@@ -166,7 +166,7 @@ def cli(
     """CLI for extracting text data from the iam dataset."""
     if data_dir is None:
         data_dir = (
-            Path(__file__).resolve().parents[3] / "data" / "raw" / "iam" / "iamdb"
+            Path(__file__).resolve().parents[2] / "data" / "downloaded" / "iam" / "iamdb"
         )
         logger.debug(f"Using data dir: {data_dir}")
         if not data_dir.exists():
