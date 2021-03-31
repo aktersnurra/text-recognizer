@@ -38,6 +38,7 @@ gtn = "^0.0.0"
 sentencepiece = "^0.1.95"
 pytorch-lightning = "^1.2.4"
 Pillow = "^8.1.2"
+madgrad = "^1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.2"
