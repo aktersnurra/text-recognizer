@@ -9,7 +9,8 @@ from torch import Tensor
 
 from text_recognizer.datasets.iam_preprocessor import Preprocessor
 from text_recognizer.data.emnist import emnist_mapping
-       
+
+
 class ToLower:
     """Converts target to lower case."""
 
@@ -23,15 +24,11 @@ class ToCharcters:
     """Converts integers to characters."""
 
     def __init__(self) -> None:
-        self.mapping, _, _ = emnist_mapping() 
+        self.mapping, _, _ = emnist_mapping()
 
     def __call__(self, y: Tensor) -> str:
         """Converts a Tensor to a str."""
-        return (
-            "".join([self.mapping(int(i)) for i in y])
-            .strip("<p>")
-            .replace(" ", "▁")
-        )
+        return "".join([self.mapping(int(i)) for i in y]).strip("<p>").replace(" ", "▁")
 
 
 class WordPieces:

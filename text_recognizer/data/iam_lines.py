@@ -211,7 +211,9 @@ def load_line_crops_and_labels(split: str, data_dirname: Path) -> Tuple[List, Li
 def get_transform(image_width: int, augment: bool = False) -> transforms.Compose:
     """Augment with brigthness, sligth rotation, slant, translation, scale, and Gaussian noise."""
 
-    def embed_crop(crop: Image, augment: bool = augment, image_width: int = image_width) -> Image:
+    def embed_crop(
+        crop: Image, augment: bool = augment, image_width: int = image_width
+    ) -> Image:
         # Crop is PIL.Image of dtype="L" (so value range is [0, 255])
         image = Image.new("L", (image_width, IMAGE_HEIGHT))
 

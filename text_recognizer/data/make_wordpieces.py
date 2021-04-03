@@ -99,7 +99,7 @@ def cli(
     """CLI for training the sentence piece model."""
     if data_dir is None:
         data_dir = (
-            Path(__file__).resolve().parents[2] / "data" / "processed" / "iam_lines" 
+            Path(__file__).resolve().parents[2] / "data" / "processed" / "iam_lines"
         )
         logger.debug(f"Using data dir: {data_dir}")
         if not data_dir.exists():

@@ -76,13 +76,7 @@ generate-iam-lines = "text_recognizer.data.iam_lines:generate_iam_lines"
 extract-iam-text = "text_recognizer.data.iam_preprocessor:cli"
 make-wordpieces = "text_recognizer.data.make_wordpieces:cli"
 build-transitions = "text_recognizer.data.build_transitions:cli"
-
-create-emnist-support-files = "text_recognizer.tests.support.create_emnist_support_files:create_emnist_support_files"
-create-emnist-lines-datasets = "text_recognizer.datasets.emnist_lines_dataset:create_datasets"
-create-iam-paragraphs = "text_recognizer.datasets.iam_paragraphs_dataset:main"
-prepare-experiments = "training.prepare_experiments:run_cli"
-run-experiment = "training.run_experiment:run_cli"
-
+generate-iam-paragraphs = "text_recognizer.data.iam_paragraphs:create_iam_paragraphs"
 
 [build-system]
 requires = ["poetry>=0.12"]
