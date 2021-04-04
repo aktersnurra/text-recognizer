@@ -96,7 +96,7 @@ class EMNIST(BaseDataModule):
 
 
 def emnist_mapping(
-    extra_symbols: Optional[List[str]],
+    extra_symbols: Optional[Sequence[str]],
 ) -> Tuple[List, Dict[str, int], List[int]]:
     """Return the EMNIST mapping."""
     if not ESSENTIALS_FILENAME.exists():
@@ -209,7 +209,7 @@ def _augment_emnist_characters(characters: Sequence[str]) -> Sequence[str]:
     # - End token at index 2
     # - Padding token at index 3
     # Note: Do not forget to update NUM_SPECIAL_TOKENS if changing this!
-    return ["<b>", "<s>", "</s>", "<p>", *characters, *iam_characters]
+    return ["<b>", "<s>", "<e>", "<p>", *characters, *iam_characters]
 
 
 def download_emnist() -> None:

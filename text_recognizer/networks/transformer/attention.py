@@ -50,8 +50,9 @@ class MultiHeadAttention(nn.Module):
         )
         nn.init.xavier_normal_(self.fc_out.weight)
 
+    @staticmethod
     def scaled_dot_product_attention(
-        self, query: Tensor, key: Tensor, value: Tensor, mask: Optional[Tensor] = None
+        query: Tensor, key: Tensor, value: Tensor, mask: Optional[Tensor] = None
     ) -> Tensor:
         """Calculates the scaled dot product attention."""
 

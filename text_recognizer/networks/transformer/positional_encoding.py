@@ -56,9 +56,9 @@ class PositionalEncoding2D(nn.Module):
         pe_h = repeat(pe_h, "h w d -> d h (w tile)", tile=max_w)
 
         pe_w = PositionalEncoding.make_pe(
-            hidden_dim // 2, max_len=max_h
+            hidden_dim // 2, max_len=max_w
         )  # [W, 1, D // 2]
-        pe_w = repeat(pe_w, "h w d -> d (h tile) w", tile=max_h)
+        pe_w = repeat(pe_w, "w h d -> d (h tile) w", tile=max_h)
 
         pe = torch.cat([pe_h, pe_w], dim=0)  # [D, H, W]
         return pe
@@ -70,3 +70,13 @@ class PositionalEncoding2D(nn.Module):
             raise ValueError("Hidden dimensions does not match.")
         x += self.pe[:, : x.shape[2], : x.shape[3]]
         return x
+
+def target_padding_mask(trg: Tensor, pad_index: int) -> Tensor:
+    """Returns causal target mask."""
+    trg_pad_mask = (trg != pad_index)[:, None, None]
+    trg_len = trg.shape[1]
+    trg_sub_mask = torch.tril(
+        torch.ones((trg_len, trg_len), device=trg.device)
+    ).bool()
+    trg_mask = trg_pad_mask & trg_sub_mask
+    return trg_mask
