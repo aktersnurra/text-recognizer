@@ -71,5 +71,6 @@ class IAMExtendedParagraphs(BaseDataModule):
         )
         return basic + data
 
+
 def show_dataset_info() -> None:
     load_and_print_info(IAMExtendedParagraphs)
