@@ -11,7 +11,7 @@ import torchmetrics
 from text_recognizer import networks
 
 
-class BaseModel(pl.LightningModule):
+class LitBaseModel(pl.LightningModule):
     """Abstract PyTorch Lightning class."""
 
     def __init__(
