@@ -19,5 +19,3 @@ def test_character_error_rate() -> None:
     metric(preds, targets)
     print(metric.compute())
     assert metric.compute() == float(sum([0, 0.75, 0.5]) / 3)
-
-
