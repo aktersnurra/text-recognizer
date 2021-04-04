@@ -71,12 +71,11 @@ class PositionalEncoding2D(nn.Module):
         x += self.pe[:, : x.shape[2], : x.shape[3]]
         return x
 
+
 def target_padding_mask(trg: Tensor, pad_index: int) -> Tensor:
     """Returns causal target mask."""
     trg_pad_mask = (trg != pad_index)[:, None, None]
     trg_len = trg.shape[1]
-    trg_sub_mask = torch.tril(
-        torch.ones((trg_len, trg_len), device=trg.device)
-    ).bool()
+    trg_sub_mask = torch.tril(torch.ones((trg_len, trg_len), device=trg.device)).bool()
     trg_mask = trg_pad_mask & trg_sub_mask
     return trg_mask
