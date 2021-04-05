@@ -4,4 +4,4 @@ from .positional_encoding import (
     PositionalEncoding2D,
     target_padding_mask,
 )
-from .transformer import Decoder, Encoder, EncoderLayer, Transformer
+from .transformer import Decoder, DecoderLayer, Encoder, EncoderLayer, Transformer
