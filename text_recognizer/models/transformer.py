@@ -19,16 +19,14 @@ class LitTransformerModel(LitBaseModel):
 
     def __init__(
         self,
-        network: Type[nn,Module],
+        network: Type[nn, Module],
         optimizer: Union[OmegaConf, Dict],
         lr_scheduler: Union[OmegaConf, Dict],
         criterion: Union[OmegaConf, Dict],
         monitor: str = "val_loss",
         mapping: Optional[List[str]] = None,
     ) -> None:
-        super().__init__(
-            network, optimizer, lr_scheduler, criterion, monitor
-        )
+        super().__init__(network, optimizer, lr_scheduler, criterion, monitor)
 
         self.mapping, ignore_tokens = self.configure_mapping(mapping)
         self.val_cer = CharacterErrorRate(ignore_tokens)

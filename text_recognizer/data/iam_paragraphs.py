@@ -161,7 +161,10 @@ def get_dataset_properties() -> Dict:
             "min": min(_get_property_values("num_lines")),
             "max": max(_get_property_values("num_lines")),
         },
-        "crop_shape": {"min": crop_shapes.min(axis=0), "max": crop_shapes.max(axis=0),},
+        "crop_shape": {
+            "min": crop_shapes.min(axis=0),
+            "max": crop_shapes.max(axis=0),
+        },
         "aspect_ratio": {
             "min": aspect_ratio.min(axis=0),
             "max": aspect_ratio.max(axis=0),
@@ -282,7 +285,9 @@ def get_transform(image_shape: Tuple[int, int], augment: bool) -> transforms.Com
             ),
             transforms.ColorJitter(brightness=(0.8, 1.6)),
             transforms.RandomAffine(
-                degrees=1, shear=(-10, 10), interpolation=InterpolationMode.BILINEAR,
+                degrees=1,
+                shear=(-10, 10),
+                interpolation=InterpolationMode.BILINEAR,
             ),
         ]
     else:

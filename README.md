@@ -11,7 +11,7 @@ TBC
 
 Extract text from the iam dataset:
 ```
-poetry run extract-iam-text --use_words --save_text train.txt --save_tokens letters.txt 
+poetry run extract-iam-text --use_words --save_text train.txt --save_tokens letters.txt
 ```
 
 Create word pieces from the extracted training text:
@@ -32,7 +32,7 @@ poetry run build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb
   - [x] transform that encodes iam targets to wordpieces
   - [x] transducer loss function
 - [  ] Train with word pieces
-- [ ] Local attention in first layer of transformer 
+- [ ] Local attention in first layer of transformer
 - [ ] Halonet encoder
 - [  ] Implement CPC
   - [ ] https://arxiv.org/pdf/1905.09272.pdf
@@ -59,4 +59,3 @@ export SWEEP_ID=...
 wandb agent $SWEEP_ID
 
 ```
-

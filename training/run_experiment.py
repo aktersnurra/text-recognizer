@@ -50,7 +50,9 @@ def _import_class(module_and_class_name: str) -> type:
     return getattr(module, class_name)
 
 
-def _configure_pl_callbacks(args: List[Union[OmegaConf, NamedTuple]]) -> List[Type[pl.callbacks.Callback]]:
+def _configure_pl_callbacks(
+    args: List[Union[OmegaConf, NamedTuple]]
+) -> List[Type[pl.callbacks.Callback]]:
     """Configures PyTorch Lightning callbacks."""
     pl_callbacks = [
         getattr(pl.callbacks, callback.type)(**callback.args) for callback in args

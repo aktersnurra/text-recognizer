@@ -15,7 +15,7 @@ class LitBaseModel(pl.LightningModule):
 
     def __init__(
         self,
-        network: Type[nn,Module],
+        network: Type[nn.Module],
         optimizer: Union[OmegaConf, Dict],
         lr_scheduler: Union[OmegaConf, Dict],
         criterion: Union[OmegaConf, Dict],
@@ -40,14 +40,14 @@ class LitBaseModel(pl.LightningModule):
         args = {} or criterion.args
         return getattr(nn, criterion.type)(**args)
 
-    def _configure_optimizer(self) -> type:
+    def _configure_optimizer(self) -> torch.optim.Optimizer:
         """Configures the optimizer."""
         args = {} or self._optimizer.args
         if self._optimizer.type == "MADGRAD":
             optimizer_class = madgrad.MADGRAD
         else:
             optimizer_class = getattr(torch.optim, self._optimizer.type)
-        return optimizer_class(parameters=self.parameters(), **args)
+        return optimizer_class(params=self.parameters(), **args)
 
     def _configure_lr_scheduler(self) -> Dict[str, Any]:
         """Configures the lr scheduler."""

@@ -1,6 +1,6 @@
 network:
         type: ImageTransformer
-        args: 
+        args:
                 input_shape: None
                 output_shape: None
                 encoder:
@@ -17,20 +17,20 @@ network:
 model:
         type: LitTransformerModel
         args:
-                optimizer: 
+                optimizer:
                         type: MADGRAD
                         args:
                                 lr: 1.0e-2
                                 momentum: 0.9
                                 weight_decay: 0
                                 eps: 1.0e-6
-                lr_scheduler: 
+                lr_scheduler:
                         type: CosineAnnealingLR
-                        args: 
+                        args:
                                 T_max: 512
                 criterion:
                         type: CrossEntropyLoss
-                        args: 
+                        args:
                                 weight: None
                                 ignore_index: -100
                                 reduction: mean
@@ -40,7 +40,7 @@ model:
 
 data:
         type: IAMExtendedParagraphs
-        args: 
+        args:
                 batch_size: 16
                 num_workers: 12
                 train_fraction: 0.8

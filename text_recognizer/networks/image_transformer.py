@@ -1,9 +1,9 @@
 """A Transformer with a cnn backbone.
 
 The network encodes a image with a convolutional backbone to a latent representation,
-i.e. feature maps. A 2d positional encoding is applied to the feature maps for 
+i.e. feature maps. A 2d positional encoding is applied to the feature maps for
 spatial information. The resulting feature are then set to a transformer decoder
-together with the target tokens. 
+together with the target tokens.
 
 TODO: Local attention for transformer.j
 
@@ -107,9 +107,7 @@ class ImageTransformer(nn.Module):
         encoder_class = getattr(network_module, encoder.type)
         return encoder_class(**encoder.args)
 
-    def _configure_mapping(
-        self, mapping: str
-    ) -> Tuple[List[str], Dict[str, int]]:
+    def _configure_mapping(self, mapping: str) -> Tuple[List[str], Dict[str, int]]:
         """Configures mapping."""
         if mapping == "emnist":
             mapping, inverse_mapping, _ = emnist_mapping()
@@ -125,7 +123,7 @@ class ImageTransformer(nn.Module):
             Tensor: Image features.
 
         Shapes:
-            - image: :math: `(B, C, H, W)` 
+            - image: :math: `(B, C, H, W)`
             - latent: :math: `(B, T, C)`
 
         """
