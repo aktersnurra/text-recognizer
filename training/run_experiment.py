@@ -2,7 +2,7 @@
 from datetime import datetime
 import importlib
 from pathlib import Path
-from typing import Dict, List, Optional, Type
+from typing import Dict, List, NamedTuple, Optional, Union, Type
 
 import click
 from loguru import logger
@@ -50,10 +50,10 @@ def _import_class(module_and_class_name: str) -> type:
     return getattr(module, class_name)
 
 
-def _configure_pl_callbacks(args: List[Dict]) -> List[Type[pl.callbacks.Callback]]:
+def _configure_pl_callbacks(args: List[Union[OmegaConf, NamedTuple]]) -> List[Type[pl.callbacks.Callback]]:
     """Configures PyTorch Lightning callbacks."""
     pl_callbacks = [
-        getattr(pl.callbacks, callback["type"])(**callback["args"]) for callback in args
+        getattr(pl.callbacks, callback.type)(**callback.args) for callback in args
     ]
     return pl_callbacks
 
