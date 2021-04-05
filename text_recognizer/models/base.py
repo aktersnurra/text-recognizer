@@ -40,7 +40,7 @@ class LitBaseModel(pl.LightningModule):
         args = {} or criterion.args
         return getattr(nn, criterion.type)(**args)
 
-    def _configure_optimizer(self) -> torch.optim.Optimizer:
+    def _configure_optimizer(self) -> Type[torch.optim.Optimizer]:
         """Configures the optimizer."""
         args = {} or self._optimizer.args
         if self._optimizer.type == "MADGRAD":
