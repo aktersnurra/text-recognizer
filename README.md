@@ -32,11 +32,11 @@ poetry run build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb
   - [x] transform that encodes iam targets to wordpieces
   - [x] transducer loss function
 - [  ] Train with word pieces
-  - [  ] implement wandb callback for logging
+- [ ] Local attention in first layer of transformer 
+- [ ] Halonet encoder
 - [  ] Implement CPC
-  - [  ] Window images
-  - [  ] Train backbone
-- [  ] Bert training, how?
+  - [ ] https://arxiv.org/pdf/1905.09272.pdf
+  - [ ] https://pytorch-lightning-bolts.readthedocs.io/en/latest/self_supervised_models.html?highlight=byol
 
 
 - [ ] Predictive coding
@@ -60,20 +60,3 @@ wandb agent $SWEEP_ID
 
 ```
 
-## PyTorch Performance Guide
-Tips and tricks from ["PyTorch Performance Tuning Guide - Szymon Migacz, NVIDIA"](https://www.youtube.com/watch?v=9mS1fIYj1So&t=125s):
-
-* Always better to use `num_workers > 0`, allows asynchronous data processing
-* Use `pin_memory=True` to allow data loading and computations to happen on the GPU in parallel.
-* Have to tune `num_workers` to use based on the problem, too many and data loading becomes slower.
-* For CNNs use `torch.backends.cudnn.benchmark=True`, allows cuDNN to select the best algorithm for convolutional computations (autotuner).
-* Increase batch size to max out GPU memory.
-* Use optimizer for large batch training, e.g. LARS, LAMB etc.
-* Set `bias=False` for convolutions directly followed by BatchNorm.
-* Use `for p in model.parameters(): p.grad = None` instead of `model.zero_grad()`.
-* Careful with disable debug APIs in prod (detect_anomaly, profiler, gradcheck).
-* Use `DistributedDataParallel` not `DataParallel`, uses 1 CPU core for each GPU.
-* Important to load balance compute on all GPUs, if variably-sized inputs or GPUs will idle.
-* Use an apex fused optimizer
-* Use checkpointing to recompute memory-intensive compute-efficient ops in backward pass (e.g. activations, upsampling), `torch.utils.checkpoint`.
-* Use `@torch.jit.script`, especially to fuse long sequences of pointwise operations like GELU.
