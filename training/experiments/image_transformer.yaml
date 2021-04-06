@@ -1,12 +1,9 @@
 network:
         type: ImageTransformer
         args:
-                input_shape: None
-                output_shape: None
                 encoder:
                         type: None
                         args: None
-                mapping: sentence_piece
                 num_decoder_layers: 4
                 hidden_dim: 256
                 num_heads: 4
@@ -60,7 +57,7 @@ callbacks:
 trainer:
         args:
                 stochastic_weight_avg: true
-                auto_scale_batch_size: power
+                auto_scale_batch_size: binsearch
                 gradient_clip_val: 0
                 fast_dev_run: false
                 gpus: 1

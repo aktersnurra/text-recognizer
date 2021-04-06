@@ -5,7 +5,7 @@ i.e. feature maps. A 2d positional encoding is applied to the feature maps for
 spatial information. The resulting feature are then set to a transformer decoder
 together with the target tokens.
 
-TODO: Local attention for transformer.j
+TODO: Local attention for lower layer in attention.
 
 """
 import importlib
@@ -39,7 +39,7 @@ class ImageTransformer(nn.Module):
         num_decoder_layers: int = 4,
         hidden_dim: int = 256,
         num_heads: int = 4,
-        expansion_dim: int = 4,
+        expansion_dim: int = 1024,
         dropout_rate: float = 0.1,
         transformer_activation: str = "glu",
     ) -> None:
@@ -109,6 +109,7 @@ class ImageTransformer(nn.Module):
 
     def _configure_mapping(self, mapping: str) -> Tuple[List[str], Dict[str, int]]:
         """Configures mapping."""
+        # TODO: Fix me!!!
         if mapping == "emnist":
             mapping, inverse_mapping, _ = emnist_mapping()
         return mapping, inverse_mapping
