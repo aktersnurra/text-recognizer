@@ -69,7 +69,7 @@ def _configure_callbacks(
 
 def _configure_logger(
     network: Type[nn.Module], args: Dict, use_wandb: bool
-) -> pl.loggers.WandbLogger:
+) -> Type[pl.loggers.LightningLoggerBase]:
     """Configures lightning logger."""
     if use_wandb:
         pl_logger = pl.loggers.WandbLogger()

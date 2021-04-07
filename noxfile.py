@@ -11,7 +11,6 @@ nox.options.sessions = "lint", "mypy", "pytype", "safety", "tests"
 locations = (
     "text_recognizer",
     "training",
-    "tasks",
     "tests",
     "noxfile.py",
     "docs/conf.py",
