@@ -2,7 +2,7 @@
 from typing import Any, Dict, List, Union, Tuple, Type
 
 import madgrad
-from omegaconf import OmegaConf
+from omegaconf import DictConfig, OmegaConf
 import pytorch_lightning as pl
 import torch
 from torch import nn
@@ -16,9 +16,9 @@ class LitBaseModel(pl.LightningModule):
     def __init__(
         self,
         network: Type[nn.Module],
-        optimizer: Union[OmegaConf, Dict],
-        lr_scheduler: Union[OmegaConf, Dict],
-        criterion: Union[OmegaConf, Dict],
+        optimizer: Union[DictConfig, Dict],
+        lr_scheduler: Union[DictConfig, Dict],
+        criterion: Union[DictConfig, Dict],
         monitor: str = "val_loss",
     ) -> None:
         super().__init__()
@@ -34,7 +34,7 @@ class LitBaseModel(pl.LightningModule):
         self.test_acc = torchmetrics.Accuracy()
 
     @staticmethod
-    def configure_criterion(criterion: Union[OmegaConf, Dict]) -> Type[nn.Module]:
+    def configure_criterion(criterion: Union[DictConfig, Dict]) -> Type[nn.Module]:
         """Returns a loss functions."""
         criterion = OmegaConf.create(criterion)
         args = {} or criterion.args

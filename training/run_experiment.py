@@ -6,7 +6,7 @@ from typing import Dict, List, NamedTuple, Optional, Union, Type
 
 import click
 from loguru import logger
-from omegaconf import OmegaConf
+from omegaconf import DictConfig, OmegaConf
 import pytorch_lightning as pl
 import torch
 from torch import nn
@@ -42,6 +42,14 @@ def _configure_logging(log_dir: Optional[Path], verbose: int = 0) -> None:
         )
 
 
+def _load_config(file_path: Path) -> DictConfig:
+    """Return experiment config."""
+    logger.info(f"Loading config from: {file_path}")
+    if not file_path.exists():
+        raise FileNotFoundError(f"Experiment config not found at: {file_path}")
+    return OmegaConf.load(file_path)
+
+
 def _import_class(module_and_class_name: str) -> type:
     """Import class from module."""
     module_name, class_name = module_and_class_name.rsplit(".", 1)
@@ -50,26 +58,25 @@ def _import_class(module_and_class_name: str) -> type:
 
 
 def _configure_callbacks(
-    args: List[Union[OmegaConf, NamedTuple]]
+    callbacks: List[DictConfig],
 ) -> List[Type[pl.callbacks.Callback]]:
     """Configures lightning callbacks."""
     pl_callbacks = [
-        getattr(pl.callbacks, callback.type)(**callback.args) for callback in args
+        getattr(pl.callbacks, callback.type)(**callback.args) for callback in callbacks
     ]
     return pl_callbacks
 
 
 def _configure_logger(
-        network: Type[nn.Module], args: Dict, use_wandb: bool
+    network: Type[nn.Module], args: Dict, use_wandb: bool
 ) -> pl.loggers.WandbLogger:
     """Configures lightning logger."""
     if use_wandb:
         pl_logger = pl.loggers.WandbLogger()
         pl_logger.watch(network)
         pl_logger.log_hyperparams(vars(args))
-    else:
-        pl_logger = pl.logger.TensorBoardLogger("training/logs")
-    return pl_logger
+        return pl_logger
+    return pl.logger.TensorBoardLogger("training/logs")
 
 
 def _save_best_weights(
@@ -89,7 +96,9 @@ def _save_best_weights(
             wandb.save(best_model_path)
 
 
-def _load_lit_model(lit_model_class: type, network: Type[nn.Module], config: OmegaConf) -> Type[pl.LightningModule]:
+def _load_lit_model(
+    lit_model_class: type, network: Type[nn.Module], config: DictConfig
+) -> Type[pl.LightningModule]:
     """Load lightning model."""
     if config.load_checkpoint is not None:
         logger.info(
@@ -101,8 +110,17 @@ def _load_lit_model(lit_model_class: type, network: Type[nn.Module], config: Ome
     return lit_model_class(network=network, **config.model.args)
 
 
-def run(path: str, train: bool, test: bool, tune: bool, use_wandb: bool) -> None:
+def run(
+    filename: str,
+    train: bool,
+    test: bool,
+    tune: bool,
+    use_wandb: bool,
+    verbose: int = 0,
+) -> None:
     """Runs experiment."""
+
+    _configure_logging(None, verbose=verbose)
     logger.info("Starting experiment...")
 
     # Seed everything in the experiment.
@@ -110,8 +128,8 @@ def run(path: str, train: bool, test: bool, tune: bool, use_wandb: bool) -> None
     pl.utilities.seed.seed_everything(SEED)
 
     # Load config.
-    logger.info(f"Loading config from: {path}")
-    config = OmegaConf.load(path)
+    file_path = EXPERIMENTS_DIRNAME / filename
+    config = _load_config(file_path)
 
     # Load classes.
     data_module_class = _import_class(f"text_recognizer.data.{config.data.type}")
@@ -169,8 +187,14 @@ def cli(
     verbose: int,
 ) -> None:
     """Run experiment."""
-    _configure_logging(None, verbose=verbose)
-    run(path=experiment_config, train=train, test=test, tune=tune, use_wandb=use_wandb)
+    run(
+        filename=experiment_config,
+        train=train,
+        test=test,
+        tune=tune,
+        use_wandb=use_wandb,
+        verbose=verbose,
+    )
 
 
 if __name__ == "__main__":

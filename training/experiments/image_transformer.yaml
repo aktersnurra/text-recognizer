@@ -1,9 +1,12 @@
+seed: 4711
+
 network:
+        desc: null
         type: ImageTransformer
         args:
                 encoder:
-                        type: None
-                        args: None
+                        type: null
+                        args: null
                 num_decoder_layers: 4
                 hidden_dim: 256
                 num_heads: 4
@@ -12,6 +15,7 @@ network:
                 transformer_activation: glu
 
 model:
+        desc: null
         type: LitTransformerModel
         args:
                 optimizer:
@@ -31,11 +35,11 @@ model:
                                 weight: None
                                 ignore_index: -100
                                 reduction: mean
-
                 monitor: val_loss
                 mapping: sentence_piece
 
 data:
+        desc: null
         type: IAMExtendedParagraphs
         args:
                 batch_size: 16
@@ -55,6 +59,7 @@ callbacks:
                   patience: 10
 
 trainer:
+        desc: null
         args:
                 stochastic_weight_avg: true
                 auto_scale_batch_size: binsearch
@@ -62,6 +67,6 @@ trainer:
                 fast_dev_run: false
                 gpus: 1
                 precision: 16
-                max_epocs: 512
+                max_epochs: 512
                 terminate_on_nan: true
                 weights_summary: true
