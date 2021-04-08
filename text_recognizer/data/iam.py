@@ -7,7 +7,6 @@ import zipfile
 
 from boltons.cacheutils import cachedproperty
 from loguru import logger
-from PIL import Image
 import toml
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info

@@ -31,10 +31,11 @@ poetry run build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb
   - [x] build_transitions.py
   - [x] transform that encodes iam targets to wordpieces
   - [x] transducer loss function
-- [  ] Train with word pieces
+- [ ] Train with word pieces
+  - [ ] Pad word pieces index to same length
 - [ ] Local attention in first layer of transformer
 - [ ] Halonet encoder
-- [  ] Implement CPC
+- [ ] Implement CPC
   - [ ] https://arxiv.org/pdf/1905.09272.pdf
   - [ ] https://pytorch-lightning-bolts.readthedocs.io/en/latest/self_supervised_models.html?highlight=byol
 

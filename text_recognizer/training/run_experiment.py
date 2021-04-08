@@ -2,7 +2,7 @@
 from datetime import datetime
 import importlib
 from pathlib import Path
-from typing import Dict, List, NamedTuple, Optional, Union, Type
+from typing import Dict, List, Optional, Type
 
 import click
 from loguru import logger
@@ -28,7 +28,7 @@ def _configure_logging(log_dir: Optional[Path], verbose: int = 0) -> None:
         verbose = min(verbose, 2)
         return levels[verbose]
 
-    # Have to remove default logger to get tqdm to work properly.
+    # Remove default logger to get tqdm to work properly.
     logger.remove()
 
     # Fetch verbosity level.

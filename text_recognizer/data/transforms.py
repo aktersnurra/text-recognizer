@@ -23,12 +23,12 @@ class ToLower:
 class ToCharcters:
     """Converts integers to characters."""
 
-    def __init__(self) -> None:
-        self.mapping, _, _ = emnist_mapping()
+    def __init__(self, extra_symbols: Optional[List[str]] = None) -> None:
+        self.mapping, _, _ = emnist_mapping(extra_symbols)
 
     def __call__(self, y: Tensor) -> str:
         """Converts a Tensor to a str."""
-        return "".join([self.mapping(int(i)) for i in y]).strip("<p>").replace(" ", "▁")
+        return "".join([self.mapping[int(i)] for i in y]).replace(" ", "▁")
 
 
 class WordPieces:

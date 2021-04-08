@@ -67,7 +67,7 @@ def convert_strings_to_labels(
     labels = torch.ones((len(strings), length), dtype=torch.long) * mapping["<p>"]
     for i, string in enumerate(strings):
         tokens = list(string)
-        tokens = ["<s>", *tokens, "</s>"]
+        tokens = ["<s>", *tokens, "<e>"]
         for j, token in enumerate(tokens):
             labels[i, j] = mapping[token]
     return labels
