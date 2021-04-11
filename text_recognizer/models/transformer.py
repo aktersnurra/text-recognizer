@@ -1,5 +1,5 @@
 """PyTorch Lightning model for base Transformers."""
-from typing import Dict, List, Optional, Union, Tuple
+from typing import Dict, List, Optional, Union, Tuple, Type
 
 from omegaconf import DictConfig, OmegaConf
 import pytorch_lightning as pl
@@ -19,7 +19,7 @@ class LitTransformerModel(LitBaseModel):
 
     def __init__(
         self,
-        network: Type[nn, Module],
+        network: Type[nn.Module],
         optimizer: Union[DictConfig, Dict],
         lr_scheduler: Union[DictConfig, Dict],
         criterion: Union[DictConfig, Dict],
@@ -27,7 +27,6 @@ class LitTransformerModel(LitBaseModel):
         mapping: Optional[List[str]] = None,
     ) -> None:
         super().__init__(network, optimizer, lr_scheduler, criterion, monitor)
-
         self.mapping, ignore_tokens = self.configure_mapping(mapping)
         self.val_cer = CharacterErrorRate(ignore_tokens)
         self.test_cer = CharacterErrorRate(ignore_tokens)

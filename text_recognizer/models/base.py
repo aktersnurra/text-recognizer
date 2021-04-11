@@ -60,6 +60,7 @@ class LitBaseModel(pl.LightningModule):
         scheduler["scheduler"] = getattr(
             torch.optim.lr_scheduler, self._lr_scheduler.type
             )(optimizer, **args)
+
         return scheduler
 
     def configure_optimizers(self) -> Tuple[List[type], List[Dict[str, Any]]]:
