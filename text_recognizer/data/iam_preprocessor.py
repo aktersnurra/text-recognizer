@@ -119,7 +119,6 @@ class Preprocessor:
                     continue
                 self.text.append(example["text"].lower())
 
-
     def _to_index(self, line: str) -> torch.LongTensor:
         if line in self.special_tokens:
             return torch.LongTensor([self.tokens_to_index[line]])

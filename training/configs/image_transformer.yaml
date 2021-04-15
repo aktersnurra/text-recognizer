@@ -56,6 +56,7 @@ callbacks:
           args:
                   monitor: val_loss
                   mode: min
+                  save_last: true
         - type: StochasticWeightAveraging
           args:
                   swa_epoch_start: 0.8

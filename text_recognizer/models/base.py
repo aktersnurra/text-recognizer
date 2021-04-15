@@ -49,7 +49,9 @@ class LitBaseModel(pl.LightningModule):
             optimizer_class = getattr(torch.optim, self._optimizer.type)
         return optimizer_class(params=self.parameters(), **args)
 
-    def _configure_lr_scheduler(self, optimizer: Type[torch.optim.Optimizer]) -> Dict[str, Any]:
+    def _configure_lr_scheduler(
+        self, optimizer: Type[torch.optim.Optimizer]
+    ) -> Dict[str, Any]:
         """Configures the lr scheduler."""
         scheduler = {"monitor": self.monitor}
         args = {} or self._lr_scheduler.args
@@ -59,7 +61,7 @@ class LitBaseModel(pl.LightningModule):
 
         scheduler["scheduler"] = getattr(
             torch.optim.lr_scheduler, self._lr_scheduler.type
-            )(optimizer, **args)
+        )(optimizer, **args)
 
         return scheduler
 

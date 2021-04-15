@@ -15,7 +15,7 @@ import wandb
 
 SEED = 4711
 CONFIGS_DIRNAME = Path(__file__).parent.resolve() / "configs"
-LOGS_DIRNAME = Path(__file__).parent.resolve() / "runs" / "logs"
+LOGS_DIRNAME = Path(__file__).parent.resolve() / "logs"
 
 
 def _configure_logging(log_dir: Optional[Path], verbose: int = 0) -> None:
@@ -67,7 +67,7 @@ def _configure_callbacks(
 
 
 def _configure_logger(
-        network: Type[nn.Module], args: Dict, log_dir: str, use_wandb: bool
+    network: Type[nn.Module], args: Dict, log_dir: str, use_wandb: bool
 ) -> Type[pl.loggers.LightningLoggerBase]:
     """Configures lightning logger."""
     if use_wandb:
@@ -123,7 +123,6 @@ def run(
 
     _configure_logging(None, verbose=verbose)
     logger.info("Starting experiment...")
-
 
     # Seed everything in the experiment.
     logger.info(f"Seeding everthing with seed={SEED}")

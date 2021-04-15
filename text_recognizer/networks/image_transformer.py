@@ -44,7 +44,9 @@ class ImageTransformer(nn.Module):
         dropout_rate: float = 0.1,
         transformer_activation: str = "glu",
     ) -> None:
-        self.vocab_size = NUM_WORD_PIECES + NUM_SPECIAL_TOKENS if vocab_size is None else vocab_size
+        self.vocab_size = (
+            NUM_WORD_PIECES + NUM_SPECIAL_TOKENS if vocab_size is None else vocab_size
+        )
         self.hidden_dim = hidden_dim
         self.max_output_length = output_shape[0]
 
