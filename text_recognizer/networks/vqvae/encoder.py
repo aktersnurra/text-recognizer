@@ -1,5 +1,5 @@
 """CNN encoder for the VQ-VAE."""
-from typing import List, Optional, Tuple, Type
+from typing import Sequence, Optional, Tuple, Type
 
 import torch
 from torch import nn
@@ -11,7 +11,10 @@ from text_recognizer.networks.vqvae.vector_quantizer import VectorQuantizer
 
 class _ResidualBlock(nn.Module):
     def __init__(
-        self, in_channels: int, out_channels: int, dropout: Optional[Type[nn.Module]],
+        self,
+        in_channels: int,
+        out_channels: int,
+        dropout: Optional[Type[nn.Module]],
     ) -> None:
         super().__init__()
         self.block = [
@@ -36,9 +39,9 @@ class Encoder(nn.Module):
     def __init__(
         self,
         in_channels: int,
-        channels: List[int],
-        kernel_sizes: List[int],
-        strides: List[int],
+        channels: Sequence[int],
+        kernel_sizes: Sequence[int],
+        strides: Sequence[int],
         num_residual_layers: int,
         embedding_dim: int,
         num_embeddings: int,
@@ -77,12 +80,12 @@ class Encoder(nn.Module):
             self.num_embeddings, self.embedding_dim, self.beta
         )
 
+    @staticmethod
     def _build_compression_block(
-        self,
         in_channels: int,
         channels: int,
-        kernel_sizes: List[int],
-        strides: List[int],
+        kernel_sizes: Sequence[int],
+        strides: Sequence[int],
         activation: Type[nn.Module],
         dropout: Optional[Type[nn.Module]],
     ) -> nn.ModuleList:
@@ -109,8 +112,8 @@ class Encoder(nn.Module):
         self,
         in_channels: int,
         channels: int,
-        kernel_sizes: List[int],
-        strides: List[int],
+        kernel_sizes: Sequence[int],
+        strides: Sequence[int],
         num_residual_layers: int,
         activation: Type[nn.Module],
         dropout: Optional[Type[nn.Module]],
@@ -135,7 +138,12 @@ class Encoder(nn.Module):
         )
 
         encoder.append(
-            nn.Conv2d(channels[-1], self.embedding_dim, kernel_size=1, stride=1,)
+            nn.Conv2d(
+                channels[-1],
+                self.embedding_dim,
+                kernel_size=1,
+                stride=1,
+            )
         )
 
         return nn.Sequential(*encoder)

@@ -57,8 +57,8 @@ class EMNISTLines(BaseDataModule):
         self.num_test = num_test
 
         self.emnist = EMNIST()
-        # TODO: fix mapping
         self.mapping = self.emnist.mapping
+
         max_width = (
             int(self.emnist.dims[2] * (self.max_length + 1) * (1 - self.min_overlap))
             + IMAGE_X_PADDING

@@ -20,7 +20,11 @@ class Conv2dAuto(nn.Conv2d):
 
 def conv_bn(in_channels: int, out_channels: int, *args, **kwargs) -> nn.Sequential:
     """3x3 convolution with batch norm."""
-    conv3x3 = partial(Conv2dAuto, kernel_size=3, bias=False,)
+    conv3x3 = partial(
+        Conv2dAuto,
+        kernel_size=3,
+        bias=False,
+    )
     return nn.Sequential(
         conv3x3(in_channels, out_channels, *args, **kwargs),
         nn.BatchNorm2d(out_channels),

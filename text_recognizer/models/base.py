@@ -40,6 +40,15 @@ class LitBaseModel(pl.LightningModule):
         args = {} or criterion.args
         return getattr(nn, criterion.type)(**args)
 
+    def optimizer_zero_grad(
+        self,
+        epoch: int,
+        batch_idx: int,
+        optimizer: Type[torch.optim.Optimizer],
+        optimizer_idx: int,
+    ) -> None:
+        optimizer.zero_grad(set_to_none=True)
+
     def _configure_optimizer(self) -> Type[torch.optim.Optimizer]:
         """Configures the optimizer."""
         args = {} or self._optimizer.args

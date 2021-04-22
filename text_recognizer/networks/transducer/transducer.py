@@ -392,7 +392,12 @@ def load_transducer_loss(
         transitions = gtn.load(str(processed_path / transitions))
 
     preprocessor = Preprocessor(
-        data_dir, num_features, tokens_path, lexicon_path, use_words, prepend_wordsep,
+        data_dir,
+        num_features,
+        tokens_path,
+        lexicon_path,
+        use_words,
+        prepend_wordsep,
     )
 
     num_tokens = preprocessor.num_tokens

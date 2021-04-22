@@ -18,6 +18,7 @@ from text_recognizer.data.base_data_module import BaseDataModule, load_and_print
 from text_recognizer.data.iam_paragraphs import (
     get_dataset_properties,
     get_transform,
+    get_target_transform,
     NEW_LINE_TOKEN,
     IAMParagraphs,
     IMAGE_SCALE_FACTOR,
@@ -41,12 +42,13 @@ class IAMSyntheticParagraphs(IAMParagraphs):
 
     def __init__(
         self,
-        batch_size: int = 128,
+        batch_size: int = 16,
         num_workers: int = 0,
         train_fraction: float = 0.8,
         augment: bool = True,
+        word_pieces: bool = False,
     ) -> None:
-        super().__init__(batch_size, num_workers, train_fraction, augment)
+        super().__init__(batch_size, num_workers, train_fraction, augment, word_pieces)
 
     def prepare_data(self) -> None:
         """Prepare IAM lines to be used to generate paragraphs."""
@@ -95,6 +97,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
                 transform=get_transform(
                     image_shape=self.dims[1:], augment=self.augment
                 ),
+                target_transform=get_target_transform(self.word_pieces)
             )
 
     def __repr__(self) -> str:

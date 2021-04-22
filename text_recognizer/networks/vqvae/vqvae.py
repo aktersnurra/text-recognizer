@@ -1,8 +1,7 @@
 """The VQ-VAE."""
 
-from typing import List, Optional, Tuple, Type
+from typing import Any, Dict, List, Optional, Tuple
 
-import torch
 from torch import nn
 from torch import Tensor
 
@@ -25,6 +24,8 @@ class VQVAE(nn.Module):
         beta: float = 0.25,
         activation: str = "leaky_relu",
         dropout_rate: float = 0.0,
+        *args: Any,
+        **kwargs: Dict,
     ) -> None:
         super().__init__()
 

@@ -44,7 +44,12 @@ class Decoder(nn.Module):
 
         # Configure encoder.
         self.decoder = self._build_decoder(
-            channels, kernel_sizes, strides, num_residual_layers, activation, dropout,
+            channels,
+            kernel_sizes,
+            strides,
+            num_residual_layers,
+            activation,
+            dropout,
         )
 
     def _build_decompression_block(
@@ -72,8 +77,10 @@ class Decoder(nn.Module):
                 )
             )
 
-            if i < len(self.upsampling):
-                modules.append(nn.Upsample(size=self.upsampling[i]),)
+            if self.upsampling and i < len(self.upsampling):
+                modules.append(
+                    nn.Upsample(size=self.upsampling[i]),
+                )
 
             if dropout is not None:
                 modules.append(dropout)
@@ -102,7 +109,12 @@ class Decoder(nn.Module):
     ) -> nn.Sequential:
 
         self.res_block.append(
-            nn.Conv2d(self.embedding_dim, channels[0], kernel_size=1, stride=1,)
+            nn.Conv2d(
+                self.embedding_dim,
+                channels[0],
+                kernel_size=1,
+                stride=1,
+            )
         )
 
         # Bottleneck module.

@@ -1,2 +1,2 @@
 """Network modules"""
-from .image_transformer import ImageTransformer
+from .vqvae import VQVAE

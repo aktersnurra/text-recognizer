@@ -89,6 +89,7 @@ class Preprocessor:
             self.lexicon = None
 
         if self.special_tokens is not None:
+            self.special_tokens += ("#", "*")
             self.tokens += self.special_tokens
             self.graphemes += self.special_tokens
 
