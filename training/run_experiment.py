@@ -22,7 +22,7 @@ def _create_experiment_dir(config: DictConfig) -> Path:
     """Creates log directory for experiment."""
     log_dir = (
         LOGS_DIRNAME
-        / f"{config.model.type}_{config.network.type}"
+        / f"{config.model.type}_{config.network.type}".lower()
         / datetime.now().strftime("%m%d_%H%M%S")
     )
     log_dir.mkdir(parents=True, exist_ok=True)
