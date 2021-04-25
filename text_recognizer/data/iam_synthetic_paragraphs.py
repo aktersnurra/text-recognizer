@@ -97,7 +97,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
                 transform=get_transform(
                     image_shape=self.dims[1:], augment=self.augment
                 ),
-                target_transform=get_target_transform(self.word_pieces)
+                target_transform=get_target_transform(self.word_pieces),
             )
 
     def __repr__(self) -> str:

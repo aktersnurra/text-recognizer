@@ -2,12 +2,13 @@ seed: 4711
 
 network:
         desc: Configuration of the PyTorch neural network.
-        type: ImageTransformer
+        type: CNNTransformer
         args:
                 encoder:
-                        type: null
+                        type: EfficientNet
                         args: null
                 num_decoder_layers: 4
+                vocab_size: 84
                 hidden_dim: 256
                 num_heads: 4
                 expansion_dim: 1024
@@ -26,7 +27,7 @@ model:
                                 weight_decay: 0
                                 eps: 1.0e-6
                 lr_scheduler:
-                        type: OneCycle
+                        type: OneCycleLR
                         args:
                                 interval: &interval step
                                 max_lr: 1.0e-3
@@ -36,7 +37,7 @@ model:
                 criterion:
                         type: CrossEntropyLoss
                         args:
-                                weight: None
+                                weight: null
                                 ignore_index: -100
                                 reduction: mean
                 monitor: val_loss
@@ -46,7 +47,7 @@ data:
         desc: Configuration of the training/test data.
         type: IAMExtendedParagraphs
         args:
-                batch_size: 16
+                batch_size: 8
                 num_workers: 12
                 train_fraction: 0.8
                 augment: true
@@ -57,33 +58,33 @@ callbacks:
                   monitor: val_loss
                   mode: min
                   save_last: true
-        - type: StochasticWeightAveraging
-          args:
-                  swa_epoch_start: 0.8
-                  swa_lrs: 0.05
-                  annealing_epochs: 10
-                  annealing_strategy: cos
-                  device: null
+        # - type: StochasticWeightAveraging
+        #   args:
+        #           swa_epoch_start: 0.8
+        #           swa_lrs: 0.05
+        #           annealing_epochs: 10
+        #           annealing_strategy: cos
+        #           device: null
         - type: LearningRateMonitor
           args:
                   logging_interval: *interval
-        - type: EarlyStopping
-          args:
-                  monitor: val_loss
-                  mode: min
-                  patience: 10
+        # - type: EarlyStopping
+        #   args:
+        #           monitor: val_loss
+        #           mode: min
+        #           patience: 10
 
 trainer:
         desc: Configuration of the PyTorch Lightning Trainer.
         args:
-                stochastic_weight_avg: true
+                stochastic_weight_avg: false
                 auto_scale_batch_size: binsearch
                 gradient_clip_val: 0
-                fast_dev_run: false
+                fast_dev_run: true
                 gpus: 1
                 precision: 16
                 max_epochs: 512
                 terminate_on_nan: true
-                weights_summary: true
+                weights_summary: top
 
 load_checkpoint: null 

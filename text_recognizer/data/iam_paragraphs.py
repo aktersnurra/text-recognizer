@@ -101,7 +101,7 @@ class IAMParagraphs(BaseDataModule):
                 data,
                 targets,
                 transform=get_transform(image_shape=self.dims[1:], augment=augment),
-                target_transform=get_target_transform(self.word_pieces)
+                target_transform=get_target_transform(self.word_pieces),
             )
 
         logger.info(f"Loading IAM paragraph regions and lines for {stage}...")
@@ -162,10 +162,7 @@ def get_dataset_properties() -> Dict:
             "min": min(_get_property_values("num_lines")),
             "max": max(_get_property_values("num_lines")),
         },
-        "crop_shape": {
-            "min": crop_shapes.min(axis=0),
-            "max": crop_shapes.max(axis=0),
-        },
+        "crop_shape": {"min": crop_shapes.min(axis=0), "max": crop_shapes.max(axis=0),},
         "aspect_ratio": {
             "min": aspect_ratio.min(axis=0),
             "max": aspect_ratio.max(axis=0),
@@ -286,9 +283,7 @@ def get_transform(image_shape: Tuple[int, int], augment: bool) -> transforms.Com
             ),
             transforms.ColorJitter(brightness=(0.8, 1.6)),
             transforms.RandomAffine(
-                degrees=1,
-                shear=(-10, 10),
-                interpolation=InterpolationMode.BILINEAR,
+                degrees=1, shear=(-10, 10), interpolation=InterpolationMode.BILINEAR,
             ),
         ]
     else:
@@ -296,9 +291,11 @@ def get_transform(image_shape: Tuple[int, int], augment: bool) -> transforms.Com
     transforms_list.append(transforms.ToTensor())
     return transforms.Compose(transforms_list)
 
+
 def get_target_transform(word_pieces: bool) -> Optional[transforms.Compose]:
     """Transform emnist characters to word pieces."""
     return transforms.Compose([WordPiece()]) if word_pieces else None
+
 
 def _labels_filename(split: str) -> Path:
     """Return filename of processed labels."""

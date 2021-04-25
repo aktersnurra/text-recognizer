@@ -58,13 +58,13 @@ class WordPieceMapping(EmnistMapping):
     def __init__(
         self,
         num_features: int = 1000,
-        tokens: str = "iamdb_1kwp_tokens_1000.txt" ,
+        tokens: str = "iamdb_1kwp_tokens_1000.txt",
         lexicon: str = "iamdb_1kwp_lex_1000.txt",
         data_dir: Optional[Union[str, Path]] = None,
         use_words: bool = False,
         prepend_wordsep: bool = False,
         special_tokens: Sequence[str] = ("<s>", "<e>", "<p>"),
-        extra_symbols: Optional[Sequence[str]] = ("\n", ),
+        extra_symbols: Optional[Sequence[str]] = ("\n",),
     ) -> None:
         super().__init__(extra_symbols)
         self.wordpiece_processor = self._configure_wordpiece_processor(
@@ -90,7 +90,13 @@ class WordPieceMapping(EmnistMapping):
         extra_symbols: Optional[Sequence[str]],
     ) -> Preprocessor:
         data_dir = (
-            (Path(__file__).resolve().parents[2] / "data" / "downloaded" / "iam" / "iamdb")
+            (
+                Path(__file__).resolve().parents[2]
+                / "data"
+                / "downloaded"
+                / "iam"
+                / "iamdb"
+            )
             if data_dir is None
             else Path(data_dir)
         )

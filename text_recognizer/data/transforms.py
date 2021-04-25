@@ -13,7 +13,7 @@ class WordPiece:
     def __init__(
         self,
         num_features: int = 1000,
-        tokens: str = "iamdb_1kwp_tokens_1000.txt" ,
+        tokens: str = "iamdb_1kwp_tokens_1000.txt",
         lexicon: str = "iamdb_1kwp_lex_1000.txt",
         data_dir: Optional[Union[str, Path]] = None,
         use_words: bool = False,
@@ -35,4 +35,4 @@ class WordPiece:
         self.max_len = max_len
 
     def __call__(self, x: Tensor) -> Tensor:
-        return self.mapping.emnist_to_wordpiece_indices(x)[:self.max_len]
+        return self.mapping.emnist_to_wordpiece_indices(x)[: self.max_len]

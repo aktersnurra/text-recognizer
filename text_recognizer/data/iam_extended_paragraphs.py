@@ -19,18 +19,10 @@ class IAMExtendedParagraphs(BaseDataModule):
         super().__init__(batch_size, num_workers)
 
         self.iam_paragraphs = IAMParagraphs(
-            batch_size,
-            num_workers,
-            train_fraction,
-            augment,
-            word_pieces,
+            batch_size, num_workers, train_fraction, augment, word_pieces,
         )
         self.iam_synthetic_paragraphs = IAMSyntheticParagraphs(
-            batch_size,
-            num_workers,
-            train_fraction,
-            augment,
-            word_pieces,
+            batch_size, num_workers, train_fraction, augment, word_pieces,
         )
 
         self.dims = self.iam_paragraphs.dims

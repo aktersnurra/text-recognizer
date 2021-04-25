@@ -5,12 +5,12 @@ network:
         type: VQVAE
         args:
             in_channels: 1
-            channels: [32, 64, 64]
-            kernel_sizes: [4, 4, 4]
-            strides: [2, 2, 2]
+            channels: [32, 64, 64, 96, 96]
+            kernel_sizes: [4, 4, 4, 4, 4]
+            strides: [2, 2, 2, 2, 2]
             num_residual_layers: 2 
-            embedding_dim: 128
-            num_embeddings: 512
+            embedding_dim: 512
+            num_embeddings: 1024
             upsampling: null
             beta: 0.25
             activation: leaky_relu

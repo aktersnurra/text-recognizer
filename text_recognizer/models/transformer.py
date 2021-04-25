@@ -39,7 +39,7 @@ class LitTransformerModel(LitBaseModel):
     def configure_mapping(mapping: Optional[List[str]]) -> Tuple[List[str], List[int]]:
         """Configure mapping."""
         # TODO: Fix me!!!
-        mapping, inverse_mapping, _ = emnist_mapping()
+        mapping, inverse_mapping, _ = emnist_mapping(["\n"])
         start_index = inverse_mapping["<s>"]
         end_index = inverse_mapping["<e>"]
         pad_index = inverse_mapping["<p>"]
