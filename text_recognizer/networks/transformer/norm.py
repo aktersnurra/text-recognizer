@@ -20,3 +20,16 @@ class Rezero(nn.Module):
     def forward(self, x: Tensor, **kwargs: Dict) -> Tensor:
         x, *rest = self.fn(x, **kwargs)
         return (x * self.g, *rest)
+
+
+class ScaleNorm(nn.Module):
+    def __init__(self, dim: int, eps: float = 1.0e-5) -> None:
+        super().__init__()
+        self.scale = dim ** -0.5
+        self.eps = eps
+        self.g = nn.Parameter(torch.ones(1))
+
+    def forward(self, x: Tensor) -> Tensor:
+        norm = torch.norm(x, dim=-1, keepdim=True) * self.scale
+        return x / norm.clamp(min=self.eps) self.g
+    
