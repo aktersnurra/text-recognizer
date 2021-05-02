@@ -149,9 +149,9 @@ def run(config: DictConfig) -> None:
 
 
 @hydra.main(config_path="conf", config_name="config")
-def main(cfg: DictConfig) -> None:
+def main(config: DictConfig) -> None:
     """Loads config with hydra."""
-    run(cfg)
+    run(config)
 
 
 if __name__ == "__main__":

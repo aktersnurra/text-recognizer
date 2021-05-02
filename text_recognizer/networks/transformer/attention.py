@@ -58,6 +58,7 @@ class Attention(nn.Module):
         context_mask: Optional[Tensor],
         rotary_pos_emb: Optional[Tensor] = None,
     ) -> Tuple[Tensor, Tensor]:
+        b, n, _, device = x.shape, x.device
         q, k, v = self.qkv_fn(x)
         q, k = (
             self._apply_rotary_emb(q, k, rotary_pos_emb)
@@ -66,7 +67,13 @@ class Attention(nn.Module):
             k,
         )
 
+        input_mask = None
         if any(x is not None for x in (mask, context_mask)):
+            q_mask = (
+                mask
+                if mask is not None
+                else lambda: torch.ones((b, n), device=device).bool()
+            )
             pass
 
         # Compute the attention
