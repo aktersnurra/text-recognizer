@@ -1,0 +1,6 @@
+defaults:
+    - network: vqvae
+    - model: lit_vqvae
+    - dataset: iam_extended_paragraphs
+    - trainer: default
+    - callbacks: default

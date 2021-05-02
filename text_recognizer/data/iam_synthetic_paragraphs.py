@@ -76,7 +76,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
     def setup(self, stage: str = None) -> None:
         """Loading synthetic dataset."""
 
-        logger.info(f"IAM Synthetic dataset steup for stage {stage}")
+        logger.info(f"IAM Synthetic dataset steup for stage {stage}...")
 
         if stage == "fit" or stage is None:
             line_crops, line_labels = load_line_crops_and_labels(

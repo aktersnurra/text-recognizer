@@ -37,6 +37,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "antlr4-python3-runtime"
+version = "4.8"
+description = "ANTLR 4.8 runtime for Python 3.7"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "appdirs"
 version = "1.4.4"
 description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
@@ -622,6 +630,19 @@ numpy = [
 ]
 
 [[package]]
+name = "hydra-core"
+version = "1.0.6"
+description = "A framework for elegantly configuring complex applications"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+antlr4-python3-runtime = "4.8"
+importlib-resources = {version = "*", markers = "python_version < \"3.9\""}
+omegaconf = ">=2.0.5,<2.1"
+
+[[package]]
 name = "idna"
 version = "2.10"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -636,6 +657,18 @@ description = "Getting image size from png/jpeg/jpeg2000/gif file"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[[package]]
+name = "importlib-resources"
+version = "5.1.2"
+description = "Read resources from Python packages"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
+testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "pytest-enabler", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [[package]]
 name = "ipykernel"
@@ -2086,7 +2119,7 @@ brotli = ["brotlipy (>=0.6.0)"]
 
 [[package]]
 name = "wandb"
-version = "0.10.27"
+version = "0.10.28"
 description = "A CLI and library for interacting with the Weights and Biases API."
 category = "main"
 optional = false
@@ -2197,7 +2230,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "07d5f14d7c55a961ce1841ecd125c0f7c83d5649cc118fcae2ed3b58347ca8c2"
+content-hash = "bcc456879df9e9ec937f1aa8c339fe96ca18ce95b12b12fc10c23494829296e8"
 
 [metadata.files]
 absl-py = [
@@ -2246,6 +2279,9 @@ aiohttp = [
 alabaster = [
     {file = "alabaster-0.7.12-py2.py3-none-any.whl", hash = "sha256:446438bdcca0e05bd45ea2de1668c1d9b032e1a9154c2c259092d77031ddd359"},
     {file = "alabaster-0.7.12.tar.gz", hash = "sha256:a661d72d58e6ea8a57f7a86e37d86716863ee5e92788398526d58b26a4e4dc02"},
+]
+antlr4-python3-runtime = [
+    {file = "antlr4-python3-runtime-4.8.tar.gz", hash = "sha256:15793f5d0512a372b4e7d2284058ad32ce7dd27126b105fb0b2245130445db33"},
 ]
 appdirs = [
     {file = "appdirs-1.4.4-py2.py3-none-any.whl", hash = "sha256:a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128"},
@@ -2628,6 +2664,10 @@ h5py = [
     {file = "h5py-3.2.1-cp39-cp39-win_amd64.whl", hash = "sha256:7c5b5f18c96fb63399280a724734fd91e1781c6b60e385e439ad8e654a294ba4"},
     {file = "h5py-3.2.1.tar.gz", hash = "sha256:89474be911bfcdb34cbf0d98b8ec48b578c27a89fdb1ae4ee7513f1ef8d9249e"},
 ]
+hydra-core = [
+    {file = "hydra-core-1.0.6.tar.gz", hash = "sha256:be5fe119eb41ada20c82835b153b956781de7e2506670ba942f7453b2e850950"},
+    {file = "hydra_core-1.0.6-py3-none-any.whl", hash = "sha256:500d4346b7afcd654276c87c15820d7e6b76c2da95ad698cceb4120d7a877b32"},
+]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
     {file = "idna-2.10.tar.gz", hash = "sha256:b307872f855b18632ce0c21c5e45be78c0ea7ae4c15c828c20788b26921eb3f6"},
@@ -2635,6 +2675,10 @@ idna = [
 imagesize = [
     {file = "imagesize-1.2.0-py2.py3-none-any.whl", hash = "sha256:6965f19a6a2039c7d48bca7dba2473069ff854c36ae6f19d2cde309d998228a1"},
     {file = "imagesize-1.2.0.tar.gz", hash = "sha256:b1f6b5a4eab1f73479a50fb79fcf729514a900c341d8503d62a62dbc4127a2b1"},
+]
+importlib-resources = [
+    {file = "importlib_resources-5.1.2-py3-none-any.whl", hash = "sha256:ebab3efe74d83b04d6bf5cd9a17f0c5c93e60fb60f30c90f56265fce4682a469"},
+    {file = "importlib_resources-5.1.2.tar.gz", hash = "sha256:642586fc4740bd1cad7690f836b3321309402b20b332529f25617ff18e8e1370"},
 ]
 ipykernel = [
     {file = "ipykernel-5.5.3-py3-none-any.whl", hash = "sha256:21abd584543759e49010975a4621603b3cf871b1039cb3879a14094717692614"},
@@ -3635,8 +3679,8 @@ urllib3 = [
     {file = "urllib3-1.26.4.tar.gz", hash = "sha256:e7b021f7241115872f92f43c6508082facffbd1c048e3c6e2bb9c2a157e28937"},
 ]
 wandb = [
-    {file = "wandb-0.10.27-py2.py3-none-any.whl", hash = "sha256:f591bb9d5c402ec5c12bd823db913d49ac31e4068f2c35c50b6f13e4fcd717b4"},
-    {file = "wandb-0.10.27.tar.gz", hash = "sha256:1b6d3bbfd644183bbd79a02ff9e57e65a8a4f7c9b770af0d3c4f961ae6d7fc73"},
+    {file = "wandb-0.10.28-py2.py3-none-any.whl", hash = "sha256:609f2605ec82f846490a2bdd9d01fa947b1892a76133cbb80c41501e5dfda763"},
+    {file = "wandb-0.10.28.tar.gz", hash = "sha256:b48aa55f147717e197d38b0dd9d9ef3662efe54fefc0be2909f93e8a5c0cc71b"},
 ]
 wcwidth = [
     {file = "wcwidth-0.2.5-py2.py3-none-any.whl", hash = "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784"},
