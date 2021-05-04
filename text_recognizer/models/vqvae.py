@@ -35,12 +35,7 @@ class LitVQVAEModel(LitBaseModel):
         """Logs prediction on image with wandb."""
         try:
             self.logger.experiment.log(
-                {
-                    title: [
-                        wandb.Image(data[0]),
-                        wandb.Image(reconstructions[0]),
-                    ]
-                }
+                {title: [wandb.Image(data[0]), wandb.Image(reconstructions[0]),]}
             )
         except AttributeError:
             pass
