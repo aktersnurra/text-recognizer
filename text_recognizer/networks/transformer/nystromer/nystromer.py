@@ -26,7 +26,8 @@ class Nystromer(nn.Module):
         residual: bool = True,
         residual_conv_kernel: int = 33,
         dropout_rate: float = 0.0,
-    ):
+        glu: bool = True,
+    ) -> None:
         super().__init__()
         self.layers = nn.ModuleList(
             [
@@ -45,7 +46,10 @@ class Nystromer(nn.Module):
                                 dropout_rate=dropout_rate,
                             ),
                         ),
-                        PreNorm(dim, FeedForward(dim=dim, dropout_rate=dropout_rate)),
+                        PreNorm(
+                            dim,
+                            FeedForward(dim=dim, glu=glu, dropout_rate=dropout_rate),
+                        ),
                     ]
                 )
                 for _ in range(depth)
