@@ -9,7 +9,9 @@ from torch import nn
 from torch import Tensor
 import torch.nn.functional as F
 
-from text_recognizer.networks.transformer.rotary_embedding import apply_rotary_pos_emb
+from text_recognizer.networks.transformer.positional_encodings.rotary_embedding import (
+    apply_rotary_pos_emb,
+)
 
 
 class Attention(nn.Module):
