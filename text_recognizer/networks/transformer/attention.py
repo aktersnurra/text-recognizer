@@ -23,6 +23,7 @@ class Attention(nn.Module):
         dropout_rate: float = 0.0,
         causal: bool = False,
     ) -> None:
+        super().__init__()
         self.scale = dim ** -0.5
         self.num_heads = num_heads
         self.causal = causal

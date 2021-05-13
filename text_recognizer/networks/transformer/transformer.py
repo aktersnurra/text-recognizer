@@ -1,5 +1,5 @@
 """Transformer wrapper."""
-from typing import Optional, Type
+from typing import Any, Optional, Type
 
 from torch import nn, Tensor
 
@@ -58,4 +58,4 @@ class Transformer(nn.Module):
         x = self.project_emb(x)
         x = self.attn_layers(x, mask=mask, **kwargs)
         out = self.logits(x) if not return_embeddings else x
-        return x
+        return out
