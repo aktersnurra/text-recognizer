@@ -11,24 +11,24 @@ TBC
 
 Extract text from the iam dataset:
 ```
-poetry run python extract-iam-text --use_words --save_text train.txt --save_tokens letters.txt
+python extract-iam-text --use_words --save_text train.txt --save_tokens letters.txt
 ```
 
 Create word pieces from the extracted training text:
 ```
-poetry run python make-wordpieces --output_prefix iamdb_1kwp --text_file train.txt --num_pieces 100
+python make-wordpieces --output_prefix iamdb_1kwp --text_file train.txt --num_pieces 100
 ```
 
 Optionally, build a transition graph for word pieces:
 ```
-poetry run python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kwp_lex_1000.txt --blank optional --self_loops --save_path 1kwp_prune_0_10_optblank.bin --prune 0 10
+python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kwp_lex_1000.txt --blank optional --self_loops --save_path 1kwp_prune_0_10_optblank.bin --prune 0 10
 ```
 (TODO: Not working atm, needed for GTN loss function)
 
 ## Todo
 - [ ] Reimplement transformer from scratch
-- [ ] Implement Nyström attention (for efficient attention)
-- [ ] Dino 
+- [x] Implement Nyström attention (for efficient attention)
+- [ ] Implement Dino 
 - [ ] Efficient-net b0 + transformer decoder
 - [ ] Test encoder pre-training ViT (CvT?) with Dino, then train decoder in a separate step
 
