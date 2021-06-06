@@ -1,4 +1,5 @@
 """Absolute positional embedding."""
+import torch
 from torch import nn, Tensor
 
 

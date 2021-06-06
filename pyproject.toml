@@ -2,7 +2,7 @@
 name = "text-recognizer"
 version = "0.1.0"
 authors = ["aktersnurra <gustaf.rydholm@gmail.com>"]
-description = "A text recognizer using best pratices in python and deep learning."
+description = "Text recognition software using best pratices in python."
 license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/aktersnurra/text-recognizer"

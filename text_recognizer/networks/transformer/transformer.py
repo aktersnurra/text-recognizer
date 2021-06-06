@@ -19,7 +19,9 @@ class Transformer(nn.Module):
         emb_dropout: float = 0.0,
         use_pos_emb: bool = True,
     ) -> None:
+        super().__init__()
         dim = attn_layers.dim
+        self.attn_layers = attn_layers
         emb_dim = emb_dim if emb_dim is not None else dim
         self.max_seq_len = max_seq_len
 
@@ -32,7 +34,6 @@ class Transformer(nn.Module):
         )
 
         self.project_emb = nn.Linear(emb_dim, dim) if emb_dim != dim else nn.Identity()
-        self.attn_layers = attn_layers
         self.norm = nn.LayerNorm(dim)
 
         self._init_weights()
@@ -45,12 +46,12 @@ class Transformer(nn.Module):
     def forward(
         self,
         x: Tensor,
-        mask: Optional[Tensor],
+        mask: Optional[Tensor] = None,
         return_embeddings: bool = False,
         **kwargs: Any
     ) -> Tensor:
         b, n, device = *x.shape, x.device
-        x += self.token_emb(x)
+        x = self.token_emb(x)
         if self.pos_emb is not None:
             x += self.pos_emb(x)
         x = self.emb_dropout(x)
