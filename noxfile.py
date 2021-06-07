@@ -13,7 +13,6 @@ locations = (
     "training",
     "tests",
     "noxfile.py",
-    "docs/conf.py",
 )
 
 
@@ -125,26 +124,9 @@ def typeguard(session: Session) -> None:
     session.run("pytest", f"--typeguard-packages={package}", *args)
 
 
-@nox.session(python=["3.9"])
-def xdoctest(session: Session) -> None:
-    """Run examples with xdoctest."""
-    args = session.posargs or ["all"]
-    session.run("poetry", "install", "--no-dev", external=True)
-    install_with_constraints(session, "xdoctest")
-    session.run("python", "-m", "xdoctest", package, *args)
-
-
 @nox.session(python="3.9")
 def coverage(session: Session) -> None:
     """Upload coverage data."""
     install_with_constraints(session, "coverage[toml]", "codecov")
     session.run("coverage", "xml", "--fail-under=0")
     session.run("codecov", *session.posargs)
-
-
-@nox.session(python="3.9")
-def docs(session: Session) -> None:
-    """Build the documentation."""
-    session.run("poetry", "install", "--no-dev", external=True)
-    install_with_constraints(session, "sphinx", "sphinx-autodoc-typehints")
-    session.run("sphinx-build", "docs", "docs/_build")

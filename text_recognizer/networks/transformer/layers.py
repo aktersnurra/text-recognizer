@@ -47,11 +47,7 @@ class AttentionLayers(nn.Module):
         return "a", "f"
 
     def _build_network(
-        self,
-        causal: bool,
-        attn_fn: partial,
-        norm_fn: partial,
-        ff_fn: partial,
+        self, causal: bool, attn_fn: partial, norm_fn: partial, ff_fn: partial,
     ) -> nn.ModuleList:
         """Configures transformer network."""
         layers = nn.ModuleList([])
