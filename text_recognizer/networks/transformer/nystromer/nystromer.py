@@ -29,6 +29,7 @@ class Nystromer(nn.Module):
         glu: bool = True,
     ) -> None:
         super().__init__()
+        self.dim = dim
         self.layers = nn.ModuleList(
             [
                 nn.ModuleList(

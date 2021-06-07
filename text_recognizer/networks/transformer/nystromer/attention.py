@@ -47,6 +47,7 @@ class NystromAttention(nn.Module):
         dropout_rate: float = 0.0,
     ):
         super().__init__()
+        self.dim = dim
         self.residual = None
         self.eps = eps
         self.num_heads = num_heads
