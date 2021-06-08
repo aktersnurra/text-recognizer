@@ -125,27 +125,19 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-# Pyre type checker
-.pyre/
 
 !data
 data/*
-!data/EMNIST
-data/EMNIST/*
-!data/EMNIST/raw
-data/EMNIST/raw/*
-!data/EMNIST/raw/metadata.toml
+!data/raw
+data/raw/*
 
-src/training/experiments/*
-!src/training/experiments/sample_experiment.yml
-!src/training/experiments/iam_line_ctc_experiment.yml
-!src/training/experiments/line_ctc_experiment.yml
-!src/training/experiments/default_config_emnist.yml
-!src/training/experiments/embedding_experiment.yml
-<<<<<<< HEAD
-src/text_recognizer/weights/*Transformer*.pt
-=======
+!data/raw/emnist
+data/raw/emnist/*
+!data/raw/emnist/metadata.toml
 
->>>>>>> 6cb08a110620ee09fe9d8a5d008197a801d025df
+!data/raw/iam
+data/raw/iam/*
+!data/raw/iam/metadata.toml
+
 src/wandb/*
 !src/wandb/settings
