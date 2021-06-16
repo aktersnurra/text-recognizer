@@ -27,14 +27,17 @@ class MBConvBlock(nn.Module):
         self.kernel_size = kernel_size
         self.bn_momentum = bn_momentum
         self.bn_eps = bn_eps
+        self.id_skip = id_skip
         self.has_se = se_ratio is not None and 0.0 < se_ratio < 1.0
 
-        out_channels = in_channels * expand_ratio
+
+    def _build(self, image_size: Tuple[int, int], in_channels: int, kernel_size: int, stride: int, expand_ratio: int) -> None:
+        inner_channels = in_channels * expand_ratio
         self._inverted_bottleneck = (
             self._configure_inverted_bottleneck(
                 image_size=image_size,
                 in_channels=in_channels,
-                out_channels=out_channels,
+                out_channels=inner_channels,
             )
             if expand_ratio != 1
             else None
@@ -43,8 +46,8 @@ class MBConvBlock(nn.Module):
         self._depthwise = self._configure_depthwise(
             image_size=image_size,
             in_channels=in_channels,
-            out_channels=out_channels,
-            groups=out_channels,
+            out_channels=inner_channels,
+            groups=inner_channels,
             kernel_size=kernel_size,
             stride=stride,
         )
@@ -52,14 +55,14 @@ class MBConvBlock(nn.Module):
         image_size = calculate_output_image_size(image_size, stride)
         self._squeeze_excite = (
             self._configure_squeeze_excite(
-                in_channels=out_channels, out_channels=out_channels, se_ratio=se_ratio
+                in_channels=inner_channels, out_channels=inner_channels, se_ratio=se_ratio
             )
             if self.has_se
             else None
         )
 
         self._pointwise = self._configure_pointwise(
-            image_size=image_size, in_channels=out_channels, out_channels=out_channels
+            image_size=image_size, in_channels=inner_channels, out_channels=out_channels
         )
 
     def _configure_inverted_bottleneck(
