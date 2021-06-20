@@ -1,2 +1,2 @@
 """Vision backbones."""
-from .efficientnet import EfficientNet
+# from .efficientnet import EfficientNet
