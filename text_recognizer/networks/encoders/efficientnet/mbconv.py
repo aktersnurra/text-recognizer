@@ -1,5 +1,5 @@
 """Mobile inverted residual block."""
-from typing import Optional, Tuple
+from typing import Any, Optional, Tuple
 
 import torch
 from torch import nn, Tensor
@@ -20,15 +20,15 @@ class MBConvBlock(nn.Module):
         bn_momentum: float,
         bn_eps: float,
         se_ratio: float,
-        id_skip: bool,
         expand_ratio: int,
         image_size: Optional[Tuple[int, int]],
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         super().__init__()
         self.kernel_size = kernel_size
         self.bn_momentum = bn_momentum
         self.bn_eps = bn_eps
-        self.id_skip = id_skip
         self.in_channels = self.in_channels
         self.out_channels = out_channels
 
