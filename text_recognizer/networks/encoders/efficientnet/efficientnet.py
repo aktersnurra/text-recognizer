@@ -47,6 +47,7 @@ class EfficientNet(nn.Module):
         in_channels = 1  # BW
         out_channels = round_filters(32, self.arch)
         self._conv_stem = nn.Sequential(
+            nn.ZeroPad2d((0, 1, 0, 1)),
             nn.Conv2d(
                 in_channels=in_channels,
                 out_channels=out_channels,
