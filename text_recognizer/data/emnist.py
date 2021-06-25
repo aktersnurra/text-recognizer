@@ -10,7 +10,7 @@ import h5py
 from loguru import logger
 import numpy as np
 import toml
-from torchvision import transforms
+import torchvision.transforms as T
 
 from text_recognizer.data.base_data_module import (
     BaseDataModule,
@@ -53,7 +53,7 @@ class EMNIST(BaseDataModule):
         self.data_train = None
         self.data_val = None
         self.data_test = None
-        self.transform = transforms.Compose([transforms.ToTensor()])
+        self.transform = T.Compose([T.ToTensor()])
         self.dims = (1, *self.input_shape)
         self.output_dims = (1,)
 

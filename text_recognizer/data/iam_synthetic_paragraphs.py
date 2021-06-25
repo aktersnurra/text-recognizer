@@ -1,8 +1,5 @@
 """IAM Synthetic Paragraphs Dataset class."""
-import itertools
-from pathlib import Path
 import random
-import time
 from typing import Any, List, Sequence, Tuple
 
 from loguru import logger
@@ -12,7 +9,6 @@ from PIL import Image
 from text_recognizer.data.base_dataset import (
     BaseDataset,
     convert_strings_to_labels,
-    split_dataset,
 )
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.iam_paragraphs import (
