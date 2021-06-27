@@ -6,7 +6,7 @@ from typing import Dict, List, Optional, Type
 
 import hydra
 from loguru import logger
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 import pytorch_lightning as pl
 from torch import nn
 from tqdm import tqdm
@@ -25,6 +25,12 @@ def _create_experiment_dir(config: DictConfig) -> Path:
     )
     log_dir.mkdir(parents=True, exist_ok=True)
     return log_dir
+
+
+def save_config(config: DictConfig, log_dir: Path) -> None:
+    """Saves config to log directory."""
+    with (log_dir / "config.yaml").open("r") as f:
+        OmegaConf.save(config=config, f=f)
 
 
 def _configure_logging(log_dir: Optional[Path], level: str) -> None:
@@ -124,6 +130,9 @@ def run(config: DictConfig) -> None:
 
     # Load ligtning model.
     lit_model = _load_lit_model(lit_model_class, network, config)
+
+    # Save config to experiment dir.
+    save_config(config, log_dir)
 
     trainer = pl.Trainer(
         **config.trainer.args,
