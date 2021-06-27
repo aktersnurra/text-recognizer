@@ -1,16 +1,7 @@
-# @package _group_
-- type: ModelCheckpoint
-  args:
-      monitor: val_loss
-      mode: min
-      save_last: true
-- type: StochasticWeightAveraging
-  args:
-      swa_epoch_start: 0.8
-      swa_lrs: 0.05
-      annealing_epochs: 10
-      annealing_strategy: cos
-      device: null
-- type: LearningRateMonitor
-  args:
-      logging_interval: step
+type: StochasticWeightAveraging
+args:
+    swa_epoch_start: 0.8
+    swa_lrs: 0.05
+    annealing_epochs: 10
+    annealing_strategy: cos
+    device: null

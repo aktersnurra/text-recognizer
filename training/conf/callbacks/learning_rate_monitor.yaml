@@ -1,0 +1,3 @@
+type: LearningRateMonitor
+args:
+    logging_interval: step
