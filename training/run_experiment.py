@@ -2,7 +2,7 @@
 from datetime import datetime
 import importlib
 from pathlib import Path
-from typing import Dict, List, Optional, Type
+from typing import List, Optional, Type
 
 import hydra
 from loguru import logger
@@ -27,7 +27,7 @@ def _create_experiment_dir(config: DictConfig) -> Path:
     return log_dir
 
 
-def save_config(config: DictConfig, log_dir: Path) -> None:
+def _save_config(config: DictConfig, log_dir: Path) -> None:
     """Saves config to log directory."""
     with (log_dir / "config.yaml").open("r") as f:
         OmegaConf.save(config=config, f=f)
@@ -132,7 +132,7 @@ def run(config: DictConfig) -> None:
     lit_model = _load_lit_model(lit_model_class, network, config)
 
     # Save config to experiment dir.
-    save_config(config, log_dir)
+    _save_config(config, log_dir)
 
     trainer = pl.Trainer(
         **config.trainer.args,
