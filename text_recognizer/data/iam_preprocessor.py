@@ -89,9 +89,9 @@ class Preprocessor:
             self.lexicon = None
 
         if self.special_tokens is not None:
-            self.special_tokens += ("#", "*")
-            self.tokens += self.special_tokens
-            self.graphemes += self.special_tokens
+            special_tokens_ = (*self.special_tokens, "#", "*")
+            self.tokens += special_tokens_
+            self.graphemes += special_tokens_
 
         self.graphemes_to_index = {t: i for i, t in enumerate(self.graphemes)}
         self.tokens_to_index = {t: i for i, t in enumerate(self.tokens)}

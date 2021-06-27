@@ -17,6 +17,7 @@ from text_recognizer.data.base_dataset import (
 )
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.emnist import emnist_mapping
+from text_recognizer.data.mappings import WordPieceMapping
 from text_recognizer.data.iam import IAM
 from text_recognizer.data.transforms import WordPiece
 
@@ -49,6 +50,9 @@ class IAMParagraphs(BaseDataModule):
         self.mapping, self.inverse_mapping, _ = emnist_mapping(
             extra_symbols=[NEW_LINE_TOKEN]
         )
+        if word_pieces:
+            self.mapping = WordPieceMapping()
+
         self.train_fraction = train_fraction
 
         self.dims = (1, IMAGE_HEIGHT, IMAGE_WIDTH)
