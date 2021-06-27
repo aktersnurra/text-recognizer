@@ -1,10 +1,9 @@
 """PyTorch Lightning model for base Transformers."""
 from typing import Any, Dict, Union, Tuple, Type
 
-from omegaconf import DictConfig, OmegaConf
+from omegaconf import DictConfig
 from torch import nn
 from torch import Tensor
-import torch.nn.functional as F
 import wandb
 
 from text_recognizer.models.base import LitBaseModel
@@ -35,7 +34,12 @@ class LitVQVAEModel(LitBaseModel):
         """Logs prediction on image with wandb."""
         try:
             self.logger.experiment.log(
-                {title: [wandb.Image(data[0]), wandb.Image(reconstructions[0]),]}
+                {
+                    title: [
+                        wandb.Image(data[0]),
+                        wandb.Image(reconstructions[0]),
+                    ]
+                }
             )
         except AttributeError:
             pass

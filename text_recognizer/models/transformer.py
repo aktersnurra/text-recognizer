@@ -1,12 +1,9 @@
 """PyTorch Lightning model for base Transformers."""
 from typing import Dict, List, Optional, Union, Tuple, Type
 
-from omegaconf import DictConfig, OmegaConf
-import pytorch_lightning as pl
-import torch
+from omegaconf import DictConfig
 from torch import nn
 from torch import Tensor
-import torch.nn.functional as F
 import wandb
 
 from text_recognizer.data.emnist import emnist_mapping
