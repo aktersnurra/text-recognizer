@@ -9,6 +9,7 @@ logging: INFO
 args:
     stochastic_weight_avg: false
     auto_scale_batch_size: binsearch
+    auto_lr_find: false
     gradient_clip_val: 0
     fast_dev_run: false
     gpus: 1
