@@ -1,0 +1,8 @@
+type: OneCycleLR
+args:
+  interval: step
+  max_lr: 1.0e-3
+  three_phase: true
+  epochs: 64
+  steps_per_epoch: 633 # num_samples / batch_size
+monitor: val_loss

@@ -1,5 +1,6 @@
-type: EarlyStopping
-args:
+early_stopping:
+  type: EarlyStopping
+  args:
     monitor: val_loss
     mode: min
     patience: 10

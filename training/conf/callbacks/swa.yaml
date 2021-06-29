@@ -1,5 +1,6 @@
-type: StochasticWeightAveraging
-args:
+stochastic_weight_averaging:
+  type: StochasticWeightAveraging
+  args:
     swa_epoch_start: 0.8
     swa_lrs: 0.05
     annealing_epochs: 10

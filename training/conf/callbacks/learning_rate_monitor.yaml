@@ -1,3 +1,4 @@
-type: LearningRateMonitor
-args:
+learning_rate_monitor:
+  type: LearningRateMonitor
+  args:
     logging_interval: step

@@ -1,8 +1,14 @@
 defaults:
   - network: vqvae
+  - criterion: mse
+  - optimizer: madgrad
+  - lr_scheduler: one_cycle
   - model: lit_vqvae
   - dataset: iam_extended_paragraphs
   - trainer: default
   - callbacks:
     - checkpoint
     - learning_rate_monitor
+
+load_checkpoint: null 
+logging: INFO

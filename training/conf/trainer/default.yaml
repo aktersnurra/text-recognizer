@@ -1,19 +1,16 @@
-# @package _group_
 seed: 4711
-load_checkpoint: null 
 wandb: false
 tune: false
 train: true
 test: true
-logging: INFO
 args:
-    stochastic_weight_avg: false
-    auto_scale_batch_size: binsearch
-    auto_lr_find: false
-    gradient_clip_val: 0
-    fast_dev_run: false
-    gpus: 1
-    precision: 16
-    max_epochs: 64
-    terminate_on_nan: true
-    weights_summary: top
+  stochastic_weight_avg: false
+  auto_scale_batch_size: binsearch
+  auto_lr_find: false
+  gradient_clip_val: 0
+  fast_dev_run: false
+  gpus: 1
+  precision: 16
+  max_epochs: 64
+  terminate_on_nan: true
+  weights_summary: top

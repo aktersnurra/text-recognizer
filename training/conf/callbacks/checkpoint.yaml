@@ -1,5 +1,6 @@
-type: ModelCheckpoint
-args:
+checkpoint:
+  type: ModelCheckpoint
+  args:
     monitor: val_loss
     mode: min
     save_last: true

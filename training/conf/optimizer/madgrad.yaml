@@ -1,0 +1,6 @@
+type: MADGRAD
+args:
+  lr: 1.0e-3
+  momentum: 0.9
+  weight_decay: 0
+  eps: 1.0e-6

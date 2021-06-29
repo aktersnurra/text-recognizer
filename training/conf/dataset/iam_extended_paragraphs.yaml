@@ -1,7 +1,6 @@
-# @package _group_
 type: IAMExtendedParagraphs
 args:
-    batch_size: 32
-    num_workers: 12
-    train_fraction: 0.8
-    augment: true
+  batch_size: 32
+  num_workers: 12
+  train_fraction: 0.8
+  augment: true
