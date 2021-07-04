@@ -1,0 +1,20 @@
+defaults:
+  - default.yaml
+
+watch_model:
+  _target_: text_recognizer.callbacks.wandb_callbacks.WatchModel
+  log: "all"
+  log_freq: 100
+
+upload_code_as_artifact:
+  _target_: text_recognizer.callbacks.wandb_callbacks.UploadCodeAsArtifact
+  project_dir: ${work_dir}/text_recognizer
+
+upload_ckpts_as_artifact:
+  _target_: text_recognizer.callbacks.wandb_callbacks.UploadCheckpointsAsArtifact
+  ckpt_dir: "checkpoints/"
+  upload_best_only: True
+
+log_text_predictions:
+  _target_: text_recognizer.callbacks.wandb_callbacks.LogTextPredictions
+  num_samples: 8
