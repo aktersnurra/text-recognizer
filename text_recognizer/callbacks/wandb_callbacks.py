@@ -29,6 +29,9 @@ class WatchModel(Callback):
     log: str = attr.ib(default="gradients")
     log_freq: int = attr.ib(default=100)
 
+    def __attrs_pre_init__(self):
+        super().__init__()
+
     def on_train_start(self, trainer: Trainer, pl_module: LightningModule) -> None:
         """Watches model weights with wandb."""
         logger = get_wandb_logger(trainer)
@@ -40,6 +43,9 @@ class UploadCodeAsArtifact(Callback):
     """Upload all *.py files to W&B as an artifact, at the beginning of the run."""
 
     project_dir: Path = attr.ib(converter=Path)
+
+    def __attrs_pre_init__(self):
+        super().__init__()
 
     def on_train_start(self, trainer: Trainer, pl_module: LightningModule) -> None:
         """Uploads project code as an artifact."""
@@ -58,6 +64,9 @@ class UploadCheckpointAsArtifact(Callback):
 
     ckpt_dir: Path = attr.ib(converter=Path)
     upload_best_only: bool = attr.ib()
+
+    def __attrs_pre_init__(self):
+        super().__init__()
 
     def on_train_end(self, trainer: Trainer, pl_module: LightningModule) -> None:
         """Uploads model checkpoint to W&B."""

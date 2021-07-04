@@ -1,8 +1,10 @@
 """Base PyTorch Lightning model."""
 from typing import Any, Dict, List, Union, Tuple, Type
 
-import madgrad
-from omegaconf import DictConfig, OmegaConf
+import attr
+import hydra
+import loguru.logger as log
+from omegaconf import DictConfig
 import pytorch_lightning as pl
 import torch
 from torch import nn
@@ -10,23 +12,29 @@ from torch import Tensor
 import torchmetrics
 
 
+@attr.s
 class LitBaseModel(pl.LightningModule):
     """Abstract PyTorch Lightning class."""
 
-    def __init__(
-        self,
-        network: Type[nn.Module],
-        optimizer: Union[DictConfig, Dict],
-        lr_scheduler: Union[DictConfig, Dict],
-        criterion: Union[DictConfig, Dict],
-        monitor: str = "val_loss",
-    ) -> None:
+    network: Type[nn.Module] = attr.ib()
+    criterion_config: DictConfig = attr.ib(converter=DictConfig)
+    optimizer_config: DictConfig = attr.ib(converter=DictConfig)
+    lr_scheduler_config: DictConfig = attr.ib(converter=DictConfig)
+
+    interval: str = attr.ib()
+    monitor: str = attr.ib(default="val/loss")
+
+    loss_fn = attr.ib(init=False)
+
+    train_acc = attr.ib(init=False)
+    val_acc = attr.ib(init=False)
+    test_acc = attr.ib(init=False)
+
+    def __attrs_pre_init__(self):
         super().__init__()
-        self.monitor = monitor
-        self.network = network
-        self._optimizer = OmegaConf.create(optimizer)
-        self._lr_scheduler = OmegaConf.create(lr_scheduler)
-        self.loss_fn = self.configure_criterion(criterion)
+
+    def __attrs_post_init__(self):
+        self.loss_fn = self.configure_criterion()
 
         # Accuracy metric
         self.train_acc = torchmetrics.Accuracy()
@@ -34,11 +42,10 @@ class LitBaseModel(pl.LightningModule):
         self.test_acc = torchmetrics.Accuracy()
 
     @staticmethod
-    def configure_criterion(criterion: Union[DictConfig, Dict]) -> Type[nn.Module]:
+    def configure_criterion(self) -> Type[nn.Module]:
         """Returns a loss functions."""
-        criterion = OmegaConf.create(criterion)
-        args = {} or criterion.args
-        return getattr(nn, criterion.type)(**args)
+        log.info(f"Instantiating criterion <{self.criterion_config._target_}>")
+        return hydra.utils.instantiate(self.criterion_config)
 
     def optimizer_zero_grad(
         self,
@@ -51,27 +58,23 @@ class LitBaseModel(pl.LightningModule):
 
     def _configure_optimizer(self) -> Type[torch.optim.Optimizer]:
         """Configures the optimizer."""
-        args = {} or self._optimizer.args
-        if self._optimizer.type == "MADGRAD":
-            optimizer_class = madgrad.MADGRAD
-        else:
-            optimizer_class = getattr(torch.optim, self._optimizer.type)
-        return optimizer_class(params=self.parameters(), **args)
+        log.info(f"Instantiating optimizer <{self.optimizer_config._target_}>")
+        return hydra.utils.instantiate(self.optimizer_config, params=self.parameters())
 
     def _configure_lr_scheduler(
         self, optimizer: Type[torch.optim.Optimizer]
     ) -> Dict[str, Any]:
         """Configures the lr scheduler."""
-        scheduler = {"monitor": self.monitor}
-        args = {} or self._lr_scheduler.args
-
-        if "interval" in args:
-            scheduler["interval"] = args.pop("interval")
-
-        scheduler["scheduler"] = getattr(
-            torch.optim.lr_scheduler, self._lr_scheduler.type
-        )(optimizer, **args)
-
+        log.info(
+            f"Instantiating learning rate scheduler <{self.lr_scheduler_config._target_}>"
+        )
+        scheduler = {
+            "monitor": self.monitor,
+            "interval": self.interval,
+            "scheduler": hydra.utils.instantiate(
+                self.lr_scheduler_config, optimizer=optimizer
+            ),
+        }
         return scheduler
 
     def configure_optimizers(self) -> Tuple[List[type], List[Dict[str, Any]]]:
@@ -90,9 +93,9 @@ class LitBaseModel(pl.LightningModule):
         data, targets = batch
         logits = self(data)
         loss = self.loss_fn(logits, targets)
-        self.log("train_loss", loss)
+        self.log("train/loss", loss)
         self.train_acc(logits, targets)
-        self.log("train_acc", self.train_acc, on_step=False, on_epoch=True)
+        self.log("train/acc", self.train_acc, on_step=False, on_epoch=True)
         return loss
 
     def validation_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
@@ -100,13 +103,13 @@ class LitBaseModel(pl.LightningModule):
         data, targets = batch
         logits = self(data)
         loss = self.loss_fn(logits, targets)
-        self.log("val_loss", loss, prog_bar=True)
+        self.log("val/loss", loss, prog_bar=True)
         self.val_acc(logits, targets)
-        self.log("val_acc", self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
+        self.log("val/acc", self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
 
     def test_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
         """Test step."""
         data, targets = batch
         logits = self(data)
         self.test_acc(logits, targets)
-        self.log("test_acc", self.test_acc, on_step=False, on_epoch=True)
+        self.log("test/acc", self.test_acc, on_step=False, on_epoch=True)
