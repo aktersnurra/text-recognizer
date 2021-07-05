@@ -14,35 +14,12 @@ from pytorch_lightning import (
 from pytorch_lightning.loggers import LightningLoggerBase
 from torch import nn
 
-from utils import configure_logging
-
-
-def configure_callbacks(
-    config: DictConfig,
-) -> List[Type[Callback]]:
-    """Configures lightning callbacks."""
-    callbacks = []
-    if config.get("callbacks"):
-        for callback_config in config.callbacks.values():
-            if config.get("_target_"):
-                log.info(f"Instantiating callback <{callback_config._target_}>")
-                callbacks.append(hydra.utils.instantiate(callback_config))
-    return callbacks
-
-
-def configure_logger(config: DictConfig) -> List[Type[LightningLoggerBase]]:
-    logger = []
-    if config.get("logger"):
-        for logger_config in config.logger.values():
-            if config.get("_target_"):
-                log.info(f"Instantiating callback <{logger_config._target_}>")
-                logger.append(hydra.utils.instantiate(logger_config))
-    return logger
+import utils
 
 
 def run(config: DictConfig) -> Optional[float]:
     """Runs experiment."""
-    configure_logging(config.logging)
+    utils.configure_logging(config.logging)
     log.info("Starting experiment...")
 
     if config.get("seed"):
@@ -65,8 +42,8 @@ def run(config: DictConfig) -> Optional[float]:
     )
 
     # Load callback and logger.
-    callbacks = configure_callbacks(config)
-    logger = configure_logger(config)
+    callbacks: List[Type[Callback]] = utils.configure_callbacks(config)
+    logger: List[Type[LightningLoggerBase]] = utils.configure_logger(config)
 
     log.info(f"Instantiating trainer <{config.trainer._target_}>")
     trainer: Trainer = hydra.utils.instantiate(
@@ -74,6 +51,7 @@ def run(config: DictConfig) -> Optional[float]:
     )
 
     # Log hyperparameters
+    utils.log_hyperparameters(config=config, model=model, trainer=trainer)
 
     if config.debug:
         log.info("Fast development run...")
@@ -81,7 +59,7 @@ def run(config: DictConfig) -> Optional[float]:
         return None
 
     if config.tune:
-        log.info("Tuning learning rate and batch size...")
+        log.info("Tuning hyperparameters...")
         trainer.tune(model, datamodule=datamodule)
 
     if config.train:
@@ -92,4 +70,5 @@ def run(config: DictConfig) -> Optional[float]:
         log.info("Testing network...")
         trainer.test(model, datamodule=datamodule)
 
-    # Make sure everything closes properly
+    log.info(f"Best checkpoint path:\n{trainer.checkpoint_callback.best_model_path}")
+    utils.finish(trainer)
