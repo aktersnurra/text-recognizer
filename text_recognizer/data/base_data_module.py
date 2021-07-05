@@ -2,7 +2,8 @@
 from pathlib import Path
 from typing import Dict
 
-import pytorch_lightning as pl
+import attr
+import pytorch_lightning as LightningDataModule
 from torch.utils.data import DataLoader
 
 
@@ -14,14 +15,17 @@ def load_and_print_info(data_module_class: type) -> None:
     print(dataset)
 
 
-class BaseDataModule(pl.LightningDataModule):
+@attr.s
+class BaseDataModule(LightningDataModule):
     """Base PyTorch Lightning DataModule."""
 
-    def __init__(self, batch_size: int = 128, num_workers: int = 0) -> None:
-        super().__init__()
-        self.batch_size = batch_size
-        self.num_workers = num_workers
+    batch_size: int = attr.ib(default=16)
+    num_workers: int = attr.ib(default=0)
 
+    def __attrs_pre_init__(self) -> None:
+        super().__init__()
+
+    def __attrs_post_init__(self) -> None:
         # Placeholders for subclasses.
         self.dims = None
         self.output_dims = None

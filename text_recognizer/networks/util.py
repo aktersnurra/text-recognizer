@@ -1,10 +1,6 @@
 """Miscellaneous neural network functionality."""
-import importlib
-from pathlib import Path
-from typing import Dict, NamedTuple, Union, Type
+from typing import Type
 
-from loguru import logger
-import torch
 from torch import nn
 
 
@@ -19,6 +15,7 @@ def activation_function(activation: str) -> Type[nn.Module]:
             ["none", nn.Identity()],
             ["relu", nn.ReLU(inplace=True)],
             ["selu", nn.SELU(inplace=True)],
+            ["mish", nn.Mish(inplace=True)],
         ]
     )
     return activation_fns[activation.lower()]

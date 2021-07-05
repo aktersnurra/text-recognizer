@@ -1,11 +1,13 @@
 """Base PyTorch Dataset class."""
 from typing import Any, Callable, Dict, Sequence, Tuple, Union
 
+import attr
 import torch
 from torch import Tensor
 from torch.utils.data import Dataset
 
 
+@attr.s
 class BaseDataset(Dataset):
     """
     Base Dataset class that processes data and targets through optional transfroms.
@@ -18,19 +20,17 @@ class BaseDataset(Dataset):
             target transforms.
     """
 
-    def __init__(
-        self,
-        data: Union[Sequence, Tensor],
-        targets: Union[Sequence, Tensor],
-        transform: Callable = None,
-        target_transform: Callable = None,
-    ) -> None:
-        if len(data) != len(targets):
+    data: Union[Sequence, Tensor] = attr.ib()
+    targets: Union[Sequence, Tensor] = attr.ib()
+    transform: Callable = attr.ib()
+    target_transform: Callable = attr.ib()
+
+    def __attrs_pre_init__(self) -> None:
+        super().__init__()
+
+    def __attrs_post_init__(self) -> None:
+        if len(self.data) != len(self.targets):
             raise ValueError("Data and targets must be of equal length.")
-        self.data = data
-        self.targets = targets
-        self.transform = transform
-        self.target_transform = target_transform
 
     def __len__(self) -> int:
         """Return the length of the dataset."""

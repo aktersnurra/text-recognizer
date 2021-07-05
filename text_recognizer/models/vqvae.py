@@ -18,7 +18,7 @@ class LitVQVAEModel(LitBaseModel):
         optimizer: Union[DictConfig, Dict],
         lr_scheduler: Union[DictConfig, Dict],
         criterion: Union[DictConfig, Dict],
-        monitor: str = "val_loss",
+        monitor: str = "val/loss",
         *args: Any,
         **kwargs: Dict,
     ) -> None:
@@ -50,7 +50,7 @@ class LitVQVAEModel(LitBaseModel):
         reconstructions, vq_loss = self.network(data)
         loss = self.loss_fn(reconstructions, data)
         loss += vq_loss
-        self.log("train_loss", loss)
+        self.log("train/loss", loss)
         return loss
 
     def validation_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
@@ -59,7 +59,7 @@ class LitVQVAEModel(LitBaseModel):
         reconstructions, vq_loss = self.network(data)
         loss = self.loss_fn(reconstructions, data)
         loss += vq_loss
-        self.log("val_loss", loss, prog_bar=True)
+        self.log("val/loss", loss, prog_bar=True)
         title = "val_pred_examples"
         self._log_prediction(data, reconstructions, title)
 

@@ -29,7 +29,7 @@ class WatchModel(Callback):
     log: str = attr.ib(default="gradients")
     log_freq: int = attr.ib(default=100)
 
-    def __attrs_pre_init__(self):
+    def __attrs_pre_init__(self) -> None:
         super().__init__()
 
     def on_train_start(self, trainer: Trainer, pl_module: LightningModule) -> None:
@@ -44,7 +44,7 @@ class UploadCodeAsArtifact(Callback):
 
     project_dir: Path = attr.ib(converter=Path)
 
-    def __attrs_pre_init__(self):
+    def __attrs_pre_init__(self) -> None:
         super().__init__()
 
     def on_train_start(self, trainer: Trainer, pl_module: LightningModule) -> None:
@@ -65,7 +65,7 @@ class UploadCheckpointAsArtifact(Callback):
     ckpt_dir: Path = attr.ib(converter=Path)
     upload_best_only: bool = attr.ib()
 
-    def __attrs_pre_init__(self):
+    def __attrs_pre_init__(self) -> None:
         super().__init__()
 
     def on_train_end(self, trainer: Trainer, pl_module: LightningModule) -> None:
@@ -90,7 +90,7 @@ class LogTextPredictions(Callback):
     num_samples: int = attr.ib(default=8)
     ready: bool = attr.ib(default=True)
 
-    def __attrs_pre_init__(self):
+    def __attrs_pre_init__(self) -> None:
         super().__init__()
 
     def on_sanity_check_start(
