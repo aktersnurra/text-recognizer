@@ -1,18 +1,23 @@
 """Character Error Rate (CER)."""
-from typing import Sequence
+from typing import Set, Sequence
 
+import attr
 import editdistance
 import torch
 from torch import Tensor
-import torchmetrics
+from torchmetrics import Metric
 
 
-class CharacterErrorRate(torchmetrics.Metric):
+@attr.s
+class CharacterErrorRate(Metric):
     """Character error rate metric, computed using Levenshtein distance."""
 
-    def __init__(self, ignore_tokens: Sequence[int], *args) -> None:
+    ignore_tokens: Set = attr.ib(converter=set)
+    error: Tensor = attr.ib(init=False)
+    total: Tensor = attr.ib(init=False)
+
+    def __attrs_post_init__(self) -> None:
         super().__init__()
-        self.ignore_tokens = set(ignore_tokens)
         self.add_state("error", default=torch.tensor(0.0), dist_reduce_fx="sum")
         self.add_state("total", default=torch.tensor(0), dist_reduce_fx="sum")
 

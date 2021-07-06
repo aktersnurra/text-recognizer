@@ -5,6 +5,7 @@ from typing import Any, Dict, List
 import xml.etree.ElementTree as ElementTree
 import zipfile
 
+import attr
 from boltons.cacheutils import cachedproperty
 from loguru import logger
 import toml
@@ -22,6 +23,7 @@ DOWNSAMPLE_FACTOR = 2  # If images were downsampled, the regions must also be.
 LINE_REGION_PADDING = 16  # Add this many pixels around the exact coordinates.
 
 
+@attr.s(auto_attribs=True)
 class IAM(BaseDataModule):
     """
     "The IAM Lines dataset, first published at the ICDAR 1999, contains forms of unconstrained handwritten text,
@@ -35,9 +37,7 @@ class IAM(BaseDataModule):
         The text lines of all data sets are mutually exclusive, thus each writer has contributed to one set only.
     """
 
-    def __init__(self, batch_size: int = 128, num_workers: int = 0) -> None:
-        super().__init__(batch_size, num_workers)
-        self.metadata = toml.load(METADATA_FILENAME)
+    metadata: Dict = attr.ib(init=False, default=toml.load(METADATA_FILENAME))
 
     def prepare_data(self) -> None:
         if self.xml_filenames:

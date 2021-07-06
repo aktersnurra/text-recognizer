@@ -93,20 +93,10 @@ class LogTextPredictions(Callback):
     def __attrs_pre_init__(self) -> None:
         super().__init__()
 
-    def on_sanity_check_start(
-        self, trainer: Trainer, pl_module: LightningModule
+    def _log_predictions(
+        stage: str, trainer: Trainer, pl_module: LightningModule
     ) -> None:
-        """Sets ready attribute."""
-        self.ready = False
-
-    def on_sanity_check_end(self, trainer: Trainer, pl_module: LightningModule) -> None:
-        """Start executing this callback only after all validation sanity checks end."""
-        self.ready = True
-
-    def on_validation_epoch_end(
-        self, trainer: Trainer, pl_module: LightningModule
-    ) -> None:
-        """Logs predictions on validation epoch end."""
+        """Logs the predicted text contained in the images."""
         if not self.ready:
             return None
 
@@ -123,7 +113,7 @@ class LogTextPredictions(Callback):
         mapping = pl_module.mapping
         experiment.log(
             {
-                f"Images/{experiment.name}": [
+                f"OCR/{experiment.name}/{stage}": [
                     wandb.Image(
                         img,
                         caption=f"Pred: {mapping.get_text(pred)}, Label: {mapping.get_text(label)}",
@@ -136,3 +126,86 @@ class LogTextPredictions(Callback):
                 ]
             }
         )
+
+    def on_sanity_check_start(
+        self, trainer: Trainer, pl_module: LightningModule
+    ) -> None:
+        """Sets ready attribute."""
+        self.ready = False
+
+    def on_sanity_check_end(self, trainer: Trainer, pl_module: LightningModule) -> None:
+        """Start executing this callback only after all validation sanity checks end."""
+        self.ready = True
+
+    def on_validation_epoch_end(
+        self, trainer: Trainer, pl_module: LightningModule
+    ) -> None:
+        """Logs predictions on validation epoch end."""
+        self._log_predictions(stage="val", trainer=trainer, pl_module=pl_module)
+
+    def on_train_epoch_end(self, trainer: Trainer, pl_module: LightningModule) -> None:
+        """Logs predictions on train epoch end."""
+        self._log_predictions(stage="test", trainer=trainer, pl_module=pl_module)
+
+
+@attr.s
+class LogReconstuctedImages(Callback):
+    """Log reconstructions of images."""
+
+    num_samples: int = attr.ib(default=8)
+    ready: bool = attr.ib(default=True)
+
+    def __attrs_pre_init__(self) -> None:
+        super().__init__()
+
+    def _log_reconstruction(
+        self, stage: str, trainer: Trainer, pl_module: LightningModule
+    ) -> None:
+        """Logs the reconstructions."""
+        if not self.ready:
+            return None
+
+        logger = get_wandb_logger(trainer)
+        experiment = logger.experiment
+
+        # Get a validation batch from the validation dataloader.
+        samples = next(iter(trainer.datamodule.val_dataloader()))
+        imgs, _ = samples
+
+        imgs = imgs.to(device=pl_module.device)
+        reconstructions = pl_module(imgs)
+
+        experiment.log(
+            {
+                f"Reconstructions/{experiment.name}/{stage}": [
+                    [
+                        wandb.Image(img),
+                        wandb.Image(rec),
+                    ]
+                    for img, rec in zip(
+                        imgs[: self.num_samples],
+                        reconstructions[: self.num_samples],
+                    )
+                ]
+            }
+        )
+
+    def on_sanity_check_start(
+        self, trainer: Trainer, pl_module: LightningModule
+    ) -> None:
+        """Sets ready attribute."""
+        self.ready = False
+
+    def on_sanity_check_end(self, trainer: Trainer, pl_module: LightningModule) -> None:
+        """Start executing this callback only after all validation sanity checks end."""
+        self.ready = True
+
+    def on_validation_epoch_end(
+        self, trainer: Trainer, pl_module: LightningModule
+    ) -> None:
+        """Logs predictions on validation epoch end."""
+        self._log_reconstruction(stage="val", trainer=trainer, pl_module=pl_module)
+
+    def on_train_epoch_end(self, trainer: Trainer, pl_module: LightningModule) -> None:
+        """Logs predictions on train epoch end."""
+        self._log_reconstruction(stage="test", trainer=trainer, pl_module=pl_module)

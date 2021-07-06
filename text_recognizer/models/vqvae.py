@@ -1,48 +1,22 @@
 """PyTorch Lightning model for base Transformers."""
 from typing import Any, Dict, Union, Tuple, Type
 
+import attr
 from omegaconf import DictConfig
 from torch import nn
 from torch import Tensor
 import wandb
 
-from text_recognizer.models.base import LitBaseModel
+from text_recognizer.models.base import BaseLitModel
 
 
-class LitVQVAEModel(LitBaseModel):
+@attr.s(auto_attribs=True)
+class VQVAELitModel(BaseLitModel):
     """A PyTorch Lightning model for transformer networks."""
-
-    def __init__(
-        self,
-        network: Type[nn.Module],
-        optimizer: Union[DictConfig, Dict],
-        lr_scheduler: Union[DictConfig, Dict],
-        criterion: Union[DictConfig, Dict],
-        monitor: str = "val/loss",
-        *args: Any,
-        **kwargs: Dict,
-    ) -> None:
-        super().__init__(network, optimizer, lr_scheduler, criterion, monitor)
 
     def forward(self, data: Tensor) -> Tensor:
         """Forward pass with the transformer network."""
         return self.network.predict(data)
-
-    def _log_prediction(
-        self, data: Tensor, reconstructions: Tensor, title: str
-    ) -> None:
-        """Logs prediction on image with wandb."""
-        try:
-            self.logger.experiment.log(
-                {
-                    title: [
-                        wandb.Image(data[0]),
-                        wandb.Image(reconstructions[0]),
-                    ]
-                }
-            )
-        except AttributeError:
-            pass
 
     def training_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> Tensor:
         """Training step."""

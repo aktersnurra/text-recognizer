@@ -5,7 +5,7 @@ import attr
 import hydra
 import loguru.logger as log
 from omegaconf import DictConfig
-import pytorch_lightning as pl
+import pytorch_lightning as LightningModule
 import torch
 from torch import nn
 from torch import Tensor
@@ -13,7 +13,7 @@ import torchmetrics
 
 
 @attr.s
-class BaseLitModel(pl.LightningModule):
+class BaseLitModel(LightningModule):
     """Abstract PyTorch Lightning class."""
 
     network: Type[nn.Module] = attr.ib()
@@ -80,7 +80,6 @@ class BaseLitModel(pl.LightningModule):
         """Configures optimizer and lr scheduler."""
         optimizer = self._configure_optimizer()
         scheduler = self._configure_lr_scheduler(optimizer)
-
         return [optimizer], [scheduler]
 
     def forward(self, data: Tensor) -> Tensor:

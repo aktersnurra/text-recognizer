@@ -1,0 +1,5 @@
+_target_: text_recognizer.data.iam_extended_paragraphs.IAMExtendedParagraphs
+batch_size: 32
+num_workers: 12
+train_fraction: 0.8
+augment: true

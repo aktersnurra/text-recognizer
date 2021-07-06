@@ -1,8 +1,15 @@
-type: OneCycleLR
-args:
-  interval: step
-  max_lr: 1.0e-3
-  three_phase: true
-  epochs: 64
-  steps_per_epoch: 633 # num_samples / batch_size
-monitor: val_loss
+_target_: torch.optim.lr_scheduler.OneCycleLR
+max_lr: 1.0e-3
+total_steps: None
+epochs: None
+steps_per_epoch: None
+pct_start: 0.3
+anneal_strategy: 'cos'
+cycle_momentum: True
+base_momentum: 0.85
+max_momentum: 0.95
+div_factor: 25.0
+final_div_factor: 10000.0
+three_phase: true
+last_epoch: -1
+verbose: false

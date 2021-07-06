@@ -51,6 +51,7 @@ def run(config: DictConfig) -> Optional[float]:
     )
 
     # Log hyperparameters
+    log.info("Logging hyperparameters")
     utils.log_hyperparameters(config=config, model=model, trainer=trainer)
 
     if config.debug:

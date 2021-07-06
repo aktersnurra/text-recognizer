@@ -1,4 +1,4 @@
-"""Util functions for training hydra configs and pytorch lightning."""
+"""Util functions for training with hydra and pytorch lightning."""
 from typing import Any, List, Type
 import warnings
 

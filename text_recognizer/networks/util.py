@@ -1,4 +1,4 @@
-"""Miscellaneous neural network functionality."""
+"""Miscellaneous neural network utility functionality."""
 from typing import Type
 
 from torch import nn
