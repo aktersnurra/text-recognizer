@@ -2,14 +2,14 @@
 from typing import List, Optional, Type
 
 import hydra
-import loguru.logger as log
+from loguru import logger as log
 from omegaconf import DictConfig
 from pytorch_lightning import (
     Callback,
     LightningDataModule,
     LightningModule,
-    Trainer,
     seed_everything,
+    Trainer,
 )
 from pytorch_lightning.loggers import LightningLoggerBase
 from torch import nn
@@ -67,7 +67,7 @@ def run(config: DictConfig) -> Optional[float]:
         log.info("Training network...")
         trainer.fit(model, datamodule=datamodule)
 
-    if config.test:
+    if config.test:lua/cfg/themes/dark.lua
         log.info("Testing network...")
         trainer.test(model, datamodule=datamodule)
 
