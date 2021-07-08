@@ -4,6 +4,11 @@ from typing import Type
 import attr
 from torch import nn, Tensor
 
+from text_recognizer.networks.transformer.positional_encodings import (
+    PositionalEncoding,
+    PositionalEncoding2D,
+)
+
 
 @attr.s
 class CnnTransformer(nn.Module):
