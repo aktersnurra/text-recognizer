@@ -5,7 +5,6 @@ Stolen from lucidrains:
 
 Explanation of roatary:
     https://blog.eleuther.ai/rotary-embeddings/
-
 """
 from typing import Tuple
 
