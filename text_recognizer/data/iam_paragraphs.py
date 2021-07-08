@@ -18,8 +18,8 @@ from text_recognizer.data.base_dataset import (
 )
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.emnist import emnist_mapping
-from text_recognizer.data.mappings import WordPieceMapping
 from text_recognizer.data.iam import IAM
+from text_recognizer.data.mappings import WordPieceMapping
 from text_recognizer.data.transforms import WordPiece
 
 
@@ -159,10 +159,7 @@ def get_dataset_properties() -> Dict:
             "min": min(_get_property_values("num_lines")),
             "max": max(_get_property_values("num_lines")),
         },
-        "crop_shape": {
-            "min": crop_shapes.min(axis=0),
-            "max": crop_shapes.max(axis=0),
-        },
+        "crop_shape": {"min": crop_shapes.min(axis=0), "max": crop_shapes.max(axis=0),},
         "aspect_ratio": {
             "min": aspect_ratio.min(axis=0),
             "max": aspect_ratio.max(axis=0),
@@ -283,9 +280,7 @@ def get_transform(image_shape: Tuple[int, int], augment: bool) -> T.Compose:
             ),
             T.ColorJitter(brightness=(0.8, 1.6)),
             T.RandomAffine(
-                degrees=1,
-                shear=(-10, 10),
-                interpolation=InterpolationMode.BILINEAR,
+                degrees=1, shear=(-10, 10), interpolation=InterpolationMode.BILINEAR,
             ),
         ]
     else:
