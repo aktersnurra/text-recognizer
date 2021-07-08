@@ -10,6 +10,7 @@ from .utils import (
 
 
 class EfficientNet(nn.Module):
+    # TODO: attr
     archs = {
         #     width,depth0res,dropout
         "b0": (1.0, 1.0, 0.2),
