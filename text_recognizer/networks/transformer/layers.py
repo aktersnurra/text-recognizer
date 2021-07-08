@@ -1,4 +1,4 @@
-"""Generates the attention layer architecture."""
+"""Transformer attention layer."""
 from functools import partial
 from typing import Any, Dict, Optional, Tuple, Type
 
