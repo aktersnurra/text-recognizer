@@ -2,7 +2,6 @@
 import tempfile
 from typing import Any
 
-
 import nox
 from nox.sessions import Session
 

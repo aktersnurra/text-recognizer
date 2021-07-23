@@ -41,7 +41,7 @@ class EfficientNet(nn.Module):
         self.bn_momentum = bn_momentum
         self.bn_eps = bn_eps
         self._conv_stem: nn.Sequential = None
-        self._blocks: nn.Sequential = None
+        self._blocks: nn.ModuleList = None
         self._conv_head: nn.Sequential = None
         self._build()
 

@@ -47,6 +47,8 @@ def load_metadata(
 class Preprocessor:
     """A preprocessor for the IAM dataset."""
 
+    # TODO: attrs
+
     def __init__(
         self,
         data_dir: Union[str, Path],
