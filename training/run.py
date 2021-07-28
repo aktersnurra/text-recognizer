@@ -67,7 +67,7 @@ def run(config: DictConfig) -> Optional[float]:
         log.info("Training network...")
         trainer.fit(model, datamodule=datamodule)
 
-    if config.test:lua/cfg/themes/dark.lua
+    if config.test:
         log.info("Testing network...")
         trainer.test(model, datamodule=datamodule)
 

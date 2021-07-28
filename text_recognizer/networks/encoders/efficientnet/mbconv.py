@@ -26,7 +26,7 @@ class MBConvBlock(nn.Module):
     ) -> None:
         super().__init__()
         self.kernel_size = kernel_size
-        self.stride = (stride, ) * 2 if isinstance(stride, int) else stride
+        self.stride = (stride,) * 2 if isinstance(stride, int) else stride
         self.bn_momentum = bn_momentum
         self.bn_eps = bn_eps
         self.in_channels = in_channels
@@ -68,8 +68,7 @@ class MBConvBlock(nn.Module):
         inner_channels = in_channels * expand_ratio
         self._inverted_bottleneck = (
             self._configure_inverted_bottleneck(
-                in_channels=in_channels,
-                out_channels=inner_channels,
+                in_channels=in_channels, out_channels=inner_channels,
             )
             if expand_ratio != 1
             else None
@@ -98,9 +97,7 @@ class MBConvBlock(nn.Module):
         )
 
     def _configure_inverted_bottleneck(
-        self,
-        in_channels: int,
-        out_channels: int,
+        self, in_channels: int, out_channels: int,
     ) -> nn.Sequential:
         """Expansion phase."""
         return nn.Sequential(

@@ -28,7 +28,6 @@ python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kw
 ## Todo
 - [ ] Reimplement transformer from scratch
 - [x] Implement Nyström attention (for efficient attention)
-- [ ] Implement Dino 
 - [ ] Efficient-net b0 + transformer decoder
 - [ ] Test encoder pre-training ViT (CvT?) with Dino, then train decoder in a separate step
 

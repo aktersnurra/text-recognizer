@@ -178,13 +178,9 @@ class LogReconstuctedImages(Callback):
         experiment.log(
             {
                 f"Reconstructions/{experiment.name}/{stage}": [
-                    [
-                        wandb.Image(img),
-                        wandb.Image(rec),
-                    ]
+                    [wandb.Image(img), wandb.Image(rec),]
                     for img, rec in zip(
-                        imgs[: self.num_samples],
-                        reconstructions[: self.num_samples],
+                        imgs[: self.num_samples], reconstructions[: self.num_samples],
                     )
                 ]
             }

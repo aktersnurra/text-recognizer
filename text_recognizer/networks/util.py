@@ -1,5 +1,7 @@
 """Miscellaneous neural network utility functionality."""
-from typing import Type
+from functools import partial
+from importlib import import_module
+from typing import Any, Type
 
 from torch import nn
 
@@ -19,3 +21,9 @@ def activation_function(activation: str) -> Type[nn.Module]:
         ]
     )
     return activation_fns[activation.lower()]
+
+
+def load_partial_fn(fn: str, **kwargs: Any) -> partial:
+    """Loads partial function."""
+    module = import_module(".".join(fn.split(".")[:-1]))
+    return partial(getattr(module, fn.split(".")[0]), **kwargs)

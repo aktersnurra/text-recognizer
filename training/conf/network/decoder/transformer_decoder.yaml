@@ -1,0 +1,21 @@
+_target_: text_recognizer.networks.transformer.Decoder
+dim: 256
+depth: 2
+num_heads: 8
+attn_fn: text_recognizer.networks.transformer.attention.Attention
+attn_kwargs:
+  num_heads: 8
+  dim_head: 64
+  dropout_rate: 0.2
+norm_fn: torch.nn.LayerNorm
+ff_fn: text_recognizer.networks.transformer.mlp.FeedForward
+ff_kwargs:
+  dim: 256
+  dim_out: null
+  expansion_factor: 4
+  glu: true
+  dropout_rate: 0.2
+rotary_emb: null
+rotary_emb_dim: null
+cross_attend: true
+pre_norm: true

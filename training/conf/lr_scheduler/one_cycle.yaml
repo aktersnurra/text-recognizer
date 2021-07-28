@@ -1,11 +1,11 @@
 _target_: torch.optim.lr_scheduler.OneCycleLR
 max_lr: 1.0e-3
-total_steps: None
-epochs: None
-steps_per_epoch: None
+total_steps: null
+epochs: null
+steps_per_epoch: null
 pct_start: 0.3
-anneal_strategy: 'cos'
-cycle_momentum: True
+anneal_strategy: cos
+cycle_momentum: true
 base_momentum: 0.85
 max_momentum: 0.95
 div_factor: 25.0

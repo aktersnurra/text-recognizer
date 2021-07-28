@@ -1,3 +1,2 @@
-type: MSELoss
-args:
-  reduction: mean
+_target_: torch.nn.MSELoss
+reduction: mean

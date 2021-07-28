@@ -1,0 +1,6 @@
+_target_: text_recognizer.networks.encoders.efficientnet.EfficientNet
+arch: b0
+out_channels: 1280
+stochastic_dropout_rate: 0.2
+bn_momentum: 0.99
+bn_eps: 1.0e-3
