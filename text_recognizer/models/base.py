@@ -31,9 +31,15 @@ class BaseLitModel(LightningModule):
 
     loss_fn: Type[nn.Module] = attr.ib(init=False)
 
-    train_acc: torchmetrics.Accuracy = attr.ib(init=False, default=torchmetrics.Accuracy())
-    val_acc: torchmetrics.Accuracy = attr.ib(init=False, default=torchmetrics.Accuracy())
-    test_acc: torchmetrics.Accuracy = attr.ib(init=False, default=torchmetrics.Accuracy())
+    train_acc: torchmetrics.Accuracy = attr.ib(
+        init=False, default=torchmetrics.Accuracy()
+    )
+    val_acc: torchmetrics.Accuracy = attr.ib(
+        init=False, default=torchmetrics.Accuracy()
+    )
+    test_acc: torchmetrics.Accuracy = attr.ib(
+        init=False, default=torchmetrics.Accuracy()
+    )
 
     @loss_fn.default
     def configure_criterion(self) -> Type[nn.Module]:

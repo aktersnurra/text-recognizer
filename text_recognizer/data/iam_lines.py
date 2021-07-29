@@ -43,7 +43,9 @@ class IAMLines(BaseDataModule):
 
     augment: bool = attr.ib(default=True)
     fraction: float = attr.ib(default=0.8)
-    dims: Tuple[int, int, int] = attr.ib(init=False, default=(1, IMAGE_HEIGHT, IMAGE_WIDTH))
+    dims: Tuple[int, int, int] = attr.ib(
+        init=False, default=(1, IMAGE_HEIGHT, IMAGE_WIDTH)
+    )
     output_dims: Tuple[int, int] = attr.ib(init=False, default=(MAX_LABEL_LENGTH, 1))
 
     def __attrs_post_init__(self) -> None:
