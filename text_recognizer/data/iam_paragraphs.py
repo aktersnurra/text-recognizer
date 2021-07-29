@@ -41,6 +41,8 @@ class IAMParagraphs(BaseDataModule):
     augment: bool = attr.ib(default=True)
     train_fraction: float = attr.ib(default=0.8)
     word_pieces: bool = attr.ib(default=False)
+    dims: Tuple[int, int, int] = attr.ib(init=False, default=(1, IMAGE_HEIGHT, IMAGE_WIDTH))
+    output_dims: Tuple[int, int] = attr.ib(init=False, default=(MAX_LABEL_LENGTH, 1))
 
     def __attrs_post_init__(self) -> None:
         self.mapping, self.inverse_mapping, _ = emnist_mapping(
@@ -48,11 +50,6 @@ class IAMParagraphs(BaseDataModule):
         )
         if self.word_pieces:
             self.mapping = WordPieceMapping()
-
-        self.train_fraction = train_fraction
-
-        self.dims = (1, IMAGE_HEIGHT, IMAGE_WIDTH)
-        self.output_dims = (MAX_LABEL_LENGTH, 1)
 
     def prepare_data(self) -> None:
         """Create data for training/testing."""

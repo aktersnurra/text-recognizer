@@ -34,6 +34,7 @@ SEED = 4711
 PROCESSED_DATA_DIRNAME = BaseDataModule.data_dirname() / "processed" / "iam_lines"
 IMAGE_HEIGHT = 56
 IMAGE_WIDTH = 1024
+MAX_LABEL_LENGTH = 89
 
 
 @attr.s(auto_attribs=True)
@@ -42,11 +43,12 @@ class IAMLines(BaseDataModule):
 
     augment: bool = attr.ib(default=True)
     fraction: float = attr.ib(default=0.8)
+    dims: Tuple[int, int, int] = attr.ib(init=False, default=(1, IMAGE_HEIGHT, IMAGE_WIDTH))
+    output_dims: Tuple[int, int] = attr.ib(init=False, default=(MAX_LABEL_LENGTH, 1))
 
     def __attrs_post_init__(self) -> None:
+        # TODO: refactor this
         self.mapping, self.inverse_mapping, _ = emnist_mapping()
-        self.dims = (1, IMAGE_HEIGHT, IMAGE_WIDTH)
-        self.output_dims = (89, 1)
 
     def prepare_data(self) -> None:
         """Creates the IAM lines dataset if not existing."""

@@ -29,6 +29,7 @@ class BaseDataset(Dataset):
         super().__init__()
 
     def __attrs_post_init__(self) -> None:
+        # TODO: refactor this
         if len(self.data) != len(self.targets):
             raise ValueError("Data and targets must be of equal length.")
 

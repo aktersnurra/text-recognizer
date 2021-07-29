@@ -46,7 +46,7 @@ class EMNIST(BaseDataModule):
     EMNIST ByClass: 814,255 characters. 62 unbalanced classes.
     """
 
-    train_fraction: float = attr.ib()
+    train_fraction: float = attr.ib(default=0.8)
     transform: Callable = attr.ib(init=False, default=T.Compose([T.ToTensor()]))
 
     def __attrs_post_init__(self) -> None:

@@ -13,23 +13,24 @@ from text_recognizer.data.iam_synthetic_paragraphs import IAMSyntheticParagraphs
 @attr.s(auto_attribs=True)
 class IAMExtendedParagraphs(BaseDataModule):
 
-    train_fraction: float = attr.ib()
+    augment: bool = attr.ib(default=True)
+    train_fraction: float = attr.ib(default=0.8)
     word_pieces: bool = attr.ib(default=False)
 
     def __attrs_post_init__(self) -> None:
         self.iam_paragraphs = IAMParagraphs(
-            self.batch_size,
-            self.num_workers,
-            self.train_fraction,
-            self.augment,
-            self.word_pieces,
+            batch_size=self.batch_size,
+            num_workers=self.num_workers,
+            train_fraction=self.train_fraction,
+            augment=self.augment,
+            word_pieces=self.word_pieces,
         )
         self.iam_synthetic_paragraphs = IAMSyntheticParagraphs(
-            self.batch_size,
-            self.num_workers,
-            self.train_fraction,
-            self.augment,
-            self.word_pieces,
+            batch_size=self.batch_size,
+            num_workers=self.num_workers,
+            train_fraction=self.train_fraction,
+            augment=self.augment,
+            word_pieces=self.word_pieces,
         )
 
         self.dims = self.iam_paragraphs.dims
