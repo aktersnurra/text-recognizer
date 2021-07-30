@@ -24,6 +24,6 @@ def activation_function(activation: str) -> Type[nn.Module]:
 
 
 def load_partial_fn(fn: str, **kwargs: Any) -> partial:
-    """Loads partial function."""
+    """Loads partial function/class."""
     module = import_module(".".join(fn.split(".")[:-1]))
-    return partial(getattr(module, fn.split(".")[0]), **kwargs)
+    return partial(getattr(module, fn.split(".")[-1]), **kwargs)

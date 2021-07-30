@@ -24,9 +24,9 @@ class Attention(nn.Module):
 
     dim: int = attr.ib()
     num_heads: int = attr.ib()
+    causal: bool = attr.ib(default=False)
     dim_head: int = attr.ib(default=64)
     dropout_rate: float = attr.ib(default=0.0)
-    casual: bool = attr.ib(default=False)
     scale: float = attr.ib(init=False)
     dropout: nn.Dropout = attr.ib(init=False)
     fc: nn.Linear = attr.ib(init=False)

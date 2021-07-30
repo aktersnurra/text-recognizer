@@ -30,8 +30,7 @@ class AttentionLayers(nn.Module):
     causal: bool = attr.ib(default=False)
     cross_attend: bool = attr.ib(default=False)
     pre_norm: bool = attr.ib(default=True)
-    rotary_emb: Optional[RotaryEmbedding] = attr.ib(default=None, init=False)
-    has_pos_emb: bool = attr.ib(init=False)
+    rotary_emb: Optional[RotaryEmbedding] = attr.ib(default=None)
     layer_types: Tuple[str, ...] = attr.ib(init=False)
     layers: nn.ModuleList = attr.ib(init=False)
     attn: partial = attr.ib(init=False)
@@ -40,12 +39,11 @@ class AttentionLayers(nn.Module):
 
     def __attrs_post_init__(self) -> None:
         """Post init configuration."""
-        self.has_pos_emb = True if self.rotary_emb is not None else False
         self.layer_types = self._get_layer_types() * self.depth
         attn = load_partial_fn(
             self.attn_fn, dim=self.dim, num_heads=self.num_heads, **self.attn_kwargs
         )
-        norm = load_partial_fn(self.norm_fn, dim=self.dim)
+        norm = load_partial_fn(self.norm_fn, normalized_shape=self.dim)
         ff = load_partial_fn(self.ff_fn, dim=self.dim, **self.ff_kwargs)
         self.layers = self._build_network(attn, norm, ff)
 
@@ -103,13 +101,11 @@ class AttentionLayers(nn.Module):
         return x
 
 
+@attr.s(auto_attribs=True)
 class Encoder(AttentionLayers):
-    def __init__(self, **kwargs: Any) -> None:
-        assert "causal" not in kwargs, "Cannot set causality on encoder"
-        super().__init__(causal=False, **kwargs)
+    causal: bool = attr.ib(default=False, init=False)
 
 
+@attr.s(auto_attribs=True)
 class Decoder(AttentionLayers):
-    def __init__(self, **kwargs: Any) -> None:
-        assert "causal" not in kwargs, "Cannot set causality on decoder"
-        super().__init__(causal=True, **kwargs)
+    causal: bool = attr.ib(default=True, init=False)

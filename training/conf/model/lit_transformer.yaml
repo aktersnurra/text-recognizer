@@ -1,4 +1,10 @@
+defaults:
+  - mapping: word_piece
+
 _target_: text_recognizer.models.transformer.TransformerLitModel
 interval: null
 monitor: val/loss
-ignore_tokens: ["<s>", "<e>", "<p>"]
+ignore_tokens: [ <s>, <e>, <p> ]
+start_token: <s>
+end_token: <e>
+pad_token: <p>

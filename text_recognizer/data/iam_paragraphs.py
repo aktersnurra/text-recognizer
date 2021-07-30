@@ -34,7 +34,7 @@ IMAGE_WIDTH = 1280 // IMAGE_SCALE_FACTOR
 MAX_LABEL_LENGTH = 682
 
 
-@attr.s(auto_attribs=True)
+@attr.s(auto_attribs=True, repr=False)
 class IAMParagraphs(BaseDataModule):
     """IAM handwriting database paragraphs."""
 

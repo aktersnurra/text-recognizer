@@ -34,8 +34,6 @@ class VQVAELitModel(BaseLitModel):
         loss = self.loss_fn(reconstructions, data)
         loss += vq_loss
         self.log("val/loss", loss, prog_bar=True)
-        title = "val_pred_examples"
-        self._log_prediction(data, reconstructions, title)
 
     def test_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
         """Test step."""
@@ -43,5 +41,4 @@ class VQVAELitModel(BaseLitModel):
         reconstructions, vq_loss = self.network(data)
         loss = self.loss_fn(reconstructions, data)
         loss += vq_loss
-        title = "test_pred_examples"
-        self._log_prediction(data, reconstructions, title)
+        self.log("test/loss", loss)

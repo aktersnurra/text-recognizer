@@ -26,10 +26,14 @@ python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kw
 (TODO: Not working atm, needed for GTN loss function)
 
 ## Todo
-- [ ] Reimplement transformer from scratch
-- [x] Implement Nyström attention (for efficient attention)
 - [ ] Efficient-net b0 + transformer decoder
-- [ ] Test encoder pre-training ViT (CvT?) with Dino, then train decoder in a separate step
+- [ ] Load everything with hydra, get it to work
+- [ ] Tests
+- [ ] Evaluation
+- [ ] Wandb artifact fetcher
+- [ ] attr refactor
+- [ ] Refactor once more
+- [ ] fix linting
 
 
 ## Run Sweeps

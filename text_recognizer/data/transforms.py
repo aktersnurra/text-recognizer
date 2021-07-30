@@ -24,14 +24,14 @@ class WordPiece:
         max_len: int = 451,
     ) -> None:
         self.mapping = WordPieceMapping(
-            num_features,
-            tokens,
-            lexicon,
-            data_dir,
-            use_words,
-            prepend_wordsep,
-            special_tokens,
-            extra_symbols,
+            data_dir=data_dir,
+            num_features=num_features,
+            tokens=tokens,
+            lexicon=lexicon,
+            use_words=use_words,
+            prepend_wordsep=prepend_wordsep,
+            special_tokens=special_tokens,
+            extra_symbols=extra_symbols,
         )
         self.max_len = max_len
 

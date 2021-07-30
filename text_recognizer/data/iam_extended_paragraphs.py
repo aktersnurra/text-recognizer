@@ -10,7 +10,7 @@ from text_recognizer.data.iam_paragraphs import IAMParagraphs
 from text_recognizer.data.iam_synthetic_paragraphs import IAMSyntheticParagraphs
 
 
-@attr.s(auto_attribs=True)
+@attr.s(auto_attribs=True, repr=False)
 class IAMExtendedParagraphs(BaseDataModule):
 
     augment: bool = attr.ib(default=True)

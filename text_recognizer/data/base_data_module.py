@@ -17,7 +17,7 @@ def load_and_print_info(data_module_class: type) -> None:
     print(dataset)
 
 
-@attr.s
+@attr.s(repr=False)
 class BaseDataModule(LightningDataModule):
     """Base PyTorch Lightning DataModule."""
 

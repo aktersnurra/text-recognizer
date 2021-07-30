@@ -32,7 +32,7 @@ IMAGE_X_PADDING = 28
 MAX_OUTPUT_LENGTH = 89  # Same as IAMLines
 
 
-@attr.s(auto_attribs=True)
+@attr.s(auto_attribs=True, repr=False)
 class EMNISTLines(BaseDataModule):
     """EMNIST Lines dataset: synthetic handwritten lines dataset made from EMNIST,"""
 

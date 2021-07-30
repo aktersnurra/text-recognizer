@@ -10,5 +10,10 @@ defaults:
     - checkpoint
     - learning_rate_monitor
 
+seed: 4711
+wandb: false
+tune: false
+train: true
+test: true
 load_checkpoint: null 
 logging: INFO

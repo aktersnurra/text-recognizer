@@ -1,5 +1,4 @@
 """The VQ-VAE."""
-
 from typing import Any, Dict, List, Optional, Tuple
 
 from torch import nn

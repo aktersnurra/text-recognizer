@@ -34,7 +34,7 @@ PROCESSED_DATA_DIRNAME = (
 )
 
 
-@attr.s(auto_attribs=True)
+@attr.s(auto_attribs=True, repr=False)
 class IAMSyntheticParagraphs(IAMParagraphs):
     """IAM Handwriting database of synthetic paragraphs."""
 

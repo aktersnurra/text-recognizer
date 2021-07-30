@@ -3,7 +3,7 @@ defaults:
 
 watch_model:
   _target_: callbacks.wandb_callbacks.WatchModel
-  log: "all"
+  log: all
   log_freq: 100
 
 upload_code_as_artifact:
@@ -12,8 +12,8 @@ upload_code_as_artifact:
 
 upload_ckpts_as_artifact:
   _target_: callbacks.wandb_callbacks.UploadCheckpointsAsArtifact
-  ckpt_dir: "checkpoints/"
-  upload_best_only: True
+  ckpt_dir: checkpoints/
+  upload_best_only: true
 
 log_text_predictions:
   _target_: callbacks.wandb_callbacks.LogTextPredictions

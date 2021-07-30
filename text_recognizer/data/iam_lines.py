@@ -37,7 +37,7 @@ IMAGE_WIDTH = 1024
 MAX_LABEL_LENGTH = 89
 
 
-@attr.s(auto_attribs=True)
+@attr.s(auto_attribs=True, repr=False)
 class IAMLines(BaseDataModule):
     """IAM handwritten lines dataset."""
 
