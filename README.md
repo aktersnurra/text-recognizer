@@ -26,7 +26,7 @@ python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kw
 (TODO: Not working atm, needed for GTN loss function)
 
 ## Todo
-- [ ] Efficient-net b0 + transformer decoder
+- [x] Efficient-net b0 + transformer decoder
 - [ ] Load everything with hydra, get it to work
 - [ ] Tests
 - [ ] Evaluation
@@ -34,6 +34,7 @@ python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kw
 - [ ] attr refactor
 - [ ] Refactor once more
 - [ ] fix linting
+- [ ] fix loading of transform iam paragraph
 
 
 ## Run Sweeps

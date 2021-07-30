@@ -26,7 +26,9 @@ class CharacterErrorRate(Metric):
         bsz = preds.shape[0]
         for index in range(bsz):
             pred = [p for p in preds[index].tolist() if p not in self.ignore_indices]
-            target = [t for t in targets[index].tolist() if t not in self.ignore_indices]
+            target = [
+                t for t in targets[index].tolist() if t not in self.ignore_indices
+            ]
             distance = editdistance.distance(pred, target)
             error = distance / max(len(pred), len(target))
             self.error += error

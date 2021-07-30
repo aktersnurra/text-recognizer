@@ -23,12 +23,9 @@ class BaseLitModel(LightningModule):
     criterion_config: DictConfig = attr.ib(converter=DictConfig)
     optimizer_config: DictConfig = attr.ib(converter=DictConfig)
     lr_scheduler_config: DictConfig = attr.ib(converter=DictConfig)
-
     interval: str = attr.ib()
     monitor: str = attr.ib(default="val/loss")
-
     loss_fn: Type[nn.Module] = attr.ib(init=False)
-
     train_acc: torchmetrics.Accuracy = attr.ib(
         init=False, default=torchmetrics.Accuracy()
     )

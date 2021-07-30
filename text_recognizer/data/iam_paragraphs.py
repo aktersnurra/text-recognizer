@@ -38,20 +38,17 @@ MAX_LABEL_LENGTH = 682
 class IAMParagraphs(BaseDataModule):
     """IAM handwriting database paragraphs."""
 
+    num_classes: int = attr.ib()
     augment: bool = attr.ib(default=True)
     train_fraction: float = attr.ib(default=0.8)
-    word_pieces: bool = attr.ib(default=False)
     dims: Tuple[int, int, int] = attr.ib(
         init=False, default=(1, IMAGE_HEIGHT, IMAGE_WIDTH)
     )
     output_dims: Tuple[int, int] = attr.ib(init=False, default=(MAX_LABEL_LENGTH, 1))
+    inverse_mapping: Dict[str, int] = attr.ib(init=False)
 
     def __attrs_post_init__(self) -> None:
-        self.mapping, self.inverse_mapping, _ = emnist_mapping(
-            extra_symbols=[NEW_LINE_TOKEN]
-        )
-        if self.word_pieces:
-            self.mapping = WordPieceMapping()
+        _, self.inverse_mapping, _ = emnist_mapping(extra_symbols=[NEW_LINE_TOKEN])
 
     def prepare_data(self) -> None:
         """Create data for training/testing."""

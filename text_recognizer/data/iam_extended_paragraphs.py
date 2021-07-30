@@ -16,6 +16,7 @@ class IAMExtendedParagraphs(BaseDataModule):
     augment: bool = attr.ib(default=True)
     train_fraction: float = attr.ib(default=0.8)
     word_pieces: bool = attr.ib(default=False)
+    num_classes: int = attr.ib(init=False)
 
     def __attrs_post_init__(self) -> None:
         self.iam_paragraphs = IAMParagraphs(
@@ -35,8 +36,7 @@ class IAMExtendedParagraphs(BaseDataModule):
 
         self.dims = self.iam_paragraphs.dims
         self.output_dims = self.iam_paragraphs.output_dims
-        self.mapping = self.iam_paragraphs.mapping
-        self.inverse_mapping = self.iam_paragraphs.inverse_mapping
+        self.num_classes = self.iam_paragraphs.num_classes
 
     def prepare_data(self) -> None:
         """Prepares the paragraphs data."""
@@ -58,7 +58,7 @@ class IAMExtendedParagraphs(BaseDataModule):
         """Returns info about the dataset."""
         basic = (
             "IAM Original and Synthetic Paragraphs Dataset\n"  # pylint: disable=no-member
-            f"Num classes: {len(self.mapping)}\n"
+            f"Num classes: {len(self.num_classes)}\n"
             f"Dims: {self.dims}\n"
             f"Output dims: {self.output_dims}\n"
         )

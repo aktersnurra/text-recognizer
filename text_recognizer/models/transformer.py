@@ -13,6 +13,7 @@ from text_recognizer.models.base import BaseLitModel
 @attr.s(auto_attribs=True)
 class TransformerLitModel(BaseLitModel):
     """A PyTorch Lightning model for transformer networks."""
+
     mapping: Type[AbstractMapping] = attr.ib()
     start_token: str = attr.ib()
     end_token: str = attr.ib()
