@@ -2,7 +2,7 @@
 from typing import List, Optional, Type
 
 import hydra
-from loguru import logger as log
+import loguru.logger as log
 from omegaconf import DictConfig
 from pytorch_lightning import (
     Callback,
@@ -33,11 +33,11 @@ def run(config: DictConfig) -> Optional[float]:
 
     log.info(f"Instantiating model <{config.model._target_}>")
     model: LightningModule = hydra.utils.instantiate(
-        config.model,
+        **config.model,
         network=network,
-        criterion=config.criterion,
-        optimizer=config.optimizer,
-        lr_scheduler=config.lr_scheduler,
+        criterion_config=config.criterion,
+        optimizer_config=config.optimizer,
+        lr_scheduler_config=config.lr_scheduler,
         _recursive_=False,
     )
 

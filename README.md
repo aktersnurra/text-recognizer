@@ -28,6 +28,7 @@ python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kw
 ## Todo
 - [x] Efficient-net b0 + transformer decoder
 - [ ] Load everything with hydra, get it to work
+- [ ] Train network
 - [ ] Tests
 - [ ] Evaluation
 - [ ] Wandb artifact fetcher

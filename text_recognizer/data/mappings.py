@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Union, Set, Sequence
 
 import attr
-from loguru import logger
+import loguru.logger as log
 import torch
 from torch import Tensor
 
@@ -87,7 +87,7 @@ class WordPieceMapping(EmnistMapping):
             if self.data_dir is None
             else Path(self.data_dir)
         )
-        logger.debug(f"Using data dir: {self.data_dir}")
+        log.debug(f"Using data dir: {self.data_dir}")
         if not self.data_dir.exists():
             raise RuntimeError(f"Could not locate iamdb directory at {self.data_dir}")
 

@@ -3,7 +3,7 @@ from typing import Any, List, Type
 import warnings
 
 import hydra
-from loguru import logger as log
+import loguru.logger as log
 from omegaconf import DictConfig, OmegaConf
 from pytorch_lightning import (
     Callback,

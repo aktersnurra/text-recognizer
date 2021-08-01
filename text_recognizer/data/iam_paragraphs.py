@@ -39,6 +39,7 @@ class IAMParagraphs(BaseDataModule):
     """IAM handwriting database paragraphs."""
 
     num_classes: int = attr.ib()
+    word_pieces: bool = attr.ib(default=False)
     augment: bool = attr.ib(default=True)
     train_fraction: float = attr.ib(default=0.8)
     dims: Tuple[int, int, int] = attr.ib(

@@ -94,7 +94,7 @@ class LogTextPredictions(Callback):
         super().__init__()
 
     def _log_predictions(
-        stage: str, trainer: Trainer, pl_module: LightningModule
+        self, stage: str, trainer: Trainer, pl_module: LightningModule
     ) -> None:
         """Logs the predicted text contained in the images."""
         if not self.ready:
