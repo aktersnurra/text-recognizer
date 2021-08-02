@@ -4,7 +4,6 @@ from typing import Dict, List
 import attr
 from torch.utils.data import ConcatDataset
 
-from text_recognizer.data.base_dataset import BaseDataset
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.iam_paragraphs import IAMParagraphs
 from text_recognizer.data.iam_synthetic_paragraphs import IAMSyntheticParagraphs
@@ -20,6 +19,7 @@ class IAMExtendedParagraphs(BaseDataModule):
 
     def __attrs_post_init__(self) -> None:
         self.iam_paragraphs = IAMParagraphs(
+            mapping=self.mapping,
             batch_size=self.batch_size,
             num_workers=self.num_workers,
             train_fraction=self.train_fraction,
@@ -27,6 +27,7 @@ class IAMExtendedParagraphs(BaseDataModule):
             word_pieces=self.word_pieces,
         )
         self.iam_synthetic_paragraphs = IAMSyntheticParagraphs(
+            mapping=self.mapping,
             batch_size=self.batch_size,
             num_workers=self.num_workers,
             train_fraction=self.train_fraction,
@@ -36,7 +37,6 @@ class IAMExtendedParagraphs(BaseDataModule):
 
         self.dims = self.iam_paragraphs.dims
         self.output_dims = self.iam_paragraphs.output_dims
-        self.num_classes = self.iam_paragraphs.num_classes
 
     def prepare_data(self) -> None:
         """Prepares the paragraphs data."""
@@ -58,7 +58,7 @@ class IAMExtendedParagraphs(BaseDataModule):
         """Returns info about the dataset."""
         basic = (
             "IAM Original and Synthetic Paragraphs Dataset\n"  # pylint: disable=no-member
-            f"Num classes: {len(self.num_classes)}\n"
+            f"Num classes: {len(self.mapping)}\n"
             f"Dims: {self.dims}\n"
             f"Output dims: {self.output_dims}\n"
         )

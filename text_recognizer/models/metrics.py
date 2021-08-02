@@ -8,11 +8,11 @@ from torch import Tensor
 from torchmetrics import Metric
 
 
-@attr.s
+@attr.s(eq=False)
 class CharacterErrorRate(Metric):
     """Character error rate metric, computed using Levenshtein distance."""
 
-    ignore_indices: Set = attr.ib(converter=set)
+    ignore_indices: Set[Tensor] = attr.ib(converter=set)
     error: Tensor = attr.ib(init=False)
     total: Tensor = attr.ib(init=False)
 

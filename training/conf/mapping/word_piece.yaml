@@ -5,5 +5,5 @@ lexicon: iamdb_1kwp_lex_1000.txt
 data_dir: null
 use_words: false
 prepend_wordsep: false
-special_tokens: ["<s>", "<e>", "<p>"]
-extra_symbols: ["\n"]
+special_tokens: [ <s>, <e>, <p> ]
+extra_symbols: [ \n ]

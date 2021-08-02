@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import List, Optional, Union
 
 import click
-from loguru import logger
+from loguru import logger as log
 import sentencepiece as spm
 
 from text_recognizer.data.iam_preprocessor import load_metadata
@@ -63,9 +63,9 @@ def save_pieces(
     vocab: set,
 ) -> None:
     """Saves word pieces to disk."""
-    logger.info(f"Generating word piece list of size {num_pieces}.")
+    log.info(f"Generating word piece list of size {num_pieces}.")
     pieces = [sp.id_to_piece(i) for i in range(1, num_pieces + 1)]
-    logger.info(f"Encoding vocabulary of size {len(vocab)}.")
+    log.info(f"Encoding vocabulary of size {len(vocab)}.")
     encoded_vocab = [sp.encode_as_pieces(v) for v in vocab]
 
     # Save pieces to file.
@@ -101,7 +101,7 @@ def cli(
         data_dir = (
             Path(__file__).resolve().parents[2] / "data" / "processed" / "iam_lines"
         )
-        logger.debug(f"Using data dir: {data_dir}")
+        log.debug(f"Using data dir: {data_dir}")
         if not data_dir.exists():
             raise RuntimeError(f"Could not locate iamdb directory at {data_dir}")
     else:

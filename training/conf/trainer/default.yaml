@@ -6,6 +6,10 @@ gradient_clip_val: 0
 fast_dev_run: false
 gpus: 1
 precision: 16
-max_epochs: 64
+max_epochs: 512
 terminate_on_nan: true
 weights_summary: top
+limit_train_batches: 1.0 
+limit_val_batches: 1.0
+limit_test_batches: 1.0
+resume_from_checkpoint: null

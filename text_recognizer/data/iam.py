@@ -7,7 +7,7 @@ import zipfile
 
 import attr
 from boltons.cacheutils import cachedproperty
-from loguru import logger
+from loguru import logger as log
 import toml
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
@@ -92,7 +92,7 @@ class IAM(BaseDataModule):
 
 
 def _extract_raw_dataset(filename: Path, dirname: Path) -> None:
-    logger.info("Extracting IAM data...")
+    log.info("Extracting IAM data...")
     curdir = os.getcwd()
     os.chdir(dirname)
     with zipfile.ZipFile(filename, "r") as f:

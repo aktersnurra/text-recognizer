@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 from urllib.request import urlretrieve
 
-from loguru import logger
+from loguru import logger as log
 from tqdm import tqdm
 
 
@@ -32,7 +32,7 @@ class TqdmUpTo(tqdm):
             total_size (Optional[int]): Total size in tqdm units. Defaults to None.
         """
         if total_size is not None:
-            self.total = total_size  # pylint: disable=attribute-defined-outside-init
+            self.total = total_size
         self.update(blocks * block_size - self.n)
 
 
@@ -62,9 +62,9 @@ def download_dataset(metadata: Dict, dl_dir: Path) -> Optional[Path]:
     filename = dl_dir / metadata["filename"]
     if filename.exists():
         return
-    logger.info(f"Downloading raw dataset from {metadata['url']} to {filename}...")
+    log.info(f"Downloading raw dataset from {metadata['url']} to {filename}...")
     _download_url(metadata["url"], filename)
-    logger.info("Computing the SHA-256...")
+    log.info("Computing the SHA-256...")
     sha256 = _compute_sha256(filename)
     if sha256 != metadata["sha256"]:
         raise ValueError(

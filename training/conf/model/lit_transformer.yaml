@@ -1,8 +1,5 @@
-defaults:
-  - mapping: word_piece
-
 _target_: text_recognizer.models.transformer.TransformerLitModel
-interval: null
+interval: step
 monitor: val/loss
 ignore_tokens: [ <s>, <e>, <p> ]
 start_token: <s>

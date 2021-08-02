@@ -1,19 +1,17 @@
 defaults:
-  - network: vqvae
-  - criterion: mse
-  - optimizer: madgrad
-  - lr_scheduler: one_cycle
-  - model: lit_vqvae
+  - callbacks: wandb_ocr
+  - criterion: label_smoothing
   - dataset: iam_extended_paragraphs
+  - hydra: default
+  - lr_scheduler: one_cycle
+  - mapping: word_piece
+  - model: lit_transformer
+  - network: conv_transformer
+  - optimizer: madgrad
   - trainer: default
-  - callbacks:
-    - checkpoint
-    - learning_rate_monitor
 
 seed: 4711
-wandb: false
 tune: false
 train: true
 test: true
-load_checkpoint: null 
 logging: INFO

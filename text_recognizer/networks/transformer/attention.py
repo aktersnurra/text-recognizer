@@ -15,7 +15,7 @@ from text_recognizer.networks.transformer.positional_encodings.rotary_embedding 
 )
 
 
-@attr.s
+@attr.s(eq=False)
 class Attention(nn.Module):
     """Standard attention."""
 
@@ -31,7 +31,6 @@ class Attention(nn.Module):
     dropout: nn.Dropout = attr.ib(init=False)
     fc: nn.Linear = attr.ib(init=False)
     qkv_fn: nn.Sequential = attr.ib(init=False)
-    attn_fn: F.softmax = attr.ib(init=False, default=F.softmax)
 
     def __attrs_post_init__(self) -> None:
         """Post init configuration."""
@@ -80,7 +79,7 @@ class Attention(nn.Module):
                 else k_mask
             )
             q_mask = rearrange(q_mask, "b i -> b () i ()")
-            k_mask = rearrange(k_mask, "b i -> b () () j")
+            k_mask = rearrange(k_mask, "b j -> b () () j")
             return q_mask * k_mask
         return
 
@@ -129,7 +128,7 @@ class Attention(nn.Module):
         if self.causal:
             energy = self._apply_causal_mask(energy, mask, mask_value, device)
 
-        attn = self.attn_fn(energy, dim=-1)
+        attn = F.softmax(energy, dim=-1)
         attn = self.dropout(attn)
         out = einsum("b h i j, b h j d -> b h i d", attn, v)
         out = rearrange(out, "b h n d -> b n (h d)")

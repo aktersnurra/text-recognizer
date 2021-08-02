@@ -12,7 +12,7 @@ from torch import Tensor
 import torchmetrics
 
 
-@attr.s
+@attr.s(eq=False)
 class BaseLitModel(LightningModule):
     """Abstract PyTorch Lightning class."""
 

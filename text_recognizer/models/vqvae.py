@@ -10,7 +10,7 @@ import wandb
 from text_recognizer.models.base import BaseLitModel
 
 
-@attr.s(auto_attribs=True)
+@attr.s(auto_attribs=True, eq=False)
 class VQVAELitModel(BaseLitModel):
     """A PyTorch Lightning model for transformer networks."""
 

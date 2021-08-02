@@ -1,0 +1,3 @@
+upload_code_as_artifact:
+  _target_: callbacks.wandb_callbacks.UploadCodeAsArtifact
+  project_dir: ${work_dir}/text_recognizer

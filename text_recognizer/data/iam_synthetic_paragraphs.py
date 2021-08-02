@@ -3,7 +3,7 @@ import random
 from typing import Any, List, Sequence, Tuple
 
 import attr
-from loguru import logger
+from loguru import logger as log
 import numpy as np
 from PIL import Image
 
@@ -21,6 +21,7 @@ from text_recognizer.data.iam_paragraphs import (
     IMAGE_SCALE_FACTOR,
     resize_image,
 )
+from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.iam import IAM
 from text_recognizer.data.iam_lines import (
     line_crops_and_labels,
@@ -43,10 +44,10 @@ class IAMSyntheticParagraphs(IAMParagraphs):
         if PROCESSED_DATA_DIRNAME.exists():
             return
 
-        logger.info("Preparing IAM lines for synthetic paragraphs dataset.")
-        logger.info("Cropping IAM line regions and loading labels.")
+        log.info("Preparing IAM lines for synthetic paragraphs dataset.")
+        log.info("Cropping IAM line regions and loading labels.")
 
-        iam = IAM()
+        iam = IAM(mapping=EmnistMapping())
         iam.prepare_data()
 
         crops_train, labels_train = line_crops_and_labels(iam, "train")
@@ -55,7 +56,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
         crops_train = [resize_image(crop, IMAGE_SCALE_FACTOR) for crop in crops_train]
         crops_test = [resize_image(crop, IMAGE_SCALE_FACTOR) for crop in crops_test]
 
-        logger.info(f"Saving images and labels at {PROCESSED_DATA_DIRNAME}")
+        log.info(f"Saving images and labels at {PROCESSED_DATA_DIRNAME}")
         save_images_and_labels(
             crops_train, labels_train, "train", PROCESSED_DATA_DIRNAME
         )
@@ -64,7 +65,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
     def setup(self, stage: str = None) -> None:
         """Loading synthetic dataset."""
 
-        logger.info(f"IAM Synthetic dataset steup for stage {stage}...")
+        log.info(f"IAM Synthetic dataset steup for stage {stage}...")
 
         if stage == "fit" or stage is None:
             line_crops, line_labels = load_line_crops_and_labels(
@@ -76,7 +77,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
 
             targets = convert_strings_to_labels(
                 strings=paragraphs_labels,
-                mapping=self.inverse_mapping,
+                mapping=self.mapping.inverse_mapping,
                 length=self.output_dims[0],
             )
             self.data_train = BaseDataset(
@@ -144,7 +145,7 @@ def generate_synthetic_paragraphs(
             [line_labels[i] for i in paragraph_indices]
         )
         if len(paragraph_label) > paragraphs_properties["label_length"]["max"]:
-            logger.info(
+            log.info(
                 "Label longer than longest label in original IAM paragraph dataset - hence dropping."
             )
             continue
@@ -158,7 +159,7 @@ def generate_synthetic_paragraphs(
             paragraph_crop.height > max_paragraph_shape[0]
             or paragraph_crop.width > max_paragraph_shape[1]
         ):
-            logger.info(
+            log.info(
                 "Crop larger than largest crop in original IAM paragraphs dataset - hence dropping"
             )
             continue

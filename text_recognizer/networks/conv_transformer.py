@@ -13,7 +13,7 @@ from text_recognizer.networks.transformer.positional_encodings import (
 )
 
 
-@attr.s
+@attr.s(eq=False)
 class ConvTransformer(nn.Module):
     """Convolutional encoder and transformer decoder network."""
 
@@ -121,6 +121,7 @@ class ConvTransformer(nn.Module):
         Returns:
             Tensor: Sequence of word piece embeddings.
         """
+        context = context.long()
         context_mask = context != self.pad_index
         context = self.token_embedding(context) * math.sqrt(self.hidden_dim)
         context = self.token_pos_encoder(context)
