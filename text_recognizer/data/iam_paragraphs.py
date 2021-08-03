@@ -40,6 +40,8 @@ class IAMParagraphs(BaseDataModule):
     word_pieces: bool = attr.ib(default=False)
     augment: bool = attr.ib(default=True)
     train_fraction: float = attr.ib(default=0.8)
+
+    # Placeholders
     dims: Tuple[int, int, int] = attr.ib(
         init=False, default=(1, IMAGE_HEIGHT, IMAGE_WIDTH)
     )

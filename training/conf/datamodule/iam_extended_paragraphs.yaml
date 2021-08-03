@@ -4,3 +4,4 @@ num_workers: 12
 train_fraction: 0.8
 augment: true
 pin_memory: false
+word_pieces: true
