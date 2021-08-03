@@ -6,4 +6,4 @@ model_checkpoint:
   mode: min # can be "max" or "min"
   verbose: false
   dirpath: checkpoints/
-  filename: {epoch:02d}
+  filename: "{epoch:02d}"

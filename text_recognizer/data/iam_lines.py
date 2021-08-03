@@ -22,7 +22,7 @@ from text_recognizer.data.base_dataset import (
     split_dataset,
 )
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
-from text_recognizer.data.mappings import EmnistMapping
+from text_recognizer.data.emnist_mapping import EmnistMapping
 from text_recognizer.data.iam import IAM
 from text_recognizer.data import image_utils
 

@@ -1,6 +1,4 @@
 """IAM original and sythetic dataset class."""
-from typing import Dict, List
-
 import attr
 from torch.utils.data import ConcatDataset
 
@@ -15,7 +13,6 @@ class IAMExtendedParagraphs(BaseDataModule):
     augment: bool = attr.ib(default=True)
     train_fraction: float = attr.ib(default=0.8)
     word_pieces: bool = attr.ib(default=False)
-    num_classes: int = attr.ib(init=False)
 
     def __attrs_post_init__(self) -> None:
         self.iam_paragraphs = IAMParagraphs(

@@ -17,7 +17,7 @@ from text_recognizer.data.base_dataset import (
     split_dataset,
 )
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
-from text_recognizer.data.mappings import EmnistMapping
+from text_recognizer.data.emnist_mapping import EmnistMapping
 from text_recognizer.data.iam import IAM
 from text_recognizer.data.transforms import WordPiece
 
@@ -50,11 +50,9 @@ class IAMParagraphs(BaseDataModule):
         if PROCESSED_DATA_DIRNAME.exists():
             return
 
-        log.info(
-            "Cropping IAM paragraph regions and saving them along with labels..."
-        )
+        log.info("Cropping IAM paragraph regions and saving them along with labels...")
 
-        iam = IAM(mapping=EmnistMapping())
+        iam = IAM(mapping=EmnistMapping(extra_symbols={NEW_LINE_TOKEN,}))
         iam.prepare_data()
 
         properties = {}
@@ -83,7 +81,9 @@ class IAMParagraphs(BaseDataModule):
             crops, labels = _load_processed_crops_and_labels(split)
             data = [resize_image(crop, IMAGE_SCALE_FACTOR) for crop in crops]
             targets = convert_strings_to_labels(
-                strings=labels, mapping=self.mapping.inverse_mapping, length=self.output_dims[0]
+                strings=labels,
+                mapping=self.mapping.inverse_mapping,
+                length=self.output_dims[0],
             )
             return BaseDataset(
                 data,

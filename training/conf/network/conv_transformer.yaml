@@ -6,6 +6,5 @@ _target_: text_recognizer.networks.conv_transformer.ConvTransformer
 input_dims: [1, 576, 640]
 hidden_dim: 96
 dropout_rate: 0.2
-max_output_len: 451
 num_classes: 1006
 pad_index: 1002

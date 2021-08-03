@@ -13,8 +13,6 @@ import click
 from loguru import logger as log
 import sentencepiece as spm
 
-from text_recognizer.data.iam_preprocessor import load_metadata
-
 
 def iamdb_pieces(
     data_dir: Path, text_file: str, num_pieces: int, output_prefix: str

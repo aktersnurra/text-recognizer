@@ -11,9 +11,7 @@ from text_recognizer.networks.encoders.efficientnet.utils import stochastic_dept
 
 def _convert_stride(stride: Union[Tuple[int, int], int]) -> Tuple[int, int]:
     """Converts int to tuple."""
-    return (
-        (stride,) * 2 if isinstance(stride, int) else stride
-    )
+    return (stride,) * 2 if isinstance(stride, int) else stride
 
 
 @attr.s(eq=False)
@@ -41,10 +39,7 @@ class MBConvBlock(nn.Module):
     def _configure_padding(self) -> Tuple[int, int, int, int]:
         """Set padding for convolutional layers."""
         if self.stride == (2, 2):
-            return (
-                (self.kernel_size - 1) // 2 - 1,
-                (self.kernel_size - 1) // 2,
-                ) * 2
+            return ((self.kernel_size - 1) // 2 - 1, (self.kernel_size - 1) // 2,) * 2
         return ((self.kernel_size - 1) // 2,) * 4
 
     def __attrs_post_init__(self) -> None:

@@ -1,6 +1,6 @@
 defaults:
   - default
-  - wandb/watch
-  - wandb/code 
-  - wandb/checkpoints
-  - wandb/ocr_predictions
+  - wandb_watch
+  - wandb_code 
+  - wandb_checkpoints
+  - wandb_ocr_predictions

@@ -1,11 +1,11 @@
 """Transforms for PyTorch datasets."""
 from pathlib import Path
-from typing import Optional, Union, Sequence
+from typing import Optional, Union, Set
 
 import torch
 from torch import Tensor
 
-from text_recognizer.data.mappings import WordPieceMapping
+from text_recognizer.data.word_piece_mapping import WordPieceMapping
 
 
 class WordPiece:
@@ -19,8 +19,8 @@ class WordPiece:
         data_dir: Optional[Union[str, Path]] = None,
         use_words: bool = False,
         prepend_wordsep: bool = False,
-        special_tokens: Sequence[str] = ("<s>", "<e>", "<p>"),
-        extra_symbols: Optional[Sequence[str]] = ("\n",),
+        special_tokens: Set[str] = {"<s>", "<e>", "<p>"},
+        extra_symbols: Optional[Set[str]] = {"\n",},
         max_len: int = 451,
     ) -> None:
         self.mapping = WordPieceMapping(

@@ -18,3 +18,4 @@ ff_kwargs:
   dropout_rate: 0.2
 cross_attend: true
 pre_norm: true
+rotary_emb: null

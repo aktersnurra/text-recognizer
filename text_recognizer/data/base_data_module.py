@@ -1,12 +1,12 @@
 """Base lightning DataModule class."""
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Type
 
 import attr
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader
 
-from text_recognizer.data.mappings import AbstractMapping
+from text_recognizer.data.base_mapping import AbstractMapping
 from text_recognizer.data.base_dataset import BaseDataset
 
 
@@ -25,7 +25,7 @@ class BaseDataModule(LightningDataModule):
     def __attrs_pre_init__(self) -> None:
         super().__init__()
 
-    mapping: AbstractMapping = attr.ib()
+    mapping: Type[AbstractMapping] = attr.ib()
     batch_size: int = attr.ib(default=16)
     num_workers: int = attr.ib(default=0)
     pin_memory: bool = attr.ib(default=True)

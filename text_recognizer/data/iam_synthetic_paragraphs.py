@@ -21,7 +21,7 @@ from text_recognizer.data.iam_paragraphs import (
     IMAGE_SCALE_FACTOR,
     resize_image,
 )
-from text_recognizer.data.mappings import EmnistMapping
+from text_recognizer.data.emnist_mapping import EmnistMapping
 from text_recognizer.data.iam import IAM
 from text_recognizer.data.iam_lines import (
     line_crops_and_labels,
@@ -47,7 +47,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
         log.info("Preparing IAM lines for synthetic paragraphs dataset.")
         log.info("Cropping IAM line regions and loading labels.")
 
-        iam = IAM(mapping=EmnistMapping())
+        iam = IAM(mapping=EmnistMapping(extra_symbols={NEW_LINE_TOKEN,}))
         iam.prepare_data()
 
         crops_train, labels_train = line_crops_and_labels(iam, "train")
