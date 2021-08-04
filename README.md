@@ -10,6 +10,7 @@ TBC
 ### Build word piece dataset
 
 Extract text from the iam dataset:
+TODO: Fix these!
 ```
 python extract-iam-text --use_words --save_text train.txt --save_tokens letters.txt
 ```
@@ -27,15 +28,17 @@ python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kw
 
 ## Todo
 - [x] Efficient-net b0 + transformer decoder
-- [ ] Load everything with hydra, get it to work
-- [ ] Train network
+- [x] Load everything with hydra, get it to work
+- [x] Train network
+- [ ] Get VQVAE2 to work and not get loss NAN
+- [ ] Local attention for target sequence
+- [ ] Rotary embedding for target sequence
 - [ ] Tests
 - [ ] Evaluation
 - [ ] Wandb artifact fetcher
 - [ ] attr refactor
 - [ ] Refactor once more
 - [ ] fix linting
-- [ ] fix loading of transform iam paragraph
 
 
 ## Run Sweeps
