@@ -119,7 +119,7 @@ class LogTextPredictions(Callback):
         ]
 
         experiment.log(
-            {f"OCR/{experiment.name}/{stage}": wandb.Table(data=data, columns=columns)}
+            {f"HTR/{experiment.name}/{stage}": wandb.Table(data=data, columns=columns)}
         )
 
     def on_sanity_check_start(

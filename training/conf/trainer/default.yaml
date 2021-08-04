@@ -8,7 +8,7 @@ gpus: 1
 precision: 16
 max_epochs: 512
 terminate_on_nan: true
-weights_summary: top
+weights_summary: full
 limit_train_batches: 1.0 
 limit_val_batches: 1.0
 limit_test_batches: 1.0

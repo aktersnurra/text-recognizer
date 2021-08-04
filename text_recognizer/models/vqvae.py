@@ -1,11 +1,8 @@
 """PyTorch Lightning model for base Transformers."""
-from typing import Any, Dict, Union, Tuple, Type
+from typing import Tuple
 
 import attr
-from omegaconf import DictConfig
-from torch import nn
 from torch import Tensor
-import wandb
 
 from text_recognizer.models.base import BaseLitModel
 
@@ -25,7 +22,7 @@ class VQVAELitModel(BaseLitModel):
         data, _ = batch
         reconstructions, vq_loss = self(data)
         loss = self.loss_fn(reconstructions, data)
-        loss += self.latent_loss_weight * vq_loss
+        loss = loss + self.latent_loss_weight * vq_loss
         self.log("train/loss", loss)
         return loss
 
@@ -34,7 +31,7 @@ class VQVAELitModel(BaseLitModel):
         data, _ = batch
         reconstructions, vq_loss = self(data)
         loss = self.loss_fn(reconstructions, data)
-        loss += self.latent_loss_weight * vq_loss
+        loss = loss + self.latent_loss_weight * vq_loss
         self.log("val/loss", loss, prog_bar=True)
 
     def test_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
@@ -42,5 +39,5 @@ class VQVAELitModel(BaseLitModel):
         data, _ = batch
         reconstructions, vq_loss = self(data)
         loss = self.loss_fn(reconstructions, data)
-        loss += self.latent_loss_weight * vq_loss
+        loss = loss + self.latent_loss_weight * vq_loss
         self.log("test/loss", loss)

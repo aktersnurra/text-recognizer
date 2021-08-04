@@ -83,8 +83,6 @@ class VectorQuantizer(nn.Module):
     def compute_ema(self, one_hot_encoding: Tensor, latent: Tensor) -> None:
         batch_cluster_size = one_hot_encoding.sum(axis=0)
         batch_embedding_avg = (latent.t() @ one_hot_encoding).t()
-        print(batch_cluster_size.shape)
-        print(self.embedding._cluster_size.shape)
         self.embedding._cluster_size.data.mul_(self.decay).add_(
             batch_cluster_size, alpha=1 - self.decay
         )
