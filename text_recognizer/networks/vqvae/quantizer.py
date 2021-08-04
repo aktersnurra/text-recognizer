@@ -7,7 +7,7 @@ from einops import rearrange
 import torch
 from torch import nn
 from torch import Tensor
-from torch.nn import functional as F
+import torch.nn.functional as F
 
 
 class EmbeddingEMA(nn.Module):

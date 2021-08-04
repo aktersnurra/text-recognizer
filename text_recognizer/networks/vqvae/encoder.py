@@ -21,11 +21,9 @@ class Encoder(nn.Module):
     activation: str = attr.ib()
     encoder: nn.Sequential = attr.ib(init=False)
 
-    def __attrs_pre_init__(self) -> None:
-        super().__init__()
-
     def __attrs_post_init__(self) -> None:
         """Post init configuration."""
+        super().__init__()
         self.encoder = self._build_compression_block()
 
     def _build_compression_block(self) -> nn.Sequential:

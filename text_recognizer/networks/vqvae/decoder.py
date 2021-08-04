@@ -19,11 +19,9 @@ class Decoder(nn.Module):
     activation: str = attr.ib()
     decoder: nn.Sequential = attr.ib(init=False)
 
-    def __attrs_pre_init__(self) -> None:
-        super().__init__()
-
     def __attrs_post_init__(self) -> None:
         """Post init configuration."""
+        super().__init__()
         self.decoder = self._build_decompression_block()
 
     def _build_decompression_block(self,) -> nn.Sequential:
