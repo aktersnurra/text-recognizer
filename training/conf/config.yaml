@@ -1,3 +1,5 @@
+# @package _global_
+
 defaults:
   - callbacks: wandb_ocr
   - criterion: label_smoothing

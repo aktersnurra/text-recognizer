@@ -2,12 +2,12 @@ defaults:
   - rotary_emb: null
 
 _target_: text_recognizer.networks.transformer.Decoder
-dim: 96
+dim: 128
 depth: 2
 num_heads: 8
 attn_fn: text_recognizer.networks.transformer.attention.Attention
 attn_kwargs:
-  dim_head: 16
+  dim_head: 64
   dropout_rate: 0.2
 norm_fn: torch.nn.LayerNorm
 ff_fn: text_recognizer.networks.transformer.mlp.FeedForward

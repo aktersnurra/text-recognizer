@@ -1,13 +1,8 @@
-type: VQVAE
-args:
-  in_channels: 1
-  channels: [64, 96]
-  kernel_sizes: [4, 4]
-  strides: [2, 2]
-  num_residual_layers: 2 
-  embedding_dim: 64
-  num_embeddings: 256
-  upsampling: null
-  beta: 0.25
-  activation: leaky_relu
-  dropout_rate: 0.2
+_target_: text_recognizer.networks.vqvae.VQVAE
+in_channels: 1
+res_channels: 32
+num_residual_layers: 2
+embedding_dim: 64
+num_embeddings: 512
+decay: 0.99
+activation: mish

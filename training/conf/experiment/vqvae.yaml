@@ -1,0 +1,20 @@
+# @package _global_
+
+defaults:
+  - override /network: vqvae
+  - override /criterion: mse
+  - override /model: lit_vqvae
+  - override /callbacks: wandb_vae
+
+trainer:
+  max_epochs: 64
+
+datamodule:
+  batch_size: 32
+
+lr_scheduler:
+  epochs: 64
+  steps_per_epoch: 624
+
+optimizer:
+  lr: 1.0e-2

@@ -1,0 +1,6 @@
+defaults:
+  - default
+  - wandb_watch
+  - wandb_code 
+  - wandb_checkpoints
+  - wandb_image_reconstructions

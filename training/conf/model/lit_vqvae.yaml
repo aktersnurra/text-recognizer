@@ -1,2 +1,4 @@
 _target_: text_recognizer.models.vqvae.VQVAELitModel
-mapping: sentence_piece
+interval: step
+monitor: val/loss
+latent_loss_weight: 0.25

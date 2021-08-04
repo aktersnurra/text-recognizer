@@ -2,9 +2,7 @@
 
 Reference:
 https://github.com/AntixK/PyTorch-VAE/blob/master/models/vq_vae.py
-
 """
-
 from einops import rearrange
 import torch
 from torch import nn
@@ -12,21 +10,27 @@ from torch import Tensor
 from torch.nn import functional as F
 
 
+class EmbeddingEMA(nn.Module):
+    def __init__(self, num_embeddings: int, embedding_dim: int) -> None:
+        super().__init__()
+        weight = torch.zeros(num_embeddings, embedding_dim)
+        nn.init.kaiming_uniform_(weight, nonlinearity="linear")
+        self.register_buffer("weight", weight)
+        self.register_buffer("_cluster_size", torch.zeros(num_embeddings))
+        self.register_buffer("_weight_avg", weight)
+
+
 class VectorQuantizer(nn.Module):
     """The codebook that contains quantized vectors."""
 
     def __init__(
-        self, num_embeddings: int, embedding_dim: int, beta: float = 0.25
+        self, num_embeddings: int, embedding_dim: int, decay: float = 0.99
     ) -> None:
         super().__init__()
-        self.K = num_embeddings
-        self.D = embedding_dim
-        self.beta = beta
-
-        self.embedding = nn.Embedding(self.K, self.D)
-
-        # Initialize the codebook.
-        nn.init.uniform_(self.embedding.weight, -1 / self.K, 1 / self.K)
+        self.num_embeddings = num_embeddings
+        self.embedding_dim = embedding_dim
+        self.decay = decay
+        self.embedding = EmbeddingEMA(self.num_embeddings, self.embedding_dim)
 
     def discretization_bottleneck(self, latent: Tensor) -> Tensor:
         """Computes the code nearest to the latent representation.
@@ -62,7 +66,7 @@ class VectorQuantizer(nn.Module):
 
         # Convert to one-hot encodings, aka discrete bottleneck.
         one_hot_encoding = torch.zeros(
-            encoding_indices.shape[0], self.K, device=latent.device
+            encoding_indices.shape[0], self.num_embeddings, device=latent.device
         )
         one_hot_encoding.scatter_(1, encoding_indices, 1)  # [BHW x K]
 
@@ -71,8 +75,26 @@ class VectorQuantizer(nn.Module):
         quantized_latent = rearrange(
             quantized_latent, "(b h w) d -> b h w d", b=b, h=h, w=w
         )
+        if self.training:
+            self.compute_ema(one_hot_encoding=one_hot_encoding, latent=latent)
 
         return quantized_latent
+
+    def compute_ema(self, one_hot_encoding: Tensor, latent: Tensor) -> None:
+        batch_cluster_size = one_hot_encoding.sum(axis=0)
+        batch_embedding_avg = (latent.t() @ one_hot_encoding).t()
+        print(batch_cluster_size.shape)
+        print(self.embedding._cluster_size.shape)
+        self.embedding._cluster_size.data.mul_(self.decay).add_(
+            batch_cluster_size, alpha=1 - self.decay
+        )
+        self.embedding._weight_avg.data.mul_(self.decay).add_(
+            batch_embedding_avg, alpha=1 - self.decay
+        )
+        new_embedding = self.embedding._weight_avg / (
+            self.embedding._cluster_size + 1.0e-5
+        ).unsqueeze(1)
+        self.embedding.weight.data.copy_(new_embedding)
 
     def vq_loss(self, latent: Tensor, quantized_latent: Tensor) -> Tensor:
         """Vector Quantization loss.
@@ -96,9 +118,10 @@ class VectorQuantizer(nn.Module):
             Tensor: The combinded VQ loss.
 
         """
-        embedding_loss = F.mse_loss(quantized_latent, latent.detach())
         commitment_loss = F.mse_loss(quantized_latent.detach(), latent)
-        return embedding_loss + self.beta * commitment_loss
+        # embedding_loss = F.mse_loss(quantized_latent, latent.detach())
+        # return embedding_loss + self.beta * commitment_loss
+        return commitment_loss
 
     def forward(self, latent: Tensor) -> Tensor:
         """Forward pass that returns the quantized vector and the vq loss."""
