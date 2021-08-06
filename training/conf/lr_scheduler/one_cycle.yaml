@@ -13,3 +13,7 @@ final_div_factor: 10000.0
 three_phase: true
 last_epoch: -1
 verbose: false
+
+# Non-class arguments
+interval: step
+monitor: val/loss

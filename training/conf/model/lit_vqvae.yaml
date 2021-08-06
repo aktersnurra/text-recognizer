@@ -1,4 +1,2 @@
 _target_: text_recognizer.models.vqvae.VQVAELitModel
-interval: step
-monitor: val/loss
-latent_loss_weight: 1.0
+latent_loss_weight: 0.25

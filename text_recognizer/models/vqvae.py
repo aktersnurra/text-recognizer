@@ -23,6 +23,7 @@ class VQVAELitModel(BaseLitModel):
         reconstructions, vq_loss = self(data)
         loss = self.loss_fn(reconstructions, data)
         loss = loss + self.latent_loss_weight * vq_loss
+        self.log("train/vq_loss", vq_loss)
         self.log("train/loss", loss)
         return loss
 
@@ -32,6 +33,7 @@ class VQVAELitModel(BaseLitModel):
         reconstructions, vq_loss = self(data)
         loss = self.loss_fn(reconstructions, data)
         loss = loss + self.latent_loss_weight * vq_loss
+        self.log("val/vq_loss", vq_loss)
         self.log("val/loss", loss, prog_bar=True)
 
     def test_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
@@ -40,4 +42,5 @@ class VQVAELitModel(BaseLitModel):
         reconstructions, vq_loss = self(data)
         loss = self.loss_fn(reconstructions, data)
         loss = loss + self.latent_loss_weight * vq_loss
+        self.log("test/vq_loss", vq_loss)
         self.log("test/loss", loss)

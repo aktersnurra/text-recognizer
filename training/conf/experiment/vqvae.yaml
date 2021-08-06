@@ -5,6 +5,7 @@ defaults:
   - override /criterion: mse
   - override /model: lit_vqvae
   - override /callbacks: wandb_vae
+  - override /lr_scheduler: cosine_annealing
 
 trainer:
   max_epochs: 64
@@ -13,11 +14,11 @@ trainer:
 datamodule:
   batch_size: 16
 
-lr_scheduler:
-  epochs: 64
-  steps_per_epoch: 1245
+# lr_scheduler:
+  # epochs: 64
+  # steps_per_epoch: 1245
 
-optimizer:
-  lr: 1.0e-3
+# optimizer:
+  # lr: 1.0e-3
 
 summary: [1, 576, 640]

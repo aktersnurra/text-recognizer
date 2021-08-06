@@ -26,8 +26,6 @@ class BaseLitModel(LightningModule):
     loss_fn: Type[nn.Module] = attr.ib()
     optimizer_config: DictConfig = attr.ib()
     lr_scheduler_config: DictConfig = attr.ib()
-    interval: str = attr.ib()
-    monitor: str = attr.ib(default="val/loss")
     train_acc: torchmetrics.Accuracy = attr.ib(
         init=False, default=torchmetrics.Accuracy()
     )
@@ -58,12 +56,18 @@ class BaseLitModel(LightningModule):
         self, optimizer: Type[torch.optim.Optimizer]
     ) -> Dict[str, Any]:
         """Configures the lr scheduler."""
+        # Extract non-class arguments.
+        monitor = self.lr_scheduler_config.monitor
+        interval = self.lr_scheduler_config.interval
+        del self.lr_scheduler_config.monitor
+        del self.lr_scheduler_config.interval
+
         log.info(
             f"Instantiating learning rate scheduler <{self.lr_scheduler_config._target_}>"
         )
         scheduler = {
-            "monitor": self.monitor,
-            "interval": self.interval,
+            "monitor": monitor,
+            "interval": interval,
             "scheduler": hydra.utils.instantiate(
                 self.lr_scheduler_config, optimizer=optimizer
             ),
