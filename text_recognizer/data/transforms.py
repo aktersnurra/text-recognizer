@@ -1,10 +1,11 @@
 """Transforms for PyTorch datasets."""
 from pathlib import Path
-from typing import Optional, Union, Set
+from typing import Optional, Union, Type, Set
 
 import torch
 from torch import Tensor
 
+from text_recognizer.data.base_mapping import AbstractMapping
 from text_recognizer.data.word_piece_mapping import WordPieceMapping
 
 

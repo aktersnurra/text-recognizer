@@ -13,6 +13,7 @@ from pytorch_lightning import (
 )
 from pytorch_lightning.loggers import LightningLoggerBase
 from torch import nn
+from torchsummary import summary
 from text_recognizer.data.base_mapping import AbstractMapping
 
 import utils
@@ -36,6 +37,9 @@ def run(config: DictConfig) -> Optional[float]:
 
     log.info(f"Instantiating network <{config.network._target_}>")
     network: nn.Module = hydra.utils.instantiate(config.network)
+
+    if config.summary:
+        summary(network, tuple(config.summary), device="cpu")
 
     log.info(f"Instantiating criterion <{config.criterion._target_}>")
     loss_fn: Type[nn.Module] = hydra.utils.instantiate(config.criterion)

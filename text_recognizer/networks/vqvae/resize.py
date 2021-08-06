@@ -8,7 +8,7 @@ class Upsample(nn.Module):
 
     def forward(self, x: Tensor) -> Tensor:
         """Applies upsampling."""
-        return F.interpolate(x, scale_factor=2, mode="nearest")
+        return F.interpolate(x, scale_factor=2.0, mode="nearest")
 
 
 class Downsample(nn.Module):

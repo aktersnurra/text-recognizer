@@ -3,4 +3,4 @@ defaults:
   - wandb_watch
   - wandb_code 
   - wandb_checkpoints
-  - wandb_ocr_predictions
+  - wandb_htr_predictions

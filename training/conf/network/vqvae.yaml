@@ -1,8 +1,9 @@
-_target_: text_recognizer.networks.vqvae.VQVAE
-in_channels: 1
-res_channels: 32
-num_residual_layers: 2
-embedding_dim: 64
-num_embeddings: 512
+defaults:
+  - encoder: vae_encoder
+  - decoder: vae_decoder
+
+_target_: text_recognizer.networks.vqvae.vqvae.VQVAE
+hidden_dim: 256
+embedding_dim: 32
+num_embeddings: 1024
 decay: 0.99
-activation: mish

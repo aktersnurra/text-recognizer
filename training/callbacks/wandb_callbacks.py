@@ -39,8 +39,8 @@ class WatchModel(Callback):
 class UploadCodeAsArtifact(Callback):
     """Upload all *.py files to W&B as an artifact, at the beginning of the run."""
 
-    def __init__(self, project_dir: str) -> None:
-        self.project_dir = Path(project_dir)
+    def __init__(self) -> None:
+        self.project_dir = Path(__file__).resolve().parents[2] / "text_recognizer"
 
     @rank_zero_only
     def on_train_start(self, trainer: Trainer, pl_module: LightningModule) -> None:
@@ -49,7 +49,7 @@ class UploadCodeAsArtifact(Callback):
         experiment = logger.experiment
         artifact = wandb.Artifact("project-source", type="code")
         for filepath in self.project_dir.glob("**/*.py"):
-            artifact.add_file(filepath)
+            artifact.add_file(str(filepath))
 
         experiment.use_artifact(artifact)
 
@@ -60,7 +60,7 @@ class UploadCheckpointsAsArtifact(Callback):
     def __init__(
         self, ckpt_dir: str = "checkpoints/", upload_best_only: bool = False
     ) -> None:
-        self.ckpt_dir = ckpt_dir
+        self.ckpt_dir = Path(__file__).resolve().parent / ckpt_dir
         self.upload_best_only = upload_best_only
 
     @rank_zero_only
