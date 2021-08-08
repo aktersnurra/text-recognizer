@@ -32,7 +32,6 @@ class VQVAE(nn.Module):
             num_embeddings=num_embeddings, embedding_dim=embedding_dim, decay=decay,
         )
 
-
     def encode(self, x: Tensor) -> Tensor:
         """Encodes input to a latent code."""
         z_e = self.encoder(x)

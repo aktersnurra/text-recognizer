@@ -50,8 +50,8 @@ def run(config: DictConfig) -> Optional[float]:
         mapping=mapping,
         network=network,
         loss_fn=loss_fn,
-        optimizer_config=config.optimizer,
-        lr_scheduler_config=config.lr_scheduler,
+        optimizer_configs=config.optimizers,
+        lr_scheduler_configs=config.lr_schedulers,
         _recursive_=False,
     )
 

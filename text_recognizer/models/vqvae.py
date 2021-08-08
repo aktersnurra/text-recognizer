@@ -28,8 +28,8 @@ class VQVAELitModel(BaseLitModel):
         self.log("train/vq_loss", vq_loss)
         self.log("train/loss", loss)
 
-        self.train_acc(reconstructions, data)
-        self.log("train/acc", self.train_acc, on_step=False, on_epoch=True)
+        # self.train_acc(reconstructions, data)
+        # self.log("train/acc", self.train_acc, on_step=False, on_epoch=True)
         return loss
 
     def validation_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
@@ -42,8 +42,8 @@ class VQVAELitModel(BaseLitModel):
         self.log("val/vq_loss", vq_loss)
         self.log("val/loss", loss, prog_bar=True)
 
-        self.val_acc(reconstructions, data)
-        self.log("val/acc", self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
+        # self.val_acc(reconstructions, data)
+        # self.log("val/acc", self.val_acc, on_step=False, on_epoch=True, prog_bar=True)
 
     def test_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
         """Test step."""
@@ -53,5 +53,5 @@ class VQVAELitModel(BaseLitModel):
         loss = loss + self.latent_loss_weight * vq_loss
         self.log("test/vq_loss", vq_loss)
         self.log("test/loss", loss)
-        self.test_acc(reconstructions, data)
-        self.log("test/acc", self.test_acc, on_step=False, on_epoch=True)
+        # self.test_acc(reconstructions, data)
+        # self.log("test/acc", self.test_acc, on_step=False, on_epoch=True)

@@ -1,0 +1,12 @@
+_target_: text_recognizer.criterions.vqgan_loss.VQGANLoss
+reconstruction_loss:
+  _target_: torch.nn.L1Loss
+  reduction: mean
+discriminator:
+  _target_: text_recognizer.criterions.n_layer_discriminator.NLayerDiscriminator
+  in_channels: 1
+  num_channels: 32
+  num_layers: 3
+vq_loss_weight: 1.0
+discriminator_weight: 1.0
+

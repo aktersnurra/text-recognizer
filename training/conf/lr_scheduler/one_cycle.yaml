@@ -1,19 +1,20 @@
-_target_: torch.optim.lr_scheduler.OneCycleLR
-max_lr: 1.0e-3
-total_steps: null
-epochs: 512
-steps_per_epoch: 4992
-pct_start: 0.3
-anneal_strategy: cos
-cycle_momentum: true
-base_momentum: 0.85
-max_momentum: 0.95
-div_factor: 25.0
-final_div_factor: 10000.0
-three_phase: true
-last_epoch: -1
-verbose: false
+onc_cycle:
+  _target_: torch.optim.lr_scheduler.OneCycleLR
+  max_lr: 1.0e-3
+  total_steps: null
+  epochs: 512
+  steps_per_epoch: 4992
+  pct_start: 0.3
+  anneal_strategy: cos
+  cycle_momentum: true
+  base_momentum: 0.85
+  max_momentum: 0.95
+  div_factor: 25.0
+  final_div_factor: 10000.0
+  three_phase: true
+  last_epoch: -1
+  verbose: false
 
-# Non-class arguments
-interval: step
-monitor: val/loss
+  # Non-class arguments
+  interval: step
+  monitor: val/loss

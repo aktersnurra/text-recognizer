@@ -30,6 +30,8 @@ python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kw
 - [x] Efficient-net b0 + transformer decoder
 - [x] Load everything with hydra, get it to work
 - [x] Train network
+- [ ] Weight init
+- [ ] patchgan loss
 - [ ] Get VQVAE2 to work and not get loss NAN
 - [ ] Local attention for target sequence
 - [ ] Rotary embedding for target sequence

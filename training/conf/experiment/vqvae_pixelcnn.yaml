@@ -1,7 +1,7 @@
 # @package _global_
 
 defaults:
-  - override /network: vqvae
+  - override /network: vqvae_pixelcnn
   - override /criterion: mae
   - override /model: lit_vqvae
   - override /callbacks: wandb_vae
@@ -22,4 +22,3 @@ datamodule:
 # optimizer:
   # lr: 1.0e-3
 
-summary: null

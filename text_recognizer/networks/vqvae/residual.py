@@ -18,7 +18,13 @@ class Residual(nn.Module):
         super().__init__()
         self.block = self._build_res_block()
         if self.in_channels != self.out_channels:
-            self.conv_shortcut = nn.Conv2d(in_channels=self.in_channels, out_channels=self.out_channels, kernel_size=3, stride=1, padding=1)
+            self.conv_shortcut = nn.Conv2d(
+                in_channels=self.in_channels,
+                out_channels=self.out_channels,
+                kernel_size=3,
+                stride=1,
+                padding=1,
+            )
         else:
             self.conv_shortcut = None
 

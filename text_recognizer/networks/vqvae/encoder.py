@@ -11,7 +11,14 @@ from text_recognizer.networks.vqvae.residual import Residual
 class Encoder(nn.Module):
     """A CNN encoder network."""
 
-    def __init__(self, in_channels: int, hidden_dim: int, channels_multipliers: List[int], dropout_rate: float, activation: str = "mish") -> None:
+    def __init__(
+        self,
+        in_channels: int,
+        hidden_dim: int,
+        channels_multipliers: List[int],
+        dropout_rate: float,
+        activation: str = "mish",
+    ) -> None:
         super().__init__()
         self.in_channels = in_channels
         self.hidden_dim = hidden_dim
@@ -33,7 +40,7 @@ class Encoder(nn.Module):
         ]
 
         num_blocks = len(self.channels_multipliers)
-        channels_multipliers = (1, ) + self.channels_multipliers
+        channels_multipliers = (1,) + self.channels_multipliers
         activation_fn = activation_function(self.activation)
 
         for i in range(num_blocks):

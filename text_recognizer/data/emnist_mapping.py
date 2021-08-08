@@ -9,7 +9,9 @@ from text_recognizer.data.emnist import emnist_mapping
 
 
 class EmnistMapping(AbstractMapping):
-    def __init__(self, extra_symbols: Optional[Set[str]] = None, lower: bool = True) -> None:
+    def __init__(
+        self, extra_symbols: Optional[Set[str]] = None, lower: bool = True
+    ) -> None:
         self.extra_symbols = set(extra_symbols) if extra_symbols is not None else None
         self.mapping, self.inverse_mapping, self.input_size = emnist_mapping(
             self.extra_symbols
@@ -20,10 +22,12 @@ class EmnistMapping(AbstractMapping):
 
     def _to_lower(self) -> None:
         """Converts mapping to lowercase letters only."""
+
         def _filter(x: int) -> int:
             if 40 <= x:
                 return x - 26
             return x
+
         self.inverse_mapping = {v: _filter(k) for k, v in enumerate(self.mapping)}
         self.mapping = [c for c in self.mapping if not c.isupper()]
 

@@ -6,11 +6,13 @@ defaults:
   - datamodule: iam_extended_paragraphs
   - hydra: default
   - logger: wandb
-  - lr_scheduler: one_cycle
+  - lr_schedulers: 
+      - one_cycle
   - mapping: word_piece
   - model: lit_transformer
   - network: conv_transformer
-  - optimizer: madgrad
+  - optimizers: 
+      - madgrad
   - trainer: default
 
 seed: 4711
@@ -32,7 +34,9 @@ work_dir: ${hydra:runtime.cwd}
 debug: False
 
 # pretty print config at the start of the run using Rich library
-print_config: True
+print_config: false
 
 # disable python warnings if they annoy you
-ignore_warnings: True
+ignore_warnings: true
+
+summary: null  # [1, 576, 640]

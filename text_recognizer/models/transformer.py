@@ -60,6 +60,8 @@ class TransformerLitModel(BaseLitModel):
         pred = self(data)
         self.val_cer(pred, targets)
         self.log("val/cer", self.val_cer, on_step=False, on_epoch=True, prog_bar=True)
+        self.test_acc(pred, targets)
+        self.log("val/acc", self.test_acc, on_step=False, on_epoch=True)
 
     def test_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
         """Test step."""
@@ -69,6 +71,8 @@ class TransformerLitModel(BaseLitModel):
         pred = self(data)
         self.test_cer(pred, targets)
         self.log("test/cer", self.test_cer, on_step=False, on_epoch=True, prog_bar=True)
+        self.test_acc(pred, targets)
+        self.log("test/acc", self.test_acc, on_step=False, on_epoch=True)
 
     def predict(self, x: Tensor) -> Tensor:
         """Predicts text in image.
