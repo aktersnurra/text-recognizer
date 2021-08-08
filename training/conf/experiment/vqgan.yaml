@@ -5,30 +5,14 @@ defaults:
   - override /criterion: vqgan_loss
   - override /model: lit_vqgan
   - override /callbacks: wandb_vae
+  - override /optimizers: null
   - override /lr_schedulers: null
 
 datamodule:
   batch_size: 8
 
 lr_schedulers:
-  - generator:
-    T_max: 256
-    eta_min: 0.0
-    last_epoch: -1
-
-    interval: epoch
-    monitor: val/loss
-
-  - discriminator:
-    T_max: 256
-    eta_min: 0.0
-    last_epoch: -1
-
-    interval: epoch
-    monitor: val/loss
-
-optimizer:
-  - generator:
+  generator:
     _target_: torch.optim.lr_scheduler.CosineAnnealingLR
     T_max: 256
     eta_min: 0.0
@@ -36,17 +20,34 @@ optimizer:
 
     interval: epoch
     monitor: val/loss
+
+  discriminator:
+    _target_: torch.optim.lr_scheduler.CosineAnnealingLR
+    T_max: 256
+    eta_min: 0.0
+    last_epoch: -1
+
+    interval: epoch
+    monitor: val/loss
+
+optimizers:
+  generator:
+    _target_: madgrad.MADGRAD
+    lr: 2.0e-5
+    momentum: 0.5
+    weight_decay: 0
+    eps: 1.0e-6
+
     parameters: network
 
-  - discriminator:
-    _target_: torch.optim.lr_scheduler.CosineAnnealingLR
-    T_max: 256
-    eta_min: 0.0
-    last_epoch: -1
+  discriminator:
+    _target_: madgrad.MADGRAD
+    lr: 2.0e-5
+    momentum: 0.5
+    weight_decay: 0
+    eps: 1.0e-6
 
-    interval: epoch
-    monitor: val/loss
-    parameters: loss_fn
+    parameters: loss_fn.discriminator
 
 trainer:
   max_epochs: 256

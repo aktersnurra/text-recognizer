@@ -9,7 +9,7 @@ from text_recognizer.criterions.vqgan_loss import VQGANLoss
 
 
 @attr.s(auto_attribs=True, eq=False)
-class VQVAELitModel(BaseLitModel):
+class VQGANLitModel(BaseLitModel):
     """A PyTorch Lightning model for transformer networks."""
 
     loss_fn: VQGANLoss = attr.ib()
@@ -26,7 +26,6 @@ class VQVAELitModel(BaseLitModel):
         data, _ = batch
 
         reconstructions, vq_loss = self(data)
-        loss = self.loss_fn(reconstructions, data)
 
         if optimizer_idx == 0:
             loss, log = self.loss_fn(
@@ -81,14 +80,6 @@ class VQVAELitModel(BaseLitModel):
         self.log(
             "val/loss", loss, prog_bar=True, logger=True, on_step=True, on_epoch=True
         )
-        self.log(
-            "val/rec_loss",
-            log["val/rec_loss"],
-            prog_bar=True,
-            logger=True,
-            on_step=True,
-            on_epoch=True,
-        )
         self.log_dict(log)
 
         _, log = self.loss_fn(
@@ -105,23 +96,12 @@ class VQVAELitModel(BaseLitModel):
         data, _ = batch
         reconstructions, vq_loss = self(data)
 
-        loss, log = self.loss_fn(
+        _, log = self.loss_fn(
             data=data,
             reconstructions=reconstructions,
             vq_loss=vq_loss,
             optimizer_idx=0,
             stage="test",
-        )
-        self.log(
-            "test/loss", loss, prog_bar=True, logger=True, on_step=True, on_epoch=True
-        )
-        self.log(
-            "test/rec_loss",
-            log["test/rec_loss"],
-            prog_bar=True,
-            logger=True,
-            on_step=True,
-            on_epoch=True,
         )
         self.log_dict(log)
 
