@@ -8,6 +8,19 @@ defaults:
   - override /optimizers: null
   - override /lr_schedulers: null
 
+criterion:
+  _target_: text_recognizer.criterions.vqgan_loss.VQGANLoss
+  reconstruction_loss:
+    _target_: torch.nn.L1Loss
+    reduction: mean
+  discriminator:
+    _target_: text_recognizer.criterions.n_layer_discriminator.NLayerDiscriminator
+    in_channels: 1
+    num_channels: 32
+    num_layers: 3
+  vq_loss_weight: 0.8
+  discriminator_weight: 0.6
+
 datamodule:
   batch_size: 8
 
@@ -33,7 +46,7 @@ lr_schedulers:
 optimizers:
   generator:
     _target_: madgrad.MADGRAD
-    lr: 2.0e-5
+    lr: 4.5e-6
     momentum: 0.5
     weight_decay: 0
     eps: 1.0e-6
@@ -42,7 +55,7 @@ optimizers:
 
   discriminator:
     _target_: madgrad.MADGRAD
-    lr: 2.0e-5
+    lr: 4.5e-6
     momentum: 0.5
     weight_decay: 0
     eps: 1.0e-6

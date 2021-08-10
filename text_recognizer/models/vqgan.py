@@ -39,11 +39,8 @@ class VQGANLitModel(BaseLitModel):
                 "train/loss",
                 loss,
                 prog_bar=True,
-                logger=True,
-                on_step=True,
-                on_epoch=True,
             )
-            self.log_dict(log, prog_bar=False, logger=True, on_step=True, on_epoch=True)
+            self.log_dict(log, logger=True, on_step=True, on_epoch=True)
             return loss
 
         if optimizer_idx == 1:
@@ -58,11 +55,8 @@ class VQGANLitModel(BaseLitModel):
                 "train/discriminator_loss",
                 loss,
                 prog_bar=True,
-                logger=True,
-                on_step=True,
-                on_epoch=True,
             )
-            self.log_dict(log, prog_bar=False, logger=True, on_step=True, on_epoch=True)
+            self.log_dict(log, logger=True, on_step=True, on_epoch=True)
             return loss
 
     def validation_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
@@ -78,7 +72,7 @@ class VQGANLitModel(BaseLitModel):
             stage="val",
         )
         self.log(
-            "val/loss", loss, prog_bar=True, logger=True, on_step=True, on_epoch=True
+            "val/loss", loss, prog_bar=True,
         )
         self.log_dict(log)
 

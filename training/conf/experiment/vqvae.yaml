@@ -10,16 +10,8 @@ defaults:
 
 trainer:
   max_epochs: 256
-  # gradient_clip_val: 0.25
 
 datamodule:
   batch_size: 8
-
-# lr_scheduler:
-  # epochs: 64
-  # steps_per_epoch: 1245
-
-# optimizer:
-  # lr: 1.0e-3
 
 summary: null
