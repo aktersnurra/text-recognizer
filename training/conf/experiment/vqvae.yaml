@@ -8,6 +8,16 @@ defaults:
   - override /lr_schedulers: 
       - cosine_annealing
 
+optimizers:
+  network:
+    _target_: madgrad.MADGRAD
+    lr: 3.0e-4
+    momentum: 0.9
+    weight_decay: 0
+    eps: 1.0e-6
+
+    parameters: network
+
 trainer:
   max_epochs: 256
 

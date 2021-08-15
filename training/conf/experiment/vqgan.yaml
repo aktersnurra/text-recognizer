@@ -19,7 +19,9 @@ criterion:
     num_channels: 32
     num_layers: 3
   vq_loss_weight: 0.8
-  discriminator_weight: 0.6
+  discriminator_weight: 0.8
+  discriminator_factor: 1.0
+  discriminator_iter_start: 2e4
 
 datamodule:
   batch_size: 8
