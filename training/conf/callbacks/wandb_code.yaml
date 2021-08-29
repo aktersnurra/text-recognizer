@@ -1,2 +1,0 @@
-upload_code_as_artifact:
-  _target_: callbacks.wandb_callbacks.UploadCodeAsArtifact

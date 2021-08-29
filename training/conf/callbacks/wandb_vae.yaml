@@ -3,4 +3,4 @@ defaults:
   - wandb_watch
   - wandb_checkpoints
   - wandb_image_reconstructions
-  # - wandb_code 
+  - wandb_config 

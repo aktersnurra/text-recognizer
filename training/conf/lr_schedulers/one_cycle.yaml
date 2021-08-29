@@ -1,4 +1,4 @@
-onc_cycle:
+one_cycle:
   _target_: torch.optim.lr_scheduler.OneCycleLR
   max_lr: 1.0e-3
   total_steps: null

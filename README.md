@@ -37,6 +37,7 @@ python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kw
 - [ ] attr refactor
 - [ ] Refactor once more
 - [ ] fix linting
+- [ ] Fix artifact uploading to wandb
 
 
 ## Run Sweeps

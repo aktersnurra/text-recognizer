@@ -3,7 +3,7 @@ defaults:
   - decoder: vae_decoder
 
 _target_: text_recognizer.networks.vqvae.vqvae.VQVAE
-hidden_dim: 256
-embedding_dim: 32
-num_embeddings: 1024
+hidden_dim: 128
+embedding_dim: 64
+num_embeddings: 2048
 decay: 0.99

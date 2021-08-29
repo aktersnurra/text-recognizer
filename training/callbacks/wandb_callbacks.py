@@ -36,19 +36,19 @@ class WatchModel(Callback):
         logger.watch(model=trainer.model, log=self.log, log_freq=self.log_freq)
 
 
-class UploadCodeAsArtifact(Callback):
+class UploadConfigAsArtifact(Callback):
     """Upload all *.py files to W&B as an artifact, at the beginning of the run."""
 
     def __init__(self) -> None:
-        self.project_dir = Path(__file__).resolve().parents[2] / "text_recognizer"
+        self.config_dir = Path(".hydra/")
 
     @rank_zero_only
     def on_train_start(self, trainer: Trainer, pl_module: LightningModule) -> None:
         """Uploads project code as an artifact."""
         logger = get_wandb_logger(trainer)
         experiment = logger.experiment
-        artifact = wandb.Artifact("project-source", type="code")
-        for filepath in self.project_dir.glob("**/*.py"):
+        artifact = wandb.Artifact("experiment-config", type="config")
+        for filepath in self.config_dir.rglob("*.yaml"):
             artifact.add_file(str(filepath))
 
         experiment.use_artifact(artifact)
@@ -60,7 +60,7 @@ class UploadCheckpointsAsArtifact(Callback):
     def __init__(
         self, ckpt_dir: str = "checkpoints/", upload_best_only: bool = False
     ) -> None:
-        self.ckpt_dir = Path(__file__).resolve().parent / ckpt_dir
+        self.ckpt_dir = Path(ckpt_dir)
         self.upload_best_only = upload_best_only
 
     @rank_zero_only
@@ -73,7 +73,7 @@ class UploadCheckpointsAsArtifact(Callback):
         if self.upload_best_only:
             ckpts.add_file(trainer.checkpoint_callback.best_model_path)
         else:
-            for ckpt in (self.ckpt_dir).glob("**/*.ckpt"):
+            for ckpt in (self.ckpt_dir).rglob("**/*.ckpt"):
                 ckpts.add_file(ckpt)
 
         experiment.use_artifact(ckpts)
