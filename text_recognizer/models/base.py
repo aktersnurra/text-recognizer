@@ -63,7 +63,7 @@ class BaseLitModel(LightningModule):
         self, optimizers: List[Type[torch.optim.Optimizer]]
     ) -> List[Dict[str, Any]]:
         """Configures the lr scheduler."""
-        if None in self.lr_scheduler_configs:
+        if self.lr_scheduler_configs is None:
             return []
         schedulers = []
         for optimizer, lr_scheduler_config in zip(
