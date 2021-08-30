@@ -24,21 +24,21 @@ criterion:
   discriminator_iter_start: 2.0e4
 
 datamodule:
-  batch_size: 12
+  batch_size: 6
 
 lr_schedulers:
   generator:
     _target_: torch.optim.lr_scheduler.OneCycleLR
     max_lr: 3.0e-4
     total_steps: null
-    epochs: 64
-    steps_per_epoch: 1685
+    epochs: 100
+    steps_per_epoch: 3369
     pct_start: 0.1
     anneal_strategy: cos
     cycle_momentum: true
     base_momentum: 0.85
     max_momentum: 0.95
-    div_factor: 1.0e2
+    div_factor: 1.0e3
     final_div_factor: 1.0e4
     three_phase: true
     last_epoch: -1
