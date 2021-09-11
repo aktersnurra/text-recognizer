@@ -63,7 +63,7 @@ class Encoder(nn.Module):
                     in_channels=self.hidden_dim * self.channels_multipliers[-1],
                     out_channels=self.hidden_dim * self.channels_multipliers[-1],
                     dropout_rate=self.dropout_rate,
-                    use_norm=True,
+                    use_norm=False,
                 )
             ]
 

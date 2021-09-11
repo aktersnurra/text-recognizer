@@ -37,7 +37,7 @@ class Decoder(nn.Module):
                     in_channels=in_channels,
                     out_channels=in_channels,
                     dropout_rate=self.dropout_rate,
-                    use_norm=True,
+                    use_norm=False,
                 ),
             ]
 
