@@ -31,7 +31,7 @@ class Decoder(nn.Module):
     def _build_decompression_block(self,) -> nn.Sequential:
         in_channels = self.hidden_dim * self.channels_multipliers[0]
         decoder = []
-        for _ in range(2):
+        for _ in range(4):
             decoder += [
                 Residual(
                     in_channels=in_channels,

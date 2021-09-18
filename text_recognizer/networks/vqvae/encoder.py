@@ -57,7 +57,7 @@ class Encoder(nn.Module):
                 activation_fn,
             ]
 
-        for _ in range(2):
+        for _ in range(4):
             encoder += [
                 Residual(
                     in_channels=self.hidden_dim * self.channels_multipliers[-1],
