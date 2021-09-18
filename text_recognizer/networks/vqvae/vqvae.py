@@ -38,6 +38,7 @@ class VQVAE(nn.Module):
         return self.pre_codebook_conv(z_e)
 
     def quantize(self, z_e: Tensor) -> Tuple[Tensor, Tensor]:
+        """Quantizes the encoded latent vectors."""
         z_q, vq_loss = self.quantizer(z_e)
         return z_q, vq_loss
 
