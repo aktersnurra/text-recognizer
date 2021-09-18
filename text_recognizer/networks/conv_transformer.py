@@ -74,7 +74,6 @@ class ConvTransformer(nn.Module):
         self.token_embedding.weight.data.uniform_(-bound, bound)
         self.head.bias.data.zero_()
         self.head.weight.data.uniform_(-bound, bound)
-        # TODO: Initalize encoder?
 
     def encode(self, x: Tensor) -> Tensor:
         """Encodes an image into a latent feature vector.
