@@ -1,2 +1,1 @@
 _target_: text_recognizer.models.vqvae.VQVAELitModel
-latent_loss_weight: 0.25

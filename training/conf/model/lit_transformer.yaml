@@ -1,6 +1,4 @@
 _target_: text_recognizer.models.transformer.TransformerLitModel
-interval: step
-monitor: val/loss
 max_output_len: 451
 start_token: <s>
 end_token: <e>

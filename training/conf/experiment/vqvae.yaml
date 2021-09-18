@@ -2,26 +2,52 @@
 
 defaults:
   - override /network: vqvae
-  - override /criterion: mae
+  - override /criterion: mse
   - override /model: lit_vqvae
   - override /callbacks: wandb_vae
-  - override /lr_schedulers: 
-      - cosine_annealing
+  - override /optimizers: null
+  # - override /lr_schedulers: 
+      # - cosine_annealing
+
+# lr_schedulers: null
+#   network:
+#     _target_: torch.optim.lr_scheduler.OneCycleLR
+#     max_lr: 1.0e-2
+#     total_steps: null
+#     epochs: 100
+#     steps_per_epoch: 200
+#     pct_start: 0.1
+#     anneal_strategy: cos
+#     cycle_momentum: true
+#     base_momentum: 0.85
+#     max_momentum: 0.95
+#     div_factor: 25
+#     final_div_factor: 1.0e4
+#     three_phase: true
+#     last_epoch: -1
+#     verbose: false
+
+#     # Non-class arguments
+#     interval: step
+#     monitor: val/loss
 
 optimizers:
   network:
     _target_: madgrad.MADGRAD
-    lr: 3.0e-4
+    lr: 1.0e-4
     momentum: 0.9
     weight_decay: 0
-    eps: 1.0e-6
+    eps: 1.0e-7
 
     parameters: network
 
 trainer:
-  max_epochs: 256
+  max_epochs: 128
+  limit_train_batches: 0.01
+  limit_val_batches: 0.1
 
 datamodule:
   batch_size: 8
+  # resize: [288, 320]
 
 summary: null

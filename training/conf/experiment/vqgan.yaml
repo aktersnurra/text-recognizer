@@ -2,7 +2,7 @@
 
 defaults:
   - override /network: vqvae
-  - override /criterion: vqgan_loss
+  - override /criterion: null
   - override /model: lit_vqgan
   - override /callbacks: wandb_vae
   - override /optimizers: null
@@ -11,7 +11,7 @@ defaults:
 criterion:
   _target_: text_recognizer.criterions.vqgan_loss.VQGANLoss
   reconstruction_loss:
-    _target_: torch.nn.L1Loss
+    _target_: torch.nn.MSELoss
     reduction: mean
   discriminator:
     _target_: text_recognizer.criterions.n_layer_discriminator.NLayerDiscriminator
@@ -21,35 +21,41 @@ criterion:
   vq_loss_weight: 0.25
   discriminator_weight: 1.0
   discriminator_factor: 1.0
-  discriminator_iter_start: 2.0e4
+  discriminator_iter_start: 5e2
 
 datamodule:
-  batch_size: 6
+  batch_size: 8
+  resize: [288, 320]
 
-lr_schedulers: null
+lr_schedulers:
+  generator:
+    _target_: torch.optim.lr_scheduler.CosineAnnealingLR
+    T_max: 128
+    eta_min: 4.5e-6
+    last_epoch: -1
 
-# lr_schedulers:
-#   generator:
+    interval: epoch
+    monitor: val/loss
 #     _target_: torch.optim.lr_scheduler.OneCycleLR
 #     max_lr: 3.0e-4
 #     total_steps: null
 #     epochs: 100
-#     steps_per_epoch: 3369
+#     steps_per_epoch: 2496
 #     pct_start: 0.1
 #     anneal_strategy: cos
 #     cycle_momentum: true
 #     base_momentum: 0.85
 #     max_momentum: 0.95
-#     div_factor: 1.0e3
+#     div_factor: 25
 #     final_div_factor: 1.0e4
 #     three_phase: true
 #     last_epoch: -1
 #     verbose: false
-# 
+
 #     # Non-class arguments
 #     interval: step
 #     monitor: val/loss
-# 
+ 
 #   discriminator:
 #     _target_: torch.optim.lr_scheduler.CosineAnnealingLR
 #     T_max: 64
@@ -79,7 +85,7 @@ optimizers:
     parameters: loss_fn.discriminator
 
 trainer:
-  max_epochs: 64
-  # gradient_clip_val: 1.0e1
-
-summary: null
+  max_epochs: 128
+  limit_train_batches: 0.1
+  limit_val_batches: 0.1
+  # gradient_clip_val: 100

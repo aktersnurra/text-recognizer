@@ -7,8 +7,8 @@ defaults:
   - hydra: default
   - logger: wandb
   - lr_schedulers: 
-      - one_cycle
-  - mapping: word_piece
+      - cosine_annealing
+  - mapping: characters # word_piece
   - model: lit_transformer
   - network: conv_transformer
   - optimizers: 
@@ -20,6 +20,12 @@ tune: false
 train: true
 test: true
 logging: INFO
+
+# datamodule:
+#   word_pieces: false
+
+# model:
+#   max_output_len: 682
 
 # path to original working directory
 # hydra hijacks working directory by changing it to the current log directory,

@@ -5,6 +5,7 @@ defaults:
 _target_: text_recognizer.networks.conv_transformer.ConvTransformer
 input_dims: [1, 576, 640]
 hidden_dim: 128
+encoder_dim: 1280
 dropout_rate: 0.2
 num_classes: 1006
 pad_index: 1002
