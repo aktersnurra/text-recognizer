@@ -27,8 +27,6 @@ python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kw
 (TODO: Not working atm, needed for GTN loss function)
 
 ## Todo
-- [ ] patchgan loss FIX THIS!! LOOK AT TAMING TRANSFORMER, MORE SPECIFICALLY SEND LAYER AND COMPUTE COEFFICIENT
-- [ ] Get VQVAE2 to work and not get loss NAN
 - [ ] Local attention for target sequence
 - [ ] Rotary embedding for target sequence
 - [ ] Tests
@@ -38,7 +36,7 @@ python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kw
 - [ ] Refactor once more
 - [ ] fix linting
 - [ ] Fix artifact uploading to wandb
-
+- [ ] Fix st config is saved to experiment log folder!!!!
 
 ## Run Sweeps
  Run the following commands to execute hyperparameter search with W&B:
