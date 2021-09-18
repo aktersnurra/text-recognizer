@@ -84,7 +84,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
                 data,
                 targets,
                 transform=get_transform(
-                    image_shape=self.dims[1:], augment=self.augment
+                    image_shape=self.dims[1:], augment=self.augment, resize=self.resize
                 ),
                 target_transform=get_target_transform(self.word_pieces),
             )
