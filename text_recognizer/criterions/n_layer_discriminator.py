@@ -38,7 +38,7 @@ class NLayerDiscriminator(nn.Module):
                     stride=2,
                     padding=1,
                 ),
-                Normalize(num_channels=in_channels * n),
+                # Normalize(num_channels=in_channels * n),
                 nn.Mish(inplace=True),
             ]
             in_channels *= n
