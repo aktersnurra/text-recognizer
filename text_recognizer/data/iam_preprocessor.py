@@ -7,7 +7,7 @@ import collections
 import itertools
 from pathlib import Path
 import re
-from typing import List, Optional, Union, Set
+from typing import List, Optional, Set, Union
 
 import click
 from loguru import logger as log
@@ -140,7 +140,7 @@ class Preprocessor:
         if self.special_tokens is not None:
             pattern = f"({'|'.join(self.special_tokens)})"
             lines = list(filter(None, re.split(pattern, line)))
-            return torch.cat([self._to_index(l) for l in lines])
+            return torch.cat([self._to_index(line) for line in lines])
         return self._to_index(line)
 
     def to_text(self, indices: List[int]) -> str:
