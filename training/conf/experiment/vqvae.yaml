@@ -43,7 +43,7 @@ optimizers:
 
 trainer:
   max_epochs: 128
-  limit_train_batches: 0.01
+  limit_train_batches: 0.1
   limit_val_batches: 0.1
 
 datamodule:

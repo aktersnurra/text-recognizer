@@ -18,14 +18,14 @@ criterion:
     in_channels: 1
     num_channels: 64
     num_layers: 3
-  vq_loss_weight: 0.25
-  discriminator_weight: 1.0
+  vq_loss_weight: 1.0
+  discriminator_weight: 0.8
   discriminator_factor: 1.0
-  discriminator_iter_start: 5e2
+  discriminator_iter_start: 7e4
 
 datamodule:
   batch_size: 8
-  resize: [288, 320]
+  # resize: [288, 320]
 
 lr_schedulers:
   generator:
@@ -36,25 +36,6 @@ lr_schedulers:
 
     interval: epoch
     monitor: val/loss
-#     _target_: torch.optim.lr_scheduler.OneCycleLR
-#     max_lr: 3.0e-4
-#     total_steps: null
-#     epochs: 100
-#     steps_per_epoch: 2496
-#     pct_start: 0.1
-#     anneal_strategy: cos
-#     cycle_momentum: true
-#     base_momentum: 0.85
-#     max_momentum: 0.95
-#     div_factor: 25
-#     final_div_factor: 1.0e4
-#     three_phase: true
-#     last_epoch: -1
-#     verbose: false
-
-#     # Non-class arguments
-#     interval: step
-#     monitor: val/loss
  
 #   discriminator:
 #     _target_: torch.optim.lr_scheduler.CosineAnnealingLR
@@ -86,6 +67,6 @@ optimizers:
 
 trainer:
   max_epochs: 128
-  limit_train_batches: 0.1
-  limit_val_batches: 0.1
-  # gradient_clip_val: 100
+  # limit_train_batches: 0.1
+  # limit_val_batches: 0.1
+  gradient_clip_val: 100
