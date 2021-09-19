@@ -67,6 +67,7 @@ def run(config: DictConfig) -> Optional[float]:
     # Log hyperparameters
     log.info("Logging hyperparameters")
     utils.log_hyperparameters(config=config, model=model, trainer=trainer)
+    utils.save_config(config)
 
     if config.debug:
         log.info("Fast development run...")

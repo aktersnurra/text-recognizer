@@ -17,7 +17,14 @@ from tqdm import tqdm
 import wandb
 
 
+def save_config(config: DictConfig) -> None:
+    """Save config to experiment directory."""
+    with open("config.yaml", "w") as f:
+        OmegaConf.save(config, f=f)
+
+
 def print_config(config: DictConfig) -> None:
+    """Prints config."""
     print(OmegaConf.to_yaml(config))
 
 
