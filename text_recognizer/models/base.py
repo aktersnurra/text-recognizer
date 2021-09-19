@@ -19,6 +19,7 @@ class BaseLitModel(LightningModule):
     """Abstract PyTorch Lightning class."""
 
     def __attrs_pre_init__(self) -> None:
+        """Pre init constructor."""
         super().__init__()
 
     network: Type[nn.Module] = attr.ib()
