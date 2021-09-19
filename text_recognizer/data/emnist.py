@@ -3,7 +3,7 @@ import json
 import os
 from pathlib import Path
 import shutil
-from typing import Callable, Dict, List, Optional, Set, Sequence, Tuple
+from typing import Callable, Dict, List, Optional, Sequence, Set, Tuple
 import zipfile
 
 import attr
@@ -50,6 +50,7 @@ class EMNIST(BaseDataModule):
     transform: Callable = attr.ib(init=False, default=T.Compose([T.ToTensor()]))
 
     def __attrs_post_init__(self) -> None:
+        """Post init configuration."""
         self.dims = (1, *self.mapping.input_size)
 
     def prepare_data(self) -> None:
