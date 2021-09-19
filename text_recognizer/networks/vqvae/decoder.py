@@ -19,6 +19,7 @@ class Decoder(nn.Module):
         channels_multipliers: Sequence[int],
         dropout_rate: float,
         activation: str = "mish",
+        use_norm: bool = False,
     ) -> None:
         super().__init__()
         self.out_channels = out_channels
@@ -26,6 +27,7 @@ class Decoder(nn.Module):
         self.channels_multipliers = tuple(channels_multipliers)
         self.activation = activation
         self.dropout_rate = dropout_rate
+        self.use_norm = use_norm
         self.decoder = self._build_decompression_block()
 
     def _build_decompression_block(self,) -> nn.Sequential:
@@ -37,7 +39,7 @@ class Decoder(nn.Module):
                     in_channels=in_channels,
                     out_channels=in_channels,
                     dropout_rate=self.dropout_rate,
-                    use_norm=False,
+                    use_norm=self.use_norm,
                 ),
             ]
 
@@ -61,7 +63,7 @@ class Decoder(nn.Module):
 
         decoder += [
             Normalize(num_channels=self.hidden_dim * out_channels_multipliers[-1]),
-            nn.Mish(),
+            activation_fn,
             nn.Conv2d(
                 in_channels=self.hidden_dim * out_channels_multipliers[-1],
                 out_channels=self.out_channels,

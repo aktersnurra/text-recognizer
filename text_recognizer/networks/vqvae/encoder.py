@@ -18,6 +18,7 @@ class Encoder(nn.Module):
         channels_multipliers: List[int],
         dropout_rate: float,
         activation: str = "mish",
+        use_norm: bool = False,
     ) -> None:
         super().__init__()
         self.in_channels = in_channels
@@ -25,6 +26,7 @@ class Encoder(nn.Module):
         self.channels_multipliers = tuple(channels_multipliers)
         self.activation = activation
         self.dropout_rate = dropout_rate
+        self.use_norm = use_norm
         self.encoder = self._build_compression_block()
 
     def _build_compression_block(self) -> nn.Sequential:
@@ -63,7 +65,7 @@ class Encoder(nn.Module):
                     in_channels=self.hidden_dim * self.channels_multipliers[-1],
                     out_channels=self.hidden_dim * self.channels_multipliers[-1],
                     dropout_rate=self.dropout_rate,
-                    use_norm=False,
+                    use_norm=self.use_norm,
                 )
             ]
 
