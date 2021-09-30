@@ -1,5 +1,5 @@
 """Emnist mapping."""
-from typing import List, Optional, Union, Set
+from typing import List, Optional, Set, Union
 
 import torch
 from torch import Tensor
