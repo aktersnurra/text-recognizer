@@ -32,11 +32,15 @@ python build-transitions --tokens iamdb_1kwp_tokens_1000.txt --lexicon iamdb_1kw
 - [ ] Tests
 - [ ] Evaluation
 - [ ] Wandb artifact fetcher
-- [ ] attr refactor
 - [ ] Refactor once more
 - [ ] fix linting
+- [ ] transducer loss function
+- [ ] make for install, build datasets
 - [ ] Fix artifact uploading to wandb
-- [ ] Fix st config is saved to experiment log folder!!!!
+- [ ] Train lines with word pieces
+- [ ] Train with Smoothloss
+- [ ] Train with SWA
+- [ ] VqTransformer without the quantization
 
 ## Run Sweeps
  Run the following commands to execute hyperparameter search with W&B:
