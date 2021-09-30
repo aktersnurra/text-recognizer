@@ -24,7 +24,7 @@ class VQGANLoss(nn.Module):
         self,
         reconstruction_loss: nn.L1Loss,
         discriminator: NLayerDiscriminator,
-        vq_loss_weight: float = 1.0,
+        commitment_weight: float = 1.0,
         discriminator_weight: float = 1.0,
         discriminator_factor: float = 1.0,
         discriminator_iter_start: int = 1000,
@@ -32,7 +32,7 @@ class VQGANLoss(nn.Module):
         super().__init__()
         self.reconstruction_loss = reconstruction_loss
         self.discriminator = discriminator
-        self.vq_loss_weight = vq_loss_weight
+        self.commitment_weight = commitment_weight
         self.discriminator_weight = discriminator_weight
         self.discriminator_factor = discriminator_factor
         self.discriminator_iter_start = discriminator_iter_start
@@ -61,20 +61,18 @@ class VQGANLoss(nn.Module):
         self,
         data: Tensor,
         reconstructions: Tensor,
-        vq_loss: Tensor,
+        commitment_loss: Tensor,
         decoder_last_layer: Tensor,
         optimizer_idx: int,
         global_step: int,
         stage: str,
     ) -> Optional[Tuple]:
         """Calculates the VQGAN loss."""
-        rec_loss: Tensor = self.reconstruction_loss(
-            data.contiguous(), reconstructions.contiguous()
-        )
+        rec_loss: Tensor = self.reconstruction_loss(reconstructions, data)
 
         # GAN part.
         if optimizer_idx == 0:
-            logits_fake = self.discriminator(reconstructions.contiguous())
+            logits_fake = self.discriminator(reconstructions)
             g_loss = -torch.mean(logits_fake)
 
             if self.training:
@@ -93,19 +91,21 @@ class VQGANLoss(nn.Module):
             )
 
             loss: Tensor = (
-                rec_loss + d_factor * d_weight * g_loss + self.vq_loss_weight * vq_loss
+                rec_loss
+                + d_factor * d_weight * g_loss
+                + self.commitment_weight * commitment_loss
             )
             log = {
                 f"{stage}/total_loss": loss,
-                f"{stage}/vq_loss": vq_loss,
+                f"{stage}/commitment_loss": commitment_loss,
                 f"{stage}/rec_loss": rec_loss,
                 f"{stage}/g_loss": g_loss,
             }
             return loss, log
 
         if optimizer_idx == 1:
-            logits_fake = self.discriminator(reconstructions.contiguous().detach())
-            logits_real = self.discriminator(data.contiguous().detach())
+            logits_fake = self.discriminator(reconstructions.detach())
+            logits_real = self.discriminator(data.detach())
 
             d_factor = _adopt_weight(
                 self.discriminator_factor,
