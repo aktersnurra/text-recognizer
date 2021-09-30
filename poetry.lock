@@ -482,7 +482,7 @@ flake8 = "*"
 
 [[package]]
 name = "fsspec"
-version = "2021.8.1"
+version = "2021.9.0"
 description = "File-system specification"
 category = "main"
 optional = false
@@ -495,15 +495,20 @@ requests = {version = "*", optional = true, markers = "extra == \"http\""}
 [package.extras]
 abfs = ["adlfs"]
 adl = ["adlfs"]
+arrow = ["pyarrow (>=1)"]
 dask = ["dask", "distributed"]
 dropbox = ["dropboxdrivefs", "requests", "dropbox"]
 entrypoints = ["importlib-metadata"]
+fuse = ["fusepy"]
 gcs = ["gcsfs"]
 git = ["pygit2"]
 github = ["requests"]
 gs = ["gcsfs"]
+gui = ["panel"]
 hdfs = ["pyarrow (>=1)"]
 http = ["requests", "aiohttp"]
+libarchive = ["libarchive-c"]
+oci = ["ocifs"]
 s3 = ["s3fs"]
 sftp = ["paramiko"]
 smb = ["smbprotocol"]
@@ -1896,10 +1901,10 @@ python-versions = ">=3.6.2"
 typing-extensions = "*"
 
 [[package]]
-name = "torch-summary"
-version = "1.4.5"
+name = "torchinfo"
+version = "1.5.3"
 description = "Model summary in PyTorch, based off of the original torchsummary."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -2133,7 +2138,7 @@ termcolor = ">=1.1.0,<2.0.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ccce9236755431d057a2fff3fee3a89dfc9de41602ce1b59085e4d036e74e04e"
+content-hash = "36353c45d8dae888096e4bff901be287c14fc1387295075516da8315a659edf9"
 
 [metadata.files]
 absl-py = [
@@ -2492,8 +2497,8 @@ flake8-polyfill = [
     {file = "flake8_polyfill-1.0.2-py2.py3-none-any.whl", hash = "sha256:12be6a34ee3ab795b19ca73505e7b55826d5f6ad7230d31b18e106400169b9e9"},
 ]
 fsspec = [
-    {file = "fsspec-2021.8.1-py3-none-any.whl", hash = "sha256:30f27c059a414d1f434b14b2d0e75c8d9c3dd473ad8daeccb444d9d4069b9f03"},
-    {file = "fsspec-2021.8.1.tar.gz", hash = "sha256:af125917788b77782899bbd4484d29e5407f53d2bb04cdfa025fe4931201a555"},
+    {file = "fsspec-2021.9.0-py3-none-any.whl", hash = "sha256:fbddcce8dd2bf7ae348b6930b67a572ba36aa7b1d2a02b122f969e7e9819dd9a"},
+    {file = "fsspec-2021.9.0.tar.gz", hash = "sha256:b5bbe7846c571597e013a917483d561d712ef1e8a13b71629ea8a24c6ffbc3e9"},
 ]
 future = [
     {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
@@ -3499,9 +3504,9 @@ torch = [
     {file = "torch-1.9.0-cp39-none-macosx_10_9_x86_64.whl", hash = "sha256:0a9e74b5057463ce4e55d9332a5670993fc9e1299c52e1740e505eda106fb355"},
     {file = "torch-1.9.0-cp39-none-macosx_11_0_arm64.whl", hash = "sha256:569ead6ae6bb0e636df0fc8af660ef03260e630dc5f2f4cf3198027e7b6bb481"},
 ]
-torch-summary = [
-    {file = "torch_summary-1.4.5-py3-none-any.whl", hash = "sha256:6127efb631f34ba8cbd28e92e8f7ddc2903ea0cbc44c80f15b7363b8f558cd8c"},
-    {file = "torch_summary-1.4.5.tar.gz", hash = "sha256:44eac21777dbbda7b8404d57a43c09d83fd9c93d0c1f0c960b5083ccb24d6d21"},
+torchinfo = [
+    {file = "torchinfo-1.5.3-py3-none-any.whl", hash = "sha256:46ec87260016b70e548e57dcb4a9cc40878c83ab3532fe6a3d6c60437a1ce58f"},
+    {file = "torchinfo-1.5.3.tar.gz", hash = "sha256:49911e5d499f9ff97e270455d1f0d01f205c87cbb7df2bb4c5ba175d88940307"},
 ]
 torchmetrics = [
     {file = "torchmetrics-0.4.1-py3-none-any.whl", hash = "sha256:70c83f0fc804a4fe00a9e72dbd2960ff76e39ef62570a19bbdce0c15a1ee0d71"},
