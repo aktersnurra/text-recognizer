@@ -13,7 +13,7 @@ def activation_function(activation: str) -> Type[nn.Module]:
             ["elu", nn.ELU(inplace=True)],
             ["gelu", nn.GELU()],
             ["glu", nn.GLU()],
-            ["leaky_relu", nn.LeakyReLU(negative_slope=1.0e-2, inplace=True)],
+            ["leaky_relu", nn.LeakyReLU(negative_slope=1.0e-2, inplace=False)],
             ["none", nn.Identity()],
             ["relu", nn.ReLU(inplace=True)],
             ["selu", nn.SELU(inplace=True)],
