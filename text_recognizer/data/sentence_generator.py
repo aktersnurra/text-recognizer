@@ -25,20 +25,22 @@ class SentenceGenerator:
         self.max_length = max_length
 
     def generate(self, max_length: Optional[int] = None) -> str:
-        """Generates a word or sentences from the Brown corpus.
+        r"""Generates a word or sentences from the Brown corpus.
 
-        Sample a string from the Brown corpus of length at least one word and at most max_length, padding to
-        max_length with the '_' characters if sentence is shorter.
+        Sample a string from the Brown corpus of length at least one word and at most
+        max_length, padding to max_length with the '_' characters if sentence is 
+        shorter.
 
         Args:
-            max_length (Optional[int]): The maximum number of characters in the sentence. Defaults to None.
+            max_length (Optional[int]): The maximum number of characters in the sentence.
+                Defaults to None.
 
         Returns:
             str: A sentence from the Brown corpus.
 
         Raises:
-            ValueError: If max_length was not specified at initialization and not given as an argument.
-
+            ValueError: If max_length was not specified at initialization and not 
+                given as an argument.
         """
         if max_length is None:
             max_length = self.max_length
