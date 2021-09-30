@@ -1,7 +1,9 @@
 _target_: text_recognizer.networks.vqvae.encoder.Encoder
 in_channels: 1 
 hidden_dim: 32
-channels_multipliers: [1, 2, 4, 4]
+channels_multipliers: [1, 2, 4]
 dropout_rate: 0.0
 activation: mish
 use_norm: true
+num_residuals: 4
+residual_channels: 32
