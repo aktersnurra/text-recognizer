@@ -19,6 +19,7 @@ class NLayerDiscriminator(nn.Module):
     def _build_discriminator(self) -> nn.Sequential:
         """Builds discriminator."""
         discriminator = [
+            nn.Sigmoid(),
             nn.Conv2d(
                 in_channels=self.in_channels,
                 out_channels=self.num_channels,
