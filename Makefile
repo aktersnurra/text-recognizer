@@ -1,5 +1,8 @@
 .POSIX:
 
+install:
+	poetry install
+
 download:
 	poetry run download-emnist
 	poetry run download-nltk
