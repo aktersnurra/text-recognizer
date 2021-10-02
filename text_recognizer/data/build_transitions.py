@@ -1,9 +1,7 @@
 """Builds transition graph.
 
 Most code stolen from here:
-
     https://github.com/facebookresearch/gtn_applications/blob/master/scripts/build_transitions.py
-
 """
 
 import collections

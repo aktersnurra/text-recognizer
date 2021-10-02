@@ -21,7 +21,8 @@ class LabelSmoothingLoss(nn.Module):
         self, ignore_index: int = -100, smoothing: float = 0.0, dim: int = -1
     ) -> None:
         super().__init__()
-        assert 0.0 < smoothing <= 1.0
+        if not 0.0 < smoothing < 1.0:
+            raise ValueError("Smoothing must be between 0.0 and 1.0")
         self.ignore_index = ignore_index
         self.confidence = 1.0 - smoothing
         self.smoothing = smoothing

@@ -1,4 +1,8 @@
-"""Class for loading the IAM dataset, which encompasses both paragraphs and lines, with associated utilities."""
+"""Class for loading the IAM dataset.
+
+Which encompasses both paragraphs and lines, with associated utilities.
+"""
+
 import os
 from pathlib import Path
 from typing import Any, Dict, List
@@ -25,21 +29,25 @@ LINE_REGION_PADDING = 16  # Add this many pixels around the exact coordinates.
 
 @attr.s(auto_attribs=True)
 class IAM(BaseDataModule):
-    """
-    "The IAM Lines dataset, first published at the ICDAR 1999, contains forms of unconstrained handwritten text,
-    which were scanned at a resolution of 300dpi and saved as PNG images with 256 gray levels.
-    From http://www.fki.inf.unibe.ch/databases/iam-handwriting-database
+    r"""The IAM Lines dataset.
+
+    First published at the ICDAR 1999, contains forms of unconstrained handwritten text,
+    which were scanned at a resolution of 300dpi and saved as PNG images with 256 gray
+    levels. From http://www.fki.inf.unibe.ch/databases/iam-handwriting-database
     The data split we will use is
-    IAM lines Large Writer Independent Text Line Recognition Task (lwitlrt): 9,862 text lines.
+    IAM lines Large Writer Independent Text Line Recognition Task (lwitlrt): 9,862 text
+    lines.
         The validation set has been merged into the train set.
         The train set has 7,101 lines from 326 writers.
         The test set has 1,861 lines from 128 writers.
-        The text lines of all data sets are mutually exclusive, thus each writer has contributed to one set only.
+        The text lines of all data sets are mutually exclusive, thus each writer has
+        contributed to one set only.
     """
 
     metadata: Dict = attr.ib(init=False, default=toml.load(METADATA_FILENAME))
 
     def prepare_data(self) -> None:
+        """Prepares the IAM dataset."""
         if self.xml_filenames:
             return
         filename = download_dataset(self.metadata, DL_DATA_DIRNAME)
@@ -47,18 +55,22 @@ class IAM(BaseDataModule):
 
     @property
     def xml_filenames(self) -> List[Path]:
+        """Returns the xml filenames."""
         return list((EXTRACTED_DATASET_DIRNAME / "xml").glob("*.xml"))
 
     @property
     def form_filenames(self) -> List[Path]:
+        """Returns the form filenames."""
         return list((EXTRACTED_DATASET_DIRNAME / "forms").glob("*.jpg"))
 
     @property
     def form_filenames_by_id(self) -> Dict[str, Path]:
+        """Returns dictionary with filename and path."""
         return {filename.stem: filename for filename in self.form_filenames}
 
     @property
     def split_by_id(self) -> Dict[str, str]:
+        """Splits files into train and test."""
         return {
             filename.stem: "test"
             if filename.stem in self.metadata["test_ids"]
@@ -76,7 +88,7 @@ class IAM(BaseDataModule):
 
     @cachedproperty
     def line_regions_by_id(self) -> Dict[str, List[Dict[str, int]]]:
-        """Return a dict from name IAM form to list of (x1, x2, y1, y2) coordinates of all lines in it."""
+        """Return a dict from name IAM form to list of (x1, x2, y1, y2)."""
         return {
             filename.stem: _get_line_regions_from_xml_file(filename)
             for filename in self.xml_filenames
@@ -129,4 +141,5 @@ def _get_line_region_from_xml_file(xml_line: Any) -> Dict[str, int]:
 
 
 def download_iam() -> None:
+    """Downloads and prints IAM dataset."""
     load_and_print_info(IAM)

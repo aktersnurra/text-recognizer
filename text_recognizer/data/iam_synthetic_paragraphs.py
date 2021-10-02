@@ -7,19 +7,10 @@ from loguru import logger as log
 import numpy as np
 from PIL import Image
 
+from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.base_dataset import (
     BaseDataset,
     convert_strings_to_labels,
-)
-from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
-from text_recognizer.data.iam_paragraphs import (
-    get_dataset_properties,
-    get_transform,
-    get_target_transform,
-    NEW_LINE_TOKEN,
-    IAMParagraphs,
-    IMAGE_SCALE_FACTOR,
-    resize_image,
 )
 from text_recognizer.data.emnist_mapping import EmnistMapping
 from text_recognizer.data.iam import IAM
@@ -27,6 +18,15 @@ from text_recognizer.data.iam_lines import (
     line_crops_and_labels,
     load_line_crops_and_labels,
     save_images_and_labels,
+)
+from text_recognizer.data.iam_paragraphs import (
+    get_dataset_properties,
+    get_target_transform,
+    get_transform,
+    IAMParagraphs,
+    IMAGE_SCALE_FACTOR,
+    NEW_LINE_TOKEN,
+    resize_image,
 )
 
 
@@ -146,7 +146,10 @@ def generate_synthetic_paragraphs(
         )
         if len(paragraph_label) > paragraphs_properties["label_length"]["max"]:
             log.info(
-                "Label longer than longest label in original IAM paragraph dataset - hence dropping."
+                (
+                    "Label longer than longest label in original IAM paragraph dataset"
+                    " - hence dropping."
+                )
             )
             continue
 
@@ -160,7 +163,10 @@ def generate_synthetic_paragraphs(
             or paragraph_crop.width > max_paragraph_shape[1]
         ):
             log.info(
-                "Crop larger than largest crop in original IAM paragraphs dataset - hence dropping"
+                (
+                    "Crop larger than largest crop in original IAM paragraphs dataset"
+                    " - hence dropping"
+                )
             )
             continue
 
@@ -213,4 +219,5 @@ def generate_random_batches(
 
 
 def create_synthetic_iam_paragraphs() -> None:
+    """Creates and prints IAM Synthetic Paragraphs dataset."""
     load_and_print_info(IAMSyntheticParagraphs)

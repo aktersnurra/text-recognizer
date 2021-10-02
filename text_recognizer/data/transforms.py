@@ -37,6 +37,7 @@ class WordPiece:
         self.max_len = max_len
 
     def __call__(self, x: Tensor) -> Tensor:
+        """Converts Emnist target tensor to Word piece target tensor."""
         y = self.mapping.emnist_to_wordpiece_indices(x)
         if len(y) < self.max_len:
             pad_len = self.max_len - len(y)
