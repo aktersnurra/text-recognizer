@@ -31,6 +31,7 @@ IMAGE_SCALE_FACTOR = 2
 IMAGE_HEIGHT = 1152 // IMAGE_SCALE_FACTOR
 IMAGE_WIDTH = 1280 // IMAGE_SCALE_FACTOR
 MAX_LABEL_LENGTH = 682
+MAX_WORD_PIECE_LENGTH = 451
 
 
 @attr.s(auto_attribs=True, repr=False)
@@ -299,9 +300,11 @@ def get_transform(
     return T.Compose(transforms_list)
 
 
-def get_target_transform(word_pieces: bool) -> Optional[T.Compose]:
+def get_target_transform(
+    word_pieces: bool, max_len: int = MAX_WORD_PIECE_LENGTH
+) -> Optional[T.Compose]:
     """Transform emnist characters to word pieces."""
-    return T.Compose([WordPiece()]) if word_pieces else None
+    return T.Compose([WordPiece(max_len=max_len)]) if word_pieces else None
 
 
 def _labels_filename(split: str) -> Path:
