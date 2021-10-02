@@ -24,8 +24,8 @@ from text_recognizer.data.base_dataset import (
     split_dataset,
 )
 from text_recognizer.data.emnist_mapping import EmnistMapping
-from text_recognizer.data.iam_paragraphs import get_target_transform
 from text_recognizer.data.iam import IAM
+from text_recognizer.data.iam_paragraphs import get_target_transform
 
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -35,6 +35,7 @@ PROCESSED_DATA_DIRNAME = BaseDataModule.data_dirname() / "processed" / "iam_line
 IMAGE_HEIGHT = 56
 IMAGE_WIDTH = 1024
 MAX_LABEL_LENGTH = 89
+MAX_WORD_PIECE_LENGTH = 72
 
 
 @attr.s(auto_attribs=True, repr=False)
@@ -94,7 +95,9 @@ class IAMLines(BaseDataModule):
                 x_train,
                 y_train,
                 transform=get_transform(IMAGE_WIDTH, self.augment),
-                target_transform=get_target_transform(self.word_pieces),
+                target_transform=get_target_transform(
+                    self.word_pieces, max_len=MAX_WORD_PIECE_LENGTH
+                ),
             )
 
             self.data_train, self.data_val = split_dataset(
@@ -116,7 +119,9 @@ class IAMLines(BaseDataModule):
                 x_test,
                 y_test,
                 transform=get_transform(IMAGE_WIDTH),
-                target_transform=get_target_transform(self.word_pieces),
+                target_transform=get_target_transform(
+                    self.word_pieces, max_len=MAX_WORD_PIECE_LENGTH
+                ),
             )
 
         if stage is None:
