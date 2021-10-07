@@ -49,7 +49,7 @@ lr_schedulers:
     max_lr: 2.0e-4
     total_steps: null
     epochs: *epochs
-    steps_per_epoch: 79
+    steps_per_epoch: 632
     pct_start: 0.3
     anneal_strategy: cos
     cycle_momentum: true
