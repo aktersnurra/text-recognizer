@@ -29,9 +29,7 @@ class VQVAE(nn.Module):
             in_channels=embedding_dim, out_channels=hidden_dim, kernel_size=1
         )
         self.quantizer = VectorQuantizer(
-            num_embeddings=num_embeddings,
-            embedding_dim=embedding_dim,
-            decay=decay,
+            num_embeddings=num_embeddings, embedding_dim=embedding_dim, decay=decay,
         )
 
     def encode(self, x: Tensor) -> Tensor:
