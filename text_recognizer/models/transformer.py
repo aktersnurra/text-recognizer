@@ -1,5 +1,5 @@
 """PyTorch Lightning model for base Transformers."""
-from typing import Tuple, Type, Set
+from typing import Tuple, Set
 
 import attr
 import torch
