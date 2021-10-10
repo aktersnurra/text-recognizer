@@ -20,12 +20,9 @@ class VQVAELitModel(BaseLitModel):
     def training_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> Tensor:
         """Training step."""
         data, _ = batch
-
         reconstructions, commitment_loss = self(data)
-
         loss = self.loss_fn(reconstructions, data)
         loss = loss + self.commitment * commitment_loss
-
         self.log("train/commitment_loss", commitment_loss)
         self.log("train/loss", loss)
         return loss
@@ -33,23 +30,16 @@ class VQVAELitModel(BaseLitModel):
     def validation_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
         """Validation step."""
         data, _ = batch
-
         reconstructions, commitment_loss = self(data)
-
         loss = self.loss_fn(reconstructions, data)
-        loss = loss + self.commitment * commitment_loss
-
         self.log("val/commitment_loss", commitment_loss)
         self.log("val/loss", loss, prog_bar=True)
 
     def test_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
         """Test step."""
         data, _ = batch
-
         reconstructions, commitment_loss = self(data)
-
         loss = self.loss_fn(reconstructions, data)
         loss = loss + self.commitment * commitment_loss
-
         self.log("test/commitment_loss", commitment_loss)
         self.log("test/loss", loss)

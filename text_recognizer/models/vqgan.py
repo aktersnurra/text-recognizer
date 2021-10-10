@@ -24,7 +24,6 @@ class VQGANLitModel(BaseLitModel):
     ) -> Tensor:
         """Training step."""
         data, _ = batch
-
         reconstructions, commitment_loss = self(data)
 
         if optimizer_idx == 0:
