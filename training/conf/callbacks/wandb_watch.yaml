@@ -1,4 +1,0 @@
-watch_model:
-  _target_: callbacks.wandb_callbacks.WatchModel
-  log: all
-  log_freq: 100

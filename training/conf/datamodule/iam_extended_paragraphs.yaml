@@ -2,7 +2,6 @@ _target_: text_recognizer.data.iam_extended_paragraphs.IAMExtendedParagraphs
 batch_size: 4
 num_workers: 12
 train_fraction: 0.8
-augment: true
 pin_memory: false
-word_pieces: true
-resize: null
+transform: transform/paragraphs.yaml
+test_transform: transform/paragraphs.yaml

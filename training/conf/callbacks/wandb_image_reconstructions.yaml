@@ -1,5 +1,0 @@
-log_image_reconstruction:
-  _target_: callbacks.wandb_callbacks.LogReconstuctedImages
-  num_samples: 8
-  log_train: true
-  use_sigmoid: true
