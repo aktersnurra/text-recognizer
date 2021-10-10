@@ -15,7 +15,7 @@ from loguru import logger as log
 import toml
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
-from text_recognizer.data.download_utils import download_dataset
+from text_recognizer.data.utils.download_utils import download_dataset
 
 
 RAW_DATA_DIRNAME = BaseDataModule.data_dirname() / "raw" / "iam"
