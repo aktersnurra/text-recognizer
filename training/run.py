@@ -27,13 +27,8 @@ def run(config: DictConfig) -> Optional[float]:
     if config.get("seed"):
         seed_everything(config.seed, workers=True)
 
-    log.info(f"Instantiating mapping <{config.mapping._target_}>")
-    mapping: AbstractMapping = hydra.utils.instantiate(config.mapping)
-
     log.info(f"Instantiating datamodule <{config.datamodule._target_}>")
-    datamodule: LightningDataModule = hydra.utils.instantiate(
-        config.datamodule, mapping=mapping
-    )
+    datamodule: LightningDataModule = hydra.utils.instantiate(config.datamodule)
 
     log.info(f"Instantiating network <{config.network._target_}>")
     network: nn.Module = hydra.utils.instantiate(config.network)
@@ -44,7 +39,6 @@ def run(config: DictConfig) -> Optional[float]:
     log.info(f"Instantiating model <{config.model._target_}>")
     model: LightningModule = hydra.utils.instantiate(
         config.model,
-        mapping=mapping,
         network=network,
         loss_fn=loss_fn,
         optimizer_configs=config.optimizers,
