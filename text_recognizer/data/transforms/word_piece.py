@@ -1,12 +1,11 @@
-"""Transforms for PyTorch datasets."""
+"""Target transform for word pieces."""
 from pathlib import Path
-from typing import Optional, Union, Type, Set
+from typing import Optional, Union, Set
 
 import torch
 from torch import Tensor
 
-from text_recognizer.data.base_mapping import AbstractMapping
-from text_recognizer.data.word_piece_mapping import WordPieceMapping
+from text_recognizer.data.mappings.word_piece_mapping import WordPieceMapping
 
 
 class WordPiece:

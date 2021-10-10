@@ -4,7 +4,7 @@ from typing import List, Optional, Set, Union
 import torch
 from torch import Tensor
 
-from text_recognizer.data.base_mapping import AbstractMapping
+from text_recognizer.data.mappings.base_mapping import AbstractMapping
 from text_recognizer.data.emnist import emnist_mapping
 
 

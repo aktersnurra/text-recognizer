@@ -6,8 +6,8 @@ from loguru import logger as log
 import torch
 from torch import Tensor
 
-from text_recognizer.data.emnist_mapping import EmnistMapping
-from text_recognizer.data.iam_preprocessor import Preprocessor
+from text_recognizer.data.mappings.emnist_mapping import EmnistMapping
+from text_recognizer.data.utils.iam_preprocessor import Preprocessor
 
 
 class WordPieceMapping(EmnistMapping):
@@ -27,7 +27,7 @@ class WordPieceMapping(EmnistMapping):
         super().__init__(extra_symbols=extra_symbols)
         self.data_dir = (
             (
-                Path(__file__).resolve().parents[2]
+                Path(__file__).resolve().parents[3]
                 / "data"
                 / "downloaded"
                 / "iam"
@@ -41,7 +41,7 @@ class WordPieceMapping(EmnistMapping):
             raise RuntimeError(f"Could not locate iamdb directory at {self.data_dir}")
 
         processed_path = (
-            Path(__file__).resolve().parents[2] / "data" / "processed" / "iam_lines"
+            Path(__file__).resolve().parents[3] / "data" / "processed" / "iam_lines"
         )
 
         tokens_path = processed_path / tokens
