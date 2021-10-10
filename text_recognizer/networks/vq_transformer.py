@@ -1,6 +1,6 @@
 """Vector quantized encoder, transformer decoder."""
 from pathlib import Path
-from typing import OrderedDict, Tuple, Union
+from typing import OrderedDict, Tuple
 
 from omegaconf import OmegaConf
 from hydra.utils import instantiate
