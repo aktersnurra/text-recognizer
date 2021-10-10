@@ -1,0 +1,20 @@
+random_crop:
+  _target_: torchvision.transforms.RandomCrop
+  size: [576, 640]
+  padding: null
+  pad_if_needed: true
+  fill: 0
+  padding_mode: constant
+
+color_jitter:
+  _target_: torchvision.transforms.ColorJitter
+  brightness: [0.8, 1.6]
+
+random_affine:
+  _target_: torchvision.transforms.RandomAffine
+  degrees: 1
+  shear: [-10, 10]
+  interpolation: BILINEAR
+
+to_tensor:
+  _target_: torchvision.transforms.ToTensor

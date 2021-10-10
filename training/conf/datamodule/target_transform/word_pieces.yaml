@@ -1,0 +1,3 @@
+word_pieces:
+  _target_: text_recognizer.data.transforms.word_pieces.WordPieces
+  max_len: 451

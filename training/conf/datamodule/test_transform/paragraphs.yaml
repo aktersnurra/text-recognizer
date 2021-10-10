@@ -1,0 +1,6 @@
+center_crop:
+  _target_: torchvision.transforms.CenterCrop
+  size: [576, 640]
+
+to_tensor:
+  _target_: torchvision.transforms.ToTensor

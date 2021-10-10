@@ -1,0 +1,6 @@
+defaults:
+  - default
+  - wandb: watch
+  - wandb: checkpoints
+  - wandb: reconstructions
+  - wandb: config 

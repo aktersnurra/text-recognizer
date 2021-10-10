@@ -1,0 +1,6 @@
+defaults:
+  - default
+  - wandb: watch
+  - wandb: config 
+  - wandb: checkpoints
+  - wandb: htr_predictions

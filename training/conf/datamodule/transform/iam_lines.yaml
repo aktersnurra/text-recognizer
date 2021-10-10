@@ -1,0 +1,17 @@
+embed_crop:
+  _target_: text_recognizer.data.transforms.embed_crop.EmbedCrop
+  augment: false
+
+color_jitter:
+  _target_: torchvision.transforms.ColorJitter
+  brightness: [0.8, 1.6]
+
+random_affine:
+  _target_: torchvision.transforms.RandomAffine
+  degrees: 1
+  shear: [-30, 20]
+  interpolation: BILINEAR
+  fill: 0
+
+to_tensor:
+  _target_: torchvision.transforms.ToTensor

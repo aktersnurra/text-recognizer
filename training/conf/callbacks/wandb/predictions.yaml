@@ -1,0 +1,3 @@
+log_text_predictions:
+  _target_: callbacks.wandb_callbacks.LogTextPredictions
+  num_samples: 8
