@@ -1,7 +1,8 @@
 # @package _global_
 
 defaults:
-  - callbacks: htr
+  - _self_
+  - callbacks: default
   - criterion: label_smoothing
   - datamodule: iam_extended_paragraphs
   - hydra: default
