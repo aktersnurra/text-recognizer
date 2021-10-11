@@ -5,7 +5,6 @@ import attr
 import torch
 from torch import Tensor
 
-from text_recognizer.data.base_mapping import AbstractMapping
 from text_recognizer.models.metrics import CharacterErrorRate
 from text_recognizer.models.base import BaseLitModel
 
@@ -13,8 +12,6 @@ from text_recognizer.models.base import BaseLitModel
 @attr.s(auto_attribs=True, eq=False)
 class TransformerLitModel(BaseLitModel):
     """A PyTorch Lightning model for transformer networks."""
-
-    mapping: Type[AbstractMapping] = attr.ib()
 
     max_output_len: int = attr.ib(default=451)
     start_token: str = attr.ib(default="<s>")

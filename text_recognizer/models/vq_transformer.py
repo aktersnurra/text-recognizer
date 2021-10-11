@@ -5,7 +5,6 @@ import attr
 import torch
 from torch import Tensor
 
-from text_recognizer.data.base_mapping import AbstractMapping
 from text_recognizer.models.transformer import TransformerLitModel
 
 
@@ -13,7 +12,6 @@ from text_recognizer.models.transformer import TransformerLitModel
 class VqTransformerLitModel(TransformerLitModel):
     """A PyTorch Lightning model for transformer networks."""
 
-    mapping: Type[AbstractMapping] = attr.ib()
     alpha: float = attr.ib(default=1.0)
 
     def forward(self, data: Tensor) -> Tensor:
