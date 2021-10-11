@@ -38,23 +38,35 @@ def configure_logging(config: DictConfig) -> None:
 
 def configure_callbacks(config: DictConfig,) -> List[Type[Callback]]:
     """Configures Lightning callbacks."""
-    callbacks = []
-    if config.get("callbacks"):
-        for callback_config in config.callbacks.values():
+    def load_callback(callback_config: DictConfig) -> Type[Callback]:
+        log.info(f"Instantiating callback <{callback_config._target_}>")
+        return hydra.utils.instantiate(callback_config)
+
+    def load_callbacks(callback_configs: DictConfig) -> List[Type[Callback]]:
+        callbacks = []
+        for callback_config in callback_configs.values():
             if callback_config.get("_target_"):
-                log.info(f"Instantiating callback <{callback_config._target_}>")
-                callbacks.append(hydra.utils.instantiate(callback_config))
+                callbacks.append(load_callback(callback_config))
+            else: 
+                callbacks += load_callbacks(callback_config)
+        return callbacks
+
+    if config.get("callbacks"):
+        callbacks = load_callbacks(config.callbacks)
     return callbacks
 
 
 def configure_logger(config: DictConfig) -> List[Type[LightningLoggerBase]]:
     """Configures Lightning loggers."""
+    def load_logger(logger_config: DictConfig) -> Type[LightningLoggerBase]:
+        log.info(f"Instantiating logger <{logger_config._target_}>")
+        return hydra.utils.instantiate(logger_config)
+
     logger = []
     if config.get("logger"):
         for logger_config in config.logger.values():
             if logger_config.get("_target_"):
-                log.info(f"Instantiating logger <{logger_config._target_}>")
-                logger.append(hydra.utils.instantiate(logger_config))
+                logger.append(load_logger(logger_config))
     return logger
 
 
