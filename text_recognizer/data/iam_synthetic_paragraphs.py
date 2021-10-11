@@ -83,7 +83,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
                 data,
                 targets,
                 transform=self.transform,
-                target_transform=self.target_transforms,
+                target_transform=self.target_transform,
             )
 
     def __repr__(self) -> str:
