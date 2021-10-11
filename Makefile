@@ -16,4 +16,4 @@ generate:
 	poetry run extract-iam-text --use_words --save_text train.txt --save_tokens letters.txt
 	poetry run make-wordpieces --output_prefix iamdb_1kwp --text_file train.txt --num_pieces 1000
 
-.PHONY: download generate
+.PHONY: install download generate
