@@ -14,7 +14,6 @@ from pytorch_lightning import (
 from pytorch_lightning.loggers import LightningLoggerBase
 from torch import nn
 from torchinfo import summary
-from text_recognizer.data.base_mapping import AbstractMapping
 
 import utils
 
@@ -40,6 +39,7 @@ def run(config: DictConfig) -> Optional[float]:
     model: LightningModule = hydra.utils.instantiate(
         config.model,
         network=network,
+        mapping=datamodule.mapping,
         loss_fn=loss_fn,
         optimizer_configs=config.optimizers,
         lr_scheduler_configs=config.lr_schedulers,
