@@ -32,8 +32,8 @@ editdistance = "^0.5.3"
 torchmetrics = "^0.4.1"
 hydra-core = "^1.1.0"
 attr = "^0.3.1"
-torch = "^1.9.0"
-torchvision = "^0.10.0"
+torch = "^1.10.0"
+torchvision = "^0.11.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.2"
@@ -63,13 +63,13 @@ fail_under = 50
 
 [tool.poetry.scripts]
 download-emnist = "text_recognizer.data.emnist:download_emnist"
-download-nltk = "text_recognizer.data.sentence_generator:load_nltk_brown_corpus"
+download-nltk = "text_recognizer.data.utils.sentence_generator:load_nltk_brown_corpus"
 generate-emnist-lines = "text_recognizer.data.emnist_lines:generate_emnist_lines"
 download-iam = "text_recognizer.data.iam:download_iam"
 generate-iam-lines = "text_recognizer.data.iam_lines:generate_iam_lines"
-extract-iam-text = "text_recognizer.data.iam_preprocessor:cli"
-make-wordpieces = "text_recognizer.data.make_wordpieces:cli"
-build-transitions = "text_recognizer.data.build_transitions:cli"
+extract-iam-text = "text_recognizer.data.utils.iam_preprocessor:cli"
+make-wordpieces = "text_recognizer.data.utils.make_wordpieces:cli"
+build-transitions = "text_recognizer.data.utils.build_transitions:cli"
 generate-iam-paragraphs = "text_recognizer.data.iam_paragraphs:create_iam_paragraphs"
 generate-iam-synthetic-paragraphs = "text_recognizer.data.iam_synthetic_paragraphs:create_synthetic_iam_paragraphs"
 show-iam-extended-info = "text_recognizer.data.iam_extended_paragraphs:show_dataset_info"
