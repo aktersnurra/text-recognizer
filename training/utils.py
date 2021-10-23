@@ -38,6 +38,7 @@ def configure_logging(config: DictConfig) -> None:
 
 def configure_callbacks(config: DictConfig,) -> List[Type[Callback]]:
     """Configures Lightning callbacks."""
+
     def load_callback(callback_config: DictConfig) -> Type[Callback]:
         log.info(f"Instantiating callback <{callback_config._target_}>")
         return hydra.utils.instantiate(callback_config)
@@ -47,7 +48,7 @@ def configure_callbacks(config: DictConfig,) -> List[Type[Callback]]:
         for callback_config in callback_configs.values():
             if callback_config.get("_target_"):
                 callbacks.append(load_callback(callback_config))
-            else: 
+            else:
                 callbacks += load_callbacks(callback_config)
         return callbacks
 
@@ -58,6 +59,7 @@ def configure_callbacks(config: DictConfig,) -> List[Type[Callback]]:
 
 def configure_logger(config: DictConfig) -> List[Type[LightningLoggerBase]]:
     """Configures Lightning loggers."""
+
     def load_logger(logger_config: DictConfig) -> Type[LightningLoggerBase]:
         log.info(f"Instantiating logger <{logger_config._target_}>")
         return hydra.utils.instantiate(logger_config)
