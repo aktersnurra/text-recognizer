@@ -165,19 +165,23 @@ def add_self_loops(pruned_ngrams: List) -> List:
 
 def parse_lines(lines: List, lexicon: Path) -> List:
     """Parses lines with a lexicon."""
-    with open(lexicon, "r") as f:
+    with (lexicon).open("r") as f:
         lex = (line.strip().split() for line in f)
         lex = {line[0]: line[1:] for line in lex}
-        print(len(lex))
-    return [[t for w in line.split(WORDSEP) for t in lex[w]] for line in lines]
+    return [[t for w in line.split(WORDSEP) for t in lex[w]] for line in lines if line]
 
 
 @click.command()
 @click.option("--data_dir", type=str, default=None, help="Path to dataset root.")
 @click.option(
-    "--tokens", type=str, help="Path to token list (in order used with training)."
+    "--tokens",
+    type=str,
+    default="iamdb_1kwp_tokens_1000.txt",
+    help="Path to token list (in order used with training).",
 )
-@click.option("--lexicon", type=str, default=None, help="Path to lexicon")
+@click.option(
+    "--lexicon", type=str, default="iamdb_1kwp_lex_1000.txt", help="Path to lexicon"
+)
 @click.option(
     "--prune",
     nargs=2,
@@ -210,7 +214,7 @@ def cli(
 
     if data_dir is None:
         data_dir = (
-            Path(__file__).resolve().parents[2] / "data" / "processed" / "iam_lines"
+            Path(__file__).resolve().parents[3] / "data" / "processed" / "iam_lines"
         )
         logger.debug(f"Using data dir: {data_dir}")
         if not data_dir.exists():
@@ -219,10 +223,10 @@ def cli(
         data_dir = Path(data_dir)
 
     # Build table of counts and the back-off if below threshold.
-    with open(data_dir / "train.txt", "r") as f:
+    with (data_dir / "train.txt").open("r") as f:
         lines = [line.strip() for line in f]
 
-    with open(data_dir / tokens, "r") as f:
+    with (data_dir / tokens).open("r") as f:
         tokens = [line.strip() for line in f]
 
     if lexicon is not None:
