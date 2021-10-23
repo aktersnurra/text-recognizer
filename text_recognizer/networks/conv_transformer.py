@@ -5,10 +5,6 @@ from typing import Tuple, Type
 from torch import nn, Tensor
 
 from text_recognizer.networks.transformer.layers import Decoder
-from text_recognizer.networks.transformer.positional_encodings import (
-    PositionalEncoding,
-    PositionalEncoding2D,
-)
 
 
 class ConvTransformer(nn.Module):
