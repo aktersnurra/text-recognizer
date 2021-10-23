@@ -24,7 +24,6 @@ make generate
 
 ## Todo
 - [ ] Local attention for target sequence
-- [ ] Rotary embedding for target sequence
 - [ ] Tests
 - [ ] Evaluation
 - [ ] Wandb artifact fetcher
