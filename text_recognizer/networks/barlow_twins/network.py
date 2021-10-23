@@ -16,4 +16,3 @@ class BarlowTwins(nn.Module):
         z_e = F.adaptive_avg_pool2d(z, (1, 1)).flatten(start_dim=1)
         z_p = self.projector(z_e)
         return z_p
-

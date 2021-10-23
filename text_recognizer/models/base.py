@@ -13,6 +13,7 @@ import torchmetrics
 
 from text_recognizer.data.mappings.base_mapping import AbstractMapping
 
+
 @attr.s(eq=False)
 class BaseLitModel(LightningModule):
     """Abstract PyTorch Lightning class."""
