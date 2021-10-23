@@ -18,8 +18,8 @@ criterion:
   smoothing: 0.1 
   ignore_index: *ignore_index
     
-mapping:
-  mapping: &mapping
+mapping: &mapping
+  mapping: 
     _target_: text_recognizer.data.emnist_mapping.EmnistMapping
 
 callbacks:
@@ -38,7 +38,6 @@ optimizers:
     momentum: 0.9
     weight_decay: 0
     eps: 1.0e-6
-
     parameters: network
 
 lr_schedulers:

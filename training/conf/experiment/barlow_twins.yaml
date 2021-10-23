@@ -15,8 +15,8 @@ summary: [[1, 1, 56, 1024]]
 
 criterion:
   _target_: text_recognizer.criterions.barlow_twins.BarlowTwinsLoss
-  dim: 512
-  lambda_: 5.1e-3
+  dim: 2048
+  lambda_: 3.9e-3
 
 callbacks:
   stochastic_weight_averaging:
@@ -79,7 +79,7 @@ network:
     bn_eps: 1.0e-3
   projector:
     _target_: text_recognizer.networks.barlow_twins.projector.Projector
-    dims: [1280, 512, 512, 512]
+    dims: [1280, 2048, 2048]
 
 model:
   _target_: text_recognizer.models.barlow_twins.BarlowTwinsLitModel
@@ -100,5 +100,5 @@ trainer:
   limit_val_batches: 1.0
   limit_test_batches: 1.0
   resume_from_checkpoint: null
-  accumulate_grad_batches: 16
+  accumulate_grad_batches: 64
   overfit_batches: 0
