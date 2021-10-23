@@ -38,7 +38,7 @@ callbacks:
 optimizers:
   madgrad:
     _target_: madgrad.MADGRAD
-    lr: 3.0e-4
+    lr: 2.0e-4
     momentum: 0.9
     weight_decay: 5.0e-6
     eps: 1.0e-6
@@ -48,7 +48,7 @@ optimizers:
 lr_schedulers:
   network:
     _target_: torch.optim.lr_scheduler.OneCycleLR
-    max_lr: 3.0e-4
+    max_lr: 2.0e-4
     total_steps: null
     epochs: *epochs
     steps_per_epoch: 632
@@ -134,7 +134,7 @@ trainer:
   stochastic_weight_avg: true
   auto_scale_batch_size: binsearch
   auto_lr_find: false
-  gradient_clip_val: 0.0
+  gradient_clip_val: 0.75
   fast_dev_run: false
   gpus: 1
   precision: 16
