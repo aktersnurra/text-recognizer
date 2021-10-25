@@ -1,3 +1,5 @@
+# @package _glbal_
+
 defaults:
   - override /mapping: null
   - override /criterion: null
@@ -34,7 +36,7 @@ callbacks:
 optimizers:
   madgrad:
     _target_: madgrad.MADGRAD
-    lr: 3.0e-4
+    lr: 1.0e-4
     momentum: 0.9
     weight_decay: 0
     eps: 1.0e-6
@@ -63,21 +65,20 @@ lr_schedulers:
 
 datamodule:
   _target_: text_recognizer.data.iam_lines.IAMLines
-  batch_size: 32
   num_workers: 12
-  train_fraction: 0.8
-  augment: true
+  train_fraction: 0.9
   pin_memory: true
-  word_pieces: false
+  transform: transform/iam_lines.yaml
+  test_transform: transform/iam_lines.yaml
+  target_transform: target_transform/word_pieces
   <<: *mapping
 
 network:
   _target_: text_recognizer.networks.conv_transformer.ConvTransformer
   input_dims: [1, 56, 1024]
-  hidden_dim: &hidden_dim 128
+  hidden_dim: &hidden_dim 256
   encoder_dim: 1280
   dropout_rate: 0.2
-  <<: *mapping
   num_classes: *num_classes
   pad_index: *ignore_index
   encoder:
@@ -111,8 +112,8 @@ network:
   pixel_pos_embedding:
     _target_: text_recognizer.networks.transformer.positional_encodings.PositionalEncoding2D
     hidden_dim: *hidden_dim 
-    max_h: 1
-    max_w: 32
+    max_h: 18
+    max_w: 20
   token_pos_embedding:
     _target_: text_recognizer.networks.transformer.positional_encodings.PositionalEncoding
     hidden_dim: *hidden_dim 

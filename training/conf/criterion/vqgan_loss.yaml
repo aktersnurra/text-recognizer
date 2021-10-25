@@ -9,4 +9,3 @@ discriminator:
   num_layers: 3
 vq_loss_weight: 1.0
 discriminator_weight: 1.0
-

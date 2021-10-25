@@ -1,4 +1,4 @@
-# @package _global_
+# @package _glbal_
 
 defaults:
   - override /mapping: null
@@ -48,7 +48,7 @@ optimizers:
 lr_schedulers:
   network:
     _target_: torch.optim.lr_scheduler.OneCycleLR
-    max_lr: 2.0e-4
+    max_lr: 1.0e-4
     total_steps: null
     epochs: *epochs
     steps_per_epoch: 632
@@ -77,7 +77,7 @@ datamodule:
 network:
   _target_: text_recognizer.networks.conv_transformer.ConvTransformer
   input_dims: [1, 576, 640]
-  hidden_dim: &hidden_dim 128
+  hidden_dim: &hidden_dim 256
   encoder_dim: 1280
   dropout_rate: 0.2
   num_classes: *num_classes
