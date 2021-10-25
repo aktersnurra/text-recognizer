@@ -47,19 +47,28 @@ class Preprocessor:
 
     def __init__(
         self,
-        data_dir: Union[str, Path],
         num_features: int,
-        tokens_path: Optional[Union[str, Path]] = None,
-        lexicon_path: Optional[Union[str, Path]] = None,
+        tokens: Optional[str] = None,
+        lexicon: Optional[str] = None,
         use_words: bool = False,
         prepend_wordsep: bool = False,
         special_tokens: Optional[Set[str]] = None,
     ) -> None:
+        self.data_dir = (
+            Path(__file__).resolve().parents[3]
+            / "data"
+            / "downloaded"
+            / "iam"
+            / "iamdb"
+        )
+        log.debug(f"Using data dir: {self.data_dir}")
+        if not self.data_dir.exists():
+            raise RuntimeError(f"Could not locate iamdb directory at {self.data_dir}")
+
         self.wordsep = "▁"
         self._use_word = use_words
         self._prepend_wordsep = prepend_wordsep
         self.special_tokens = special_tokens if special_tokens is not None else None
-        self.data_dir = Path(data_dir)
         self.forms = load_metadata(self.data_dir, self.wordsep, use_words=use_words)
 
         # Load the set of graphemes:
@@ -70,14 +79,17 @@ class Preprocessor:
         self.graphemes = sorted(graphemes)
 
         # Build the token-to-index and index-to-token maps.
-        if tokens_path is not None:
-            with open(tokens_path, "r") as f:
+        processed_path = (
+            Path(__file__).resolve().parents[3] / "data" / "processed" / "iam_lines"
+        )
+        if tokens is not None:
+            with open(processed_path / tokens, "r") as f:
                 self.tokens = [line.strip() for line in f]
         else:
             self.tokens = self.graphemes
 
-        if lexicon_path is not None:
-            with open(lexicon_path, "r") as f:
+        if lexicon is not None:
+            with open(processed_path / lexicon, "r") as f:
                 lexicon = (line.strip().split() for line in f)
                 lexicon = {line[0]: line[1:] for line in lexicon}
                 self.lexicon = lexicon

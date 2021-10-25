@@ -15,7 +15,6 @@ class WordPieceMapping(EmnistMapping):
 
     def __init__(
         self,
-        data_dir: Optional[Path] = None,
         num_features: int = 1000,
         tokens: str = "iamdb_1kwp_tokens_1000.txt",
         lexicon: str = "iamdb_1kwp_lex_1000.txt",
@@ -25,37 +24,14 @@ class WordPieceMapping(EmnistMapping):
         extra_symbols: Set[str] = {"\n"},
     ) -> None:
         super().__init__(extra_symbols=extra_symbols)
-        self.data_dir = (
-            (
-                Path(__file__).resolve().parents[3]
-                / "data"
-                / "downloaded"
-                / "iam"
-                / "iamdb"
-            )
-            if data_dir is None
-            else Path(data_dir)
-        )
-        log.debug(f"Using data dir: {self.data_dir}")
-        if not self.data_dir.exists():
-            raise RuntimeError(f"Could not locate iamdb directory at {self.data_dir}")
-
-        processed_path = (
-            Path(__file__).resolve().parents[3] / "data" / "processed" / "iam_lines"
-        )
-
-        tokens_path = processed_path / tokens
-        lexicon_path = processed_path / lexicon
-
         special_tokens = set(special_tokens)
         if self.extra_symbols is not None:
             special_tokens = special_tokens | set(extra_symbols)
 
         self.wordpiece_processor = Preprocessor(
-            data_dir=self.data_dir,
             num_features=num_features,
-            tokens_path=tokens_path,
-            lexicon_path=lexicon_path,
+            tokens=tokens,
+            lexicon=lexicon,
             use_words=use_words,
             prepend_wordsep=prepend_wordsep,
             special_tokens=special_tokens,

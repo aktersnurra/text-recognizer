@@ -16,7 +16,6 @@ class WordPiece:
         num_features: int = 1000,
         tokens: str = "iamdb_1kwp_tokens_1000.txt",
         lexicon: str = "iamdb_1kwp_lex_1000.txt",
-        data_dir: Optional[Union[str, Path]] = None,
         use_words: bool = False,
         prepend_wordsep: bool = False,
         special_tokens: Set[str] = {"<s>", "<e>", "<p>"},
@@ -24,7 +23,6 @@ class WordPiece:
         max_len: int = 451,
     ) -> None:
         self.mapping = WordPieceMapping(
-            data_dir=data_dir,
             num_features=num_features,
             tokens=tokens,
             lexicon=lexicon,
