@@ -11,7 +11,7 @@ from torch import nn
 from torch import Tensor
 import torchmetrics
 
-from text_recognizer.data.mappings.base_mapping import AbstractMapping
+from text_recognizer.data.mappings.base import AbstractMapping
 
 
 @attr.s(eq=False)
