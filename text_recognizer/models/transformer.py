@@ -1,12 +1,12 @@
 """PyTorch Lightning model for base Transformers."""
-from typing import Tuple, Type, Set
+from typing import Set, Tuple
 
 import attr
 import torch
 from torch import Tensor
 
-from text_recognizer.models.metrics import CharacterErrorRate
 from text_recognizer.models.base import BaseLitModel
+from text_recognizer.models.metrics import CharacterErrorRate
 
 
 @attr.s(auto_attribs=True, eq=False)
@@ -76,7 +76,7 @@ class TransformerLitModel(BaseLitModel):
 
     def predict(self, x: Tensor) -> Tensor:
         """Predicts text in image.
-        
+
         Args:
             x (Tensor): Image(s) to extract text from.
 
