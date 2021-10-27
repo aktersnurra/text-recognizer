@@ -4,7 +4,7 @@ Copied from lucidrains:
     https://github.com/lucidrains/x-transformers/blob/main/x_transformers/x_transformers.py
 
 """
-from typing import Callable, Dict, Type
+from typing import Dict, Type
 
 import torch
 from torch import nn
@@ -19,6 +19,7 @@ class ScaleNorm(nn.Module):
         self.g = nn.Parameter(torch.ones(1))
 
     def forward(self, x: Tensor) -> Tensor:
+        """Applies scale norm."""
         norm = torch.norm(x, dim=-1, keepdim=True) * self.scale
         return x / norm.clamp(min=self.eps) * self.g
 
@@ -30,6 +31,6 @@ class PreNorm(nn.Module):
         self.fn = fn
 
     def forward(self, x: Tensor, **kwargs: Dict) -> Tensor:
-        """Norm tensor."""
+        """Applies pre norm."""
         x = self.norm(x)
         return self.fn(x, **kwargs)
