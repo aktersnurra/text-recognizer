@@ -13,6 +13,7 @@ class IAMExtendedParagraphs(BaseDataModule):
     """A dataset with synthetic and real handwritten paragraph."""
 
     def __attrs_post_init__(self) -> None:
+        """Post init constructor."""
         self.iam_paragraphs = IAMParagraphs(
             mapping=self.mapping,
             batch_size=self.batch_size,
