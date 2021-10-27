@@ -4,8 +4,8 @@ from typing import Tuple
 import attr
 from torch import Tensor
 
+from text_recognizer.criterion.vqgan_loss import VQGANLoss
 from text_recognizer.models.base import BaseLitModel
-from text_recognizer.criterions.vqgan_loss import VQGANLoss
 
 
 @attr.s(auto_attribs=True, eq=False)
