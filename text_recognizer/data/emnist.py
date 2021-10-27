@@ -17,8 +17,8 @@ from text_recognizer.data.base_data_module import (
     load_and_print_info,
 )
 from text_recognizer.data.base_dataset import BaseDataset, split_dataset
-from text_recognizer.data.utils.download_utils import download_dataset
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
+from text_recognizer.data.utils.download_utils import download_dataset
 
 
 SEED = 4711

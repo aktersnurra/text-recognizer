@@ -17,8 +17,8 @@ from text_recognizer.data.base_data_module import (
 )
 from text_recognizer.data.base_dataset import BaseDataset, convert_strings_to_labels
 from text_recognizer.data.emnist import EMNIST
-from text_recognizer.data.utils.sentence_generator import SentenceGenerator
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
+from text_recognizer.data.utils.sentence_generator import SentenceGenerator
 
 
 DATA_DIRNAME = BaseDataModule.data_dirname() / "processed" / "emnist_lines"

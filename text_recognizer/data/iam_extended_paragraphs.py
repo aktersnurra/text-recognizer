@@ -1,6 +1,5 @@
 """IAM original and sythetic dataset class."""
 import attr
-
 from torch.utils.data import ConcatDataset
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
