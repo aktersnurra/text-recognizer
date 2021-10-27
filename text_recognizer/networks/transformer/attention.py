@@ -3,7 +3,6 @@ from typing import Optional, Tuple
 
 import attr
 from einops import rearrange
-from einops.layers.torch import Rearrange
 import torch
 from torch import einsum
 from torch import nn
@@ -18,6 +17,7 @@ class Attention(nn.Module):
     """Standard attention."""
 
     def __attrs_pre_init__(self) -> None:
+        """Pre init constructor."""
         super().__init__()
 
     dim: int = attr.ib()
@@ -52,6 +52,7 @@ class Attention(nn.Module):
         context_mask: Optional[Tensor] = None,
         rotary_pos_emb: Optional[Tensor] = None,
     ) -> Tuple[Tensor, Tensor]:
+        """Computes the attention."""
         b, n, _, device = *x.shape, x.device
 
         q = self.query(x)
