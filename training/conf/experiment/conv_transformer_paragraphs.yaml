@@ -50,7 +50,7 @@ lr_schedulers:
     max_lr: 1.0e-4
     total_steps: null
     epochs: *epochs
-    steps_per_epoch: 316
+    steps_per_epoch: 211
     pct_start: 0.03
     anneal_strategy: cos
     cycle_momentum: true
@@ -66,7 +66,7 @@ lr_schedulers:
 
 datamodule:
   _target_: text_recognizer.data.iam_extended_paragraphs.IAMExtendedParagraphs
-  batch_size: 4
+  batch_size: 6
   num_workers: 12
   train_fraction: 0.8
   pin_memory: true
@@ -75,7 +75,7 @@ datamodule:
 network:
   _target_: text_recognizer.networks.conv_transformer.ConvTransformer
   input_dims: [1, 576, 640]
-  hidden_dim: &hidden_dim 256
+  hidden_dim: &hidden_dim 192
   encoder_dim: 1280
   dropout_rate: 0.1
   num_classes: *num_classes
