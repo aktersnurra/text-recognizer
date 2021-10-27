@@ -117,7 +117,7 @@ network:
     cross_attend: true
     pre_norm: true
     rotary_emb:
-      _target_: text_recognizer.networks.transformer.positional_encodings.rotary_embedding.RotaryEmbedding
+      _target_: text_recognizer.networks.transformer.positional_encodings.rotary.RotaryEmbedding
       dim: 32
   pixel_pos_embedding:
     _target_: text_recognizer.networks.transformer.positional_encodings.PositionalEncoding2D

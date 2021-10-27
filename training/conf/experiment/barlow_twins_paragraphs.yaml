@@ -37,10 +37,10 @@ optimizers:
 lr_schedulers:
   network:
     _target_: torch.optim.lr_scheduler.OneCycleLR
-    max_lr: 1.0e-1
+    max_lr: 1.0e-3
     total_steps: null
     epochs: *epochs
-    steps_per_epoch: 5053
+    steps_per_epoch: 40
     pct_start: 0.03
     anneal_strategy: cos
     cycle_momentum: true
