@@ -4,10 +4,8 @@ from typing import Any, Dict, Optional, Tuple
 import attr
 from torch import nn, Tensor
 
+from text_recognizer.networks.transformer.embeddings.rotary import RotaryEmbedding
 from text_recognizer.networks.transformer.residual import Residual
-from text_recognizer.networks.transformer.positional_encodings.rotary_embedding import (
-    RotaryEmbedding,
-)
 from text_recognizer.networks.util import load_partial_fn
 
 
