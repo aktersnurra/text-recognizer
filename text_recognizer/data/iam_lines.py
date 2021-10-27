@@ -20,8 +20,8 @@ from text_recognizer.data.base_dataset import (
     split_dataset,
 )
 from text_recognizer.data.iam import IAM
-from text_recognizer.data.mappings.emnist_mapping import EmnistMapping
 from text_recognizer.data.utils import image_utils
+from text_recognizer.data.mappings.emnist import EmnistMapping
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
 
 

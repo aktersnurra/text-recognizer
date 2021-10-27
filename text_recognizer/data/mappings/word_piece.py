@@ -1,12 +1,10 @@
 """Word piece mapping."""
-from pathlib import Path
-from typing import List, Optional, Set, Union
+from typing import List, Set, Union
 
-from loguru import logger as log
 import torch
 from torch import Tensor
 
-from text_recognizer.data.mappings.emnist_mapping import EmnistMapping
+from text_recognizer.data.mappings.emnist import EmnistMapping
 from text_recognizer.data.utils.iam_preprocessor import Preprocessor
 
 
