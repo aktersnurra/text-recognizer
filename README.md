@@ -23,20 +23,14 @@ make generate
 ## TODO
 
 ## Todo
-- [ ] Local attention for target sequence
+- [ ] Fix local attention
+- [ ] remove einops
 - [ ] Tests
 - [ ] Evaluation
 - [ ] Wandb artifact fetcher
-- [ ] Refactor once more
 - [ ] fix linting
-- [ ] transducer loss function
 - [ ] make for install, build datasets
 - [ ] Fix artifact uploading to wandb
-- [ ] Train lines with word pieces
-- [ ] Train with Smoothloss
-- [ ] Train with SWA
-- [ ] VqTransformer without the quantization
-- [ ] VqTransformer with extra layer
 
 
 ## Run Sweeps (old stuff)
