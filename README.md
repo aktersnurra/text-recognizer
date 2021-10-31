@@ -23,7 +23,6 @@ make generate
 ## TODO
 
 ## Todo
-- [ ] Fix local attention
 - [ ] remove einops
 - [ ] Tests
 - [ ] Evaluation
