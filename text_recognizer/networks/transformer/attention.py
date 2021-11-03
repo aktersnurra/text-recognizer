@@ -53,7 +53,7 @@ class Attention(nn.Module):
         context: Optional[Tensor] = None,
         mask: Optional[Tensor] = None,
         context_mask: Optional[Tensor] = None,
-    ) -> Tuple[Tensor, Tensor]:
+    ) -> Tensor:
         """Computes the attention."""
         b, n, _, device = *x.shape, x.device
 
@@ -81,7 +81,7 @@ class Attention(nn.Module):
         out = einsum("b h i j, b h j d -> b h i d", attn, v)
         out = rearrange(out, "b h n d -> b n (h d)")
         out = self.fc(out)
-        return out, attn
+        return out
 
 
 def _apply_rotary_emb(
