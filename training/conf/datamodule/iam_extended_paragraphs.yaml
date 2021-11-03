@@ -5,3 +5,4 @@ train_fraction: 0.8
 pin_memory: false
 transform: transform/paragraphs.yaml
 test_transform: test_transform/paragraphs.yaml
+target_transform: target_transform/pad.yaml
