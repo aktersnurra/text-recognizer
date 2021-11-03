@@ -91,9 +91,9 @@ class AttentionLayers(nn.Module):
                 x = norm(x)
 
             if layer_type == "a":
-                out, _ = block(x=x, mask=mask)
+                out = block(x=x, mask=mask)
             elif layer_type == "c":
-                out, _ = block(x, context=context, mask=mask, context_mask=context_mask)
+                out = block(x, context=context, mask=mask, context_mask=context_mask)
             elif layer_type == "f":
                 out = block(x)
 
