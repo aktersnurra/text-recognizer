@@ -1,9 +1,0 @@
-defaults:
-  - encoder: pixelcnn_encoder
-  - decoder: pixelcnn_decoder
-
-_target_: text_recognizer.networks.vqvae.vqvae.VQVAE
-hidden_dim: 64
-embedding_dim: 32
-num_embeddings: 1024
-decay: 0.99

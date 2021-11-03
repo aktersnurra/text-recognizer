@@ -1,5 +1,0 @@
-_target_: text_recognizer.networks.vqvae.pixelcnn.Encoder
-in_channels: 1 
-hidden_dim: 8
-channels_multipliers: [1, 2, 8]
-dropout_rate: 0.25
