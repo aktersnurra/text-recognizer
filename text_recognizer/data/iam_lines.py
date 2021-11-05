@@ -211,6 +211,6 @@ def load_line_crops_and_labels(split: str, data_dirname: Path) -> Tuple[List, Li
 
 def generate_iam_lines() -> None:
     """Displays Iam Lines dataset statistics."""
-    transform = load_transform_from_file("transform/iam_lines.yaml")
-    test_transform = load_transform_from_file("test_transform/iam_lines.yaml")
+    transform = load_transform_from_file("transform/lines.yaml")
+    test_transform = load_transform_from_file("test_transform/lines.yaml")
     load_and_print_info(IAMLines(transform=transform, test_transform=test_transform))

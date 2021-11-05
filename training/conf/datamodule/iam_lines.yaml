@@ -3,5 +3,5 @@ batch_size: 8
 num_workers: 12
 train_fraction: 0.8
 pin_memory: false
-transform: transform/iam_lines.yaml
-test_transform: test_transform/iam_lines.yaml
+transform: transform/lines.yaml
+test_transform: test_transform/lines.yaml

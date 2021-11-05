@@ -13,5 +13,11 @@ random_affine:
   interpolation: BILINEAR
   fill: 0
 
+random_perspective:
+  _target_: torchvision.transforms.RandomPerspective
+  distortion_scale: 0.2
+  p: 0.5
+  fill: 0
+
 to_tensor:
   _target_: torchvision.transforms.ToTensor
