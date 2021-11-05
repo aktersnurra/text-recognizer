@@ -118,7 +118,7 @@ class ConvTransformer(nn.Module):
             if self.token_pos_embedding is not None
             else trg
         )
-        out = self.decoder(x=trg, context=src, mask=trg_mask)
+        out = self.decoder(x=trg, context=src, input_mask=trg_mask)
         logits = self.head(out)  # [B, Sy, T]
         logits = logits.permute(0, 2, 1)  # [B, T, Sy]
         return logits

@@ -77,7 +77,7 @@ class AttentionLayers(nn.Module):
         self,
         x: Tensor,
         context: Optional[Tensor] = None,
-        mask: Optional[Tensor] = None,
+        input_mask: Optional[Tensor] = None,
         context_mask: Optional[Tensor] = None,
     ) -> Tensor:
         """Forward pass."""
@@ -91,9 +91,11 @@ class AttentionLayers(nn.Module):
                 x = norm(x)
 
             if layer_type == "a":
-                out = block(x=x, mask=mask)
+                out = block(x=x, input_mask=input_mask)
             elif layer_type == "c":
-                out = block(x, context=context, mask=mask, context_mask=context_mask)
+                out = block(
+                    x, context=context, input_mask=input_mask, context_mask=context_mask
+                )
             elif layer_type == "f":
                 out = block(x)
 

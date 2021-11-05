@@ -51,7 +51,7 @@ class Attention(nn.Module):
         self,
         x: Tensor,
         context: Optional[Tensor] = None,
-        mask: Optional[Tensor] = None,
+        input_mask: Optional[Tensor] = None,
         context_mask: Optional[Tensor] = None,
     ) -> Tensor:
         """Computes the attention."""
@@ -71,10 +71,10 @@ class Attention(nn.Module):
         energy = einsum("b h i d, b h j d -> b h i j", q, k) * self.scale
         mask_value = -torch.finfo(energy.dtype).max
         energy = apply_input_mask(
-            b, n, k, energy, mask, context, context_mask, mask_value, device
+            b, n, k, energy, input_mask, context, context_mask, mask_value, device
         )
         if self.causal:
-            energy = apply_causal_mask(energy, mask, mask_value, device)
+            energy = apply_causal_mask(energy, input_mask, mask_value, device)
 
         attn = F.softmax(energy, dim=-1)
         attn = self.dropout(attn)
@@ -98,15 +98,19 @@ def apply_input_mask(
     n: int,
     k: Tensor,
     energy: Tensor,
-    mask: Optional[Tensor],
+    input_mask: Optional[Tensor],
     context: Optional[Tensor],
     context_mask: Optional[Tensor],
     mask_value: Tensor,
     device: str,
 ) -> Tensor:
     """Applies an input mask."""
-    if any(x is not None for x in (mask, context_mask)):
-        q_mask = mask if mask is not None else torch.ones((b, n), device=device).bool()
+    if any(x is not None for x in (input_mask, context_mask)):
+        q_mask = (
+            input_mask
+            if input_mask is not None
+            else torch.ones((b, n), device=device).bool()
+        )
         k_mask = q_mask if context is None else context_mask
         k_mask = (
             torch.ones((b, k.shape[-2]), device=device).bool()
