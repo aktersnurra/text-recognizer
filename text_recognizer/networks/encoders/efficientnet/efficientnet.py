@@ -101,6 +101,7 @@ class EfficientNet(nn.Module):
                 momentum=self.bn_momentum,
                 eps=self.bn_eps,
             ),
+            nn.Dropout(p=self.arch[-1]),
         )
 
     def extract_features(self, x: Tensor) -> Tensor:
