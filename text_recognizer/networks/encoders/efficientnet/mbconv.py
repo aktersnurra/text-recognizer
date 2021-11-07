@@ -1,5 +1,5 @@
 """Mobile inverted residual block."""
-from typing import Optional, Sequence, Union, Tuple
+from typing import Optional, Tuple, Union
 
 import attr
 import torch
@@ -12,6 +12,125 @@ from text_recognizer.networks.encoders.efficientnet.utils import stochastic_dept
 def _convert_stride(stride: Union[Tuple[int, int], int]) -> Tuple[int, int]:
     """Converts int to tuple."""
     return (stride,) * 2 if isinstance(stride, int) else stride
+
+
+@attr.s(eq=False)
+class BaseModule(nn.Module):
+    """Base sub module class."""
+
+    bn_momentum: float = attr.ib()
+    bn_eps: float = attr.ib()
+    block: nn.Sequential = attr.ib(init=False)
+
+    def __attrs_pre_init__(self) -> None:
+        super().__init__()
+
+    def __attrs_post_init__(self) -> None:
+        self._build()
+
+    def _build(self) -> None:
+        pass
+
+    def forward(self, x: Tensor) -> Tensor:
+        """Forward pass."""
+        return self.block(x)
+
+
+@attr.s(auto_attribs=True, eq=False)
+class InvertedBottleneck(BaseModule):
+    """Inverted bottleneck module."""
+
+    in_channels: int = attr.ib()
+    out_channels: int = attr.ib()
+
+    def _build(self) -> None:
+        self.block = nn.Sequential(
+            nn.Conv2d(
+                in_channels=self.in_channels,
+                out_channels=self.out_channels,
+                kernel_size=1,
+                bias=False,
+            ),
+            nn.BatchNorm2d(
+                num_features=self.out_channels,
+                momentum=self.bn_momentum,
+                eps=self.bn_eps,
+            ),
+            nn.Mish(inplace=True),
+        )
+
+
+@attr.s(auto_attribs=True, eq=False)
+class Depthwise(BaseModule):
+    """Depthwise convolution module."""
+
+    channels: int = attr.ib()
+    kernel_size: int = attr.ib()
+    stride: int = attr.ib()
+
+    def _build(self) -> None:
+        self.block = nn.Sequential(
+            nn.Conv2d(
+                in_channels=self.channels,
+                out_channels=self.channels,
+                kernel_size=self.kernel_size,
+                stride=self.stride,
+                groups=self.channels,
+                bias=False,
+            ),
+            nn.BatchNorm2d(
+                num_features=self.channels, momentum=self.bn_momentum, eps=self.bn_eps
+            ),
+            nn.Mish(inplace=True),
+        )
+
+
+@attr.s(auto_attribs=True, eq=False)
+class SqueezeAndExcite(BaseModule):
+    """Sequeeze and excite module."""
+
+    in_channels: int = attr.ib()
+    channels: int = attr.ib()
+    se_ratio: float = attr.ib()
+
+    def _build(self) -> None:
+        num_squeezed_channels = max(1, int(self.in_channels * self.se_ratio))
+        self.block = nn.Sequential(
+            nn.Conv2d(
+                in_channels=self.channels,
+                out_channels=num_squeezed_channels,
+                kernel_size=1,
+            ),
+            nn.Mish(inplace=True),
+            nn.Conv2d(
+                in_channels=num_squeezed_channels,
+                out_channels=self.channels,
+                kernel_size=1,
+            ),
+        )
+
+
+@attr.s(auto_attribs=True, eq=False)
+class Pointwise(BaseModule):
+    """Pointwise module."""
+
+    in_channels: int = attr.ib()
+    out_channels: int = attr.ib()
+
+    def _build(self) -> None:
+        self.block = nn.Sequential(
+            nn.Conv2d(
+                in_channels=self.in_channels,
+                out_channels=self.out_channels,
+                kernel_size=1,
+                bias=False,
+            ),
+            nn.BatchNorm2d(
+                num_features=self.out_channels,
+                momentum=self.bn_momentum,
+                eps=self.bn_eps,
+            ),
+        )
 
 
 @attr.s(eq=False)
@@ -30,7 +149,7 @@ class MBConvBlock(nn.Module):
     se_ratio: float = attr.ib()
     expand_ratio: int = attr.ib()
     pad: Tuple[int, int, int, int] = attr.ib(init=False)
-    _inverted_bottleneck: nn.Sequential = attr.ib(init=False)
+    _inverted_bottleneck: Optional[InvertedBottleneck] = attr.ib(init=False)
     _depthwise: nn.Sequential = attr.ib(init=False)
     _squeeze_excite: nn.Sequential = attr.ib(init=False)
     _pointwise: nn.Sequential = attr.ib(init=False)
@@ -53,90 +172,41 @@ class MBConvBlock(nn.Module):
         has_se = self.se_ratio is not None and 0.0 < self.se_ratio < 1.0
         inner_channels = self.in_channels * self.expand_ratio
         self._inverted_bottleneck = (
-            self._configure_inverted_bottleneck(out_channels=inner_channels)
+            InvertedBottleneck(
+                in_channels=self.in_channels,
+                out_channels=inner_channels,
+                bn_momentum=self.bn_momentum,
+                bn_eps=self.bn_eps,
+            )
             if self.expand_ratio != 1
             else None
         )
 
-        self._depthwise = self._configure_depthwise(
+        self._depthwise = Depthwise(
             channels=inner_channels,
-            groups=inner_channels,
+            kernel_size=self.kernel_size,
+            stride=self.stride,
+            bn_momentum=self.bn_momentum,
+            bn_eps=self.bn_eps,
         )
 
         self._squeeze_excite = (
-            self._configure_squeeze_excite(
+            SqueezeAndExcite(
+                in_channels=self.in_channels,
                 channels=inner_channels,
+                se_ratio=self.se_ratio,
+                bn_momentum=self.bn_momentum,
+                bn_eps=self.bn_eps,
             )
             if has_se
             else None
         )
 
-        self._pointwise = self._configure_pointwise(in_channels=inner_channels)
-
-    def _configure_inverted_bottleneck(self, out_channels: int) -> nn.Sequential:
-        """Expansion phase."""
-        return nn.Sequential(
-            nn.Conv2d(
-                in_channels=self.in_channels,
-                out_channels=out_channels,
-                kernel_size=1,
-                bias=False,
-            ),
-            nn.BatchNorm2d(
-                num_features=out_channels, momentum=self.bn_momentum, eps=self.bn_eps
-            ),
-            nn.Mish(inplace=True),
-        )
-
-    def _configure_depthwise(
-        self,
-        channels: int,
-        groups: int,
-    ) -> nn.Sequential:
-        return nn.Sequential(
-            nn.Conv2d(
-                in_channels=channels,
-                out_channels=channels,
-                kernel_size=self.kernel_size,
-                stride=self.stride,
-                groups=groups,
-                bias=False,
-            ),
-            nn.BatchNorm2d(
-                num_features=channels, momentum=self.bn_momentum, eps=self.bn_eps
-            ),
-            nn.Mish(inplace=True),
-        )
-
-    def _configure_squeeze_excite(self, channels: int) -> nn.Sequential:
-        num_squeezed_channels = max(1, int(self.in_channels * self.se_ratio))
-        return nn.Sequential(
-            nn.Conv2d(
-                in_channels=channels,
-                out_channels=num_squeezed_channels,
-                kernel_size=1,
-            ),
-            nn.Mish(inplace=True),
-            nn.Conv2d(
-                in_channels=num_squeezed_channels,
-                out_channels=channels,
-                kernel_size=1,
-            ),
-        )
-
-    def _configure_pointwise(self, in_channels: int) -> nn.Sequential:
-        return nn.Sequential(
-            nn.Conv2d(
-                in_channels=in_channels,
-                out_channels=self.out_channels,
-                kernel_size=1,
-                bias=False,
-            ),
-            nn.BatchNorm2d(
-                num_features=self.out_channels,
-                momentum=self.bn_momentum,
-                eps=self.bn_eps,
-            ),
+        self._pointwise = Pointwise(
+            in_channels=inner_channels,
+            out_channels=self.out_channels,
+            bn_momentum=self.bn_momentum,
+            bn_eps=self.bn_eps,
         )
 
     def _stochastic_depth(
@@ -153,6 +223,7 @@ class MBConvBlock(nn.Module):
     def forward(
         self, x: Tensor, stochastic_dropout_rate: Optional[float] = None
     ) -> Tensor:
+        """Forward pass."""
         residual = x
         if self._inverted_bottleneck is not None:
             x = self._inverted_bottleneck(x)
