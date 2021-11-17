@@ -12,8 +12,6 @@ from text_recognizer.models.transformer import TransformerLitModel
 class VqTransformerLitModel(TransformerLitModel):
     """A PyTorch Lightning model for transformer networks."""
 
-    alpha: float = attr.ib(default=1.0)
-
     def forward(self, data: Tensor) -> Tensor:
         """Forward pass with the transformer network."""
         return self.predict(data)
@@ -22,7 +20,7 @@ class VqTransformerLitModel(TransformerLitModel):
         """Training step."""
         data, targets = batch
         logits, commitment_loss = self.network(data, targets[:, :-1])
-        loss = self.loss_fn(logits, targets[:, 1:]) + self.alpha * commitment_loss
+        loss = self.loss_fn(logits, targets[:, 1:]) + commitment_loss
         self.log("train/loss", loss)
         self.log("train/commitment_loss", commitment_loss)
         return loss
@@ -31,7 +29,7 @@ class VqTransformerLitModel(TransformerLitModel):
         """Validation step."""
         data, targets = batch
         logits, commitment_loss = self.network(data, targets[:, :-1])
-        loss = self.loss_fn(logits, targets[:, 1:]) + self.alpha * commitment_loss
+        loss = self.loss_fn(logits, targets[:, 1:]) + commitment_loss
         self.log("val/loss", loss, prog_bar=True)
         self.log("val/commitment_loss", commitment_loss)
 
