@@ -158,10 +158,7 @@ class MBConvBlock(nn.Module):
     def _configure_padding(self) -> Tuple[int, int, int, int]:
         """Set padding for convolutional layers."""
         if self.stride == (2, 2):
-            return (
-                (self.kernel_size - 1) // 2 - 1,
-                (self.kernel_size - 1) // 2,
-            ) * 2
+            return ((self.kernel_size - 1) // 2 - 1, (self.kernel_size - 1) // 2,) * 2
         return ((self.kernel_size - 1) // 2,) * 4
 
     def __attrs_post_init__(self) -> None:
