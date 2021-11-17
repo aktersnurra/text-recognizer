@@ -5,7 +5,7 @@ import torch
 from torch import nn, Tensor
 import torch.nn.functional as F
 
-from text_recognizer.criterions.n_layer_discriminator import NLayerDiscriminator
+from text_recognizer.criterion.n_layer_discriminator import NLayerDiscriminator
 
 
 def _adopt_weight(
