@@ -20,7 +20,6 @@ class Attention(nn.Module):
     """Standard attention."""
 
     def __attrs_pre_init__(self) -> None:
-        """Pre init constructor."""
         super().__init__()
 
     dim: int = attr.ib()
@@ -34,7 +33,6 @@ class Attention(nn.Module):
     fc: nn.Linear = attr.ib(init=False)
 
     def __attrs_post_init__(self) -> None:
-        """Post init configuration."""
         self.scale = self.dim ** -0.5
         inner_dim = self.num_heads * self.dim_head
 

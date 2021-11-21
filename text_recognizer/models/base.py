@@ -46,6 +46,7 @@ class BaseLitModel(LightningModule):
         optimizer: Type[torch.optim.Optimizer],
         optimizer_idx: int,
     ) -> None:
+        """Optimal way to set grads to zero."""
         optimizer.zero_grad(set_to_none=True)
 
     def _configure_optimizer(self) -> List[Type[torch.optim.Optimizer]]:
