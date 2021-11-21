@@ -113,7 +113,7 @@ network:
     dim: *hidden_dim
     heads: 4
     shape: *shape
-    depth: 2
+    depth: 1
     dim_head: 64
     dim_index: 1
 

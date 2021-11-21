@@ -18,6 +18,7 @@ summary: [[1, 1, 576, 640], [1, 682]]
 
 criterion:
   ignore_index: *ignore_index
+  label_smoothing: 0.1
     
 mapping: &mapping
   mapping:
@@ -108,7 +109,15 @@ network:
   pixel_pos_embedding:
     _target_: text_recognizer.networks.transformer.embeddings.axial.AxialPositionalEmbedding
     dim: *hidden_dim
-    shape: [18, 20]
+    shape: &shape [36, 40]
+  axial_encoder:
+    _target_: text_recognizer.networks.transformer.axial_attention.encoder.AxialEncoder
+    dim: *hidden_dim
+    heads: 4
+    shape: *shape
+    depth: 1
+    dim_head: 64
+    dim_index: 1
 
 model:
   _target_: text_recognizer.models.transformer.TransformerLitModel
