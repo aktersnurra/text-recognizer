@@ -1,3 +1,0 @@
-_target_: text_recognizer.criterion.label_smoothing.LabelSmoothingLoss
-smoothing: 0.1 
-ignore_index: 1000
