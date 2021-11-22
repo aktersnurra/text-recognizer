@@ -1,2 +1,1 @@
-"""Efficient net."""
-from .efficientnet import EfficientNet
+"""Efficientnet module."""

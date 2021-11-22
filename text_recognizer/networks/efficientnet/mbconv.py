@@ -6,7 +6,7 @@ import torch
 from torch import nn, Tensor
 import torch.nn.functional as F
 
-from text_recognizer.networks.encoders.efficientnet.utils import stochastic_depth
+from text_recognizer.networks.efficientnet.utils import stochastic_depth
 
 
 def _convert_stride(stride: Union[Tuple[int, int], int]) -> Tuple[int, int]:
