@@ -64,7 +64,7 @@ rotary_embedding: &rotary_embedding
     dim: 64
 
 attn: &attn
-  dim: &hidden_dim 128
+  dim: &hidden_dim 256
   num_heads: 4
   dim_head: 64
   dropout_rate: &dropout_rate 0.2
