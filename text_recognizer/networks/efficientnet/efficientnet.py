@@ -4,8 +4,8 @@ from typing import Tuple
 import attr
 from torch import nn, Tensor
 
-from .mbconv import MBConvBlock
-from .utils import (
+from text_recognizer.networks.efficientnet.mbconv import MBConvBlock
+from text_recognizer.networks.efficientnet.utils import (
     block_args,
     round_filters,
     round_repeats,
@@ -38,6 +38,7 @@ class EfficientNet(nn.Module):
     stochastic_dropout_rate: float = attr.ib(default=0.2)
     bn_momentum: float = attr.ib(default=0.99)
     bn_eps: float = attr.ib(default=1.0e-3)
+    depth: int = attr.ib(default=7)
     out_channels: int = attr.ib(default=None, init=False)
     _conv_stem: nn.Sequential = attr.ib(default=None, init=False)
     _blocks: nn.ModuleList = attr.ib(default=None, init=False)
@@ -47,8 +48,13 @@ class EfficientNet(nn.Module):
         """Post init configuration."""
         self._build()
 
+    @depth.validator
+    def _check_depth(self, attribute: attr._make.Attribute, value: str) -> None:
+        if not 5 <= value <= 7:
+            raise ValueError(f"Depth has to be between 5 and 7, was: {value}")
+
     @arch.validator
-    def check_arch(self, attribute: attr._make.Attribute, value: str) -> None:
+    def _check_arch(self, attribute: attr._make.Attribute, value: str) -> None:
         """Validates the efficientnet architecure."""
         if value not in self.archs:
             raise ValueError(f"{value} not a valid architecure.")
@@ -56,7 +62,7 @@ class EfficientNet(nn.Module):
 
     def _build(self) -> None:
         """Builds the efficientnet backbone."""
-        _block_args = block_args()
+        _block_args = block_args()[: self.depth]
         in_channels = 1  # BW
         out_channels = round_filters(32, self.params)
         self._conv_stem = nn.Sequential(
@@ -88,7 +94,7 @@ class EfficientNet(nn.Module):
                 args.in_channels = args.out_channels
                 args.stride = 1
 
-        in_channels = round_filters(320, self.params)
+        in_channels = round_filters(_block_args[-1].out_channels, self.params)
         self.out_channels = round_filters(1280, self.params)
         self._conv_head = nn.Sequential(
             nn.Conv2d(

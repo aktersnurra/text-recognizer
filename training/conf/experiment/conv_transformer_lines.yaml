@@ -64,10 +64,10 @@ rotary_embedding: &rotary_embedding
     dim: 64
 
 attn: &attn
-  dim: &hidden_dim 256
+  dim: &hidden_dim 128
   num_heads: 4
   dim_head: 64
-  dropout_rate: &dropout_rate 0.5
+  dropout_rate: &dropout_rate 0.2
 
 network:
   _target_: text_recognizer.networks.conv_transformer.ConvTransformer
@@ -76,8 +76,9 @@ network:
   num_classes: *num_classes
   pad_index: *ignore_index
   encoder:
-    _target_: text_recognizer.networks.encoders.efficientnet.EfficientNet
-    arch: b1
+    _target_: text_recognizer.networks.efficientnet.EfficientNet
+    arch: b0
+    depth: 5
     stochastic_dropout_rate: 0.2
     bn_momentum: 0.99
     bn_eps: 1.0e-3
@@ -113,7 +114,7 @@ network:
     dim: *hidden_dim
     heads: 4
     shape: *shape
-    depth: 1
+    depth: 2
     dim_head: 64
     dim_index: 1
 

@@ -78,7 +78,7 @@ network:
   num_classes: *num_classes
   pad_index: *ignore_index
   encoder:
-    _target_: text_recognizer.networks.encoders.efficientnet.EfficientNet
+    _target_: text_recognizer.networks.efficientnet.EfficientNet
     arch: b1
     stochastic_dropout_rate: 0.2
     bn_momentum: 0.99
