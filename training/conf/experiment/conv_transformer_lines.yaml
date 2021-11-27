@@ -64,7 +64,7 @@ rotary_embedding: &rotary_embedding
     dim: 64
 
 attn: &attn
-  dim: &hidden_dim 256
+  dim: &hidden_dim 128
   num_heads: 4
   dim_head: 64
   dropout_rate: &dropout_rate 0.2
@@ -76,7 +76,7 @@ network:
   num_classes: *num_classes
   pad_index: *ignore_index
   encoder:
-    _target_: text_recognizer.networks.efficientnet.EfficientNet
+    _target_: text_recognizer.networks.efficientnet.efficientnet.EfficientNet
     arch: b0
     depth: 5
     stochastic_dropout_rate: 0.2
@@ -109,14 +109,14 @@ network:
     _target_: text_recognizer.networks.transformer.embeddings.axial.AxialPositionalEmbedding
     dim: *hidden_dim
     shape: &shape [3, 64]
-  axial_encoder:
-    _target_: text_recognizer.networks.transformer.axial_attention.encoder.AxialEncoder
-    dim: *hidden_dim
-    heads: 4
-    shape: *shape
-    depth: 2
-    dim_head: 64
-    dim_index: 1
+  axial_encoder: null
+    # _target_: text_recognizer.networks.transformer.axial_attention.encoder.AxialEncoder
+    # dim: *hidden_dim
+    # heads: 4
+    # shape: *shape
+    # depth: 2
+    # dim_head: 64
+    # dim_index: 1
 
 model:
   _target_: text_recognizer.models.transformer.TransformerLitModel
