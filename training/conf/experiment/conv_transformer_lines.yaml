@@ -109,14 +109,14 @@ network:
     _target_: text_recognizer.networks.transformer.embeddings.axial.AxialPositionalEmbedding
     dim: *hidden_dim
     shape: &shape [3, 64]
-  axial_encoder: null
-    # _target_: text_recognizer.networks.transformer.axial_attention.encoder.AxialEncoder
-    # dim: *hidden_dim
-    # heads: 4
-    # shape: *shape
-    # depth: 2
-    # dim_head: 64
-    # dim_index: 1
+  axial_encoder:
+    _target_: text_recognizer.networks.transformer.axial_attention.encoder.AxialEncoder
+    dim: *hidden_dim
+    heads: 4
+    shape: *shape
+    depth: 2
+    dim_head: 64
+    dim_index: 1
 
 model:
   _target_: text_recognizer.models.transformer.TransformerLitModel
