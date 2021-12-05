@@ -10,7 +10,7 @@ defaults:
   - override /lr_schedulers: null
   - override /optimizers: null
 
-epochs: &epochs 620
+epochs: &epochs 200
 ignore_index: &ignore_index 3
 num_classes: &num_classes 57
 max_output_len: &max_output_len 89
@@ -28,7 +28,7 @@ callbacks:
   stochastic_weight_averaging:
     _target_: pytorch_lightning.callbacks.StochasticWeightAveraging
     swa_epoch_start: 0.75
-    swa_lrs: 1.0e-4
+    swa_lrs: 1.0e-5
     annealing_epochs: 10
     annealing_strategy: cos
     device: null
@@ -36,7 +36,7 @@ callbacks:
 optimizers:
   madgrad:
     _target_: madgrad.MADGRAD
-    lr: 3.0e-4
+    lr: 1.0e-4
     momentum: 0.9
     weight_decay: 0
     eps: 1.0e-6
@@ -46,7 +46,7 @@ lr_schedulers:
   network:
     _target_: torch.optim.lr_scheduler.CosineAnnealingLR
     T_max: *epochs
-    eta_min: 1.0e-4
+    eta_min: 1.0e-6
     last_epoch: -1
     interval: epoch
     monitor: val/loss
@@ -83,7 +83,7 @@ network:
     bn_momentum: 0.99
     bn_eps: 1.0e-3
   decoder:
-    depth: 6
+    depth: 3
     _target_: text_recognizer.networks.transformer.layers.Decoder
     self_attn:
       _target_: text_recognizer.networks.transformer.attention.Attention
@@ -109,14 +109,14 @@ network:
     _target_: text_recognizer.networks.transformer.embeddings.axial.AxialPositionalEmbedding
     dim: *hidden_dim
     shape: &shape [3, 64]
-  axial_encoder:
-    _target_: text_recognizer.networks.transformer.axial_attention.encoder.AxialEncoder
-    dim: *hidden_dim
-    heads: 4
-    shape: *shape
-    depth: 2
-    dim_head: 64
-    dim_index: 1
+  axial_encoder: null
+    # _target_: text_recognizer.networks.transformer.axial_attention.encoder.AxialEncoder
+    # dim: *hidden_dim
+    # heads: 4
+    # shape: *shape
+    # depth: 2
+    # dim_head: 64
+    # dim_index: 1
 
 model:
   _target_: text_recognizer.models.transformer.TransformerLitModel
