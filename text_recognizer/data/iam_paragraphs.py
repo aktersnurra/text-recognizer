@@ -86,7 +86,10 @@ class IAMParagraphs(BaseDataModule):
                 length=self.output_dims[0],
             )
             return BaseDataset(
-                data, targets, transform=transform, target_transform=target_transform,
+                data,
+                targets,
+                transform=transform,
+                target_transform=target_transform,
             )
 
         log.info(f"Loading IAM paragraph regions and lines for {stage}...")

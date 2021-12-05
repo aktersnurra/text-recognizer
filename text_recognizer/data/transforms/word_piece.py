@@ -19,7 +19,9 @@ class WordPiece:
         use_words: bool = False,
         prepend_wordsep: bool = False,
         special_tokens: Set[str] = {"<s>", "<e>", "<p>"},
-        extra_symbols: Optional[Set[str]] = {"\n",},
+        extra_symbols: Optional[Set[str]] = {
+            "\n",
+        },
         max_len: int = 451,
     ) -> None:
         self.mapping = WordPieceMapping(
