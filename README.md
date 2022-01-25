@@ -14,7 +14,7 @@ Implementing the text recognizer project from the course ["Full Stack Deep Learn
 Install poetry and pyenv.
 
 ```sh
-pyenv local 3.9.\*
+pyenv local 3.9.*
 make check
 make install
 ```
