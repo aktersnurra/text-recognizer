@@ -25,19 +25,19 @@ omegaconf = "^2.1.0"
 einops = "^0.3.0"
 gtn = "^0.0.0"
 sentencepiece = "^0.1.95"
-pytorch-lightning = "^1.4.0"
+pytorch-lightning = "^1.5.9"
 Pillow = "^8.1.2"
 madgrad = "^1.0"
 editdistance = "^0.5.3"
 torchmetrics = "^0.4.1"
 hydra-core = "^1.1.0"
 attr = "^0.3.1"
-torch = "^1.10.0"
-torchvision = "^0.11.1"
+torch = "^1.10.1"
+torchvision = "^0.11.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.2"
-coverage = {extras = ["toml"], version = "^5.1"}
+coverage = { extras = ["toml"], version = "^5.1" }
 pytest-cov = "^2.9.0"
 pytest-mock = "^3.1.0"
 black = "^19.10b0"
@@ -74,5 +74,5 @@ generate-iam-synthetic-paragraphs = "text_recognizer.data.iam_synthetic_paragrap
 show-iam-extended-info = "text_recognizer.data.iam_extended_paragraphs:show_dataset_info"
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
