@@ -6,7 +6,7 @@ import nox
 from nox.sessions import Session
 
 package = "text-recognizer"
-nox.options.sessions = "lint", "mypy", "pytype", "safety", "tests"
+nox.options.sessions = "lint", "mypy", "safety", "tests"
 locations = (
     "text_recognizer",
     "training",
@@ -93,14 +93,6 @@ def mypy(session: Session) -> None:
     args = session.posargs or locations
     install_with_constraints(session, "mypy")
     session.run("mypy", *args)
-
-
-@nox.session(python="3.9")
-def pytype(session: Session) -> None:
-    """Type-check using pytype."""
-    args = session.posargs or ["--disable=import-error", *locations]
-    install_with_constraints(session, "pytype")
-    session.run("pytype", *args)
 
 
 @nox.session(python=["3.9"])
