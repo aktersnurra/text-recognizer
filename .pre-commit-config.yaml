@@ -17,3 +17,9 @@ repos:
         entry: flake8
         language: system
         types: [python]
+- repo: https://github.com/compilerla/conventional-pre-commit
+  rev: v1.2.0
+  hooks:
+    - id: conventional-pre-commit
+      stages: [commit-msg]
+      args: []
