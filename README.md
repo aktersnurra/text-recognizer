@@ -3,17 +3,11 @@ Implementing the text recognizer project from the course ["Full Stack Deep Learn
 
 ## Prerequisite
 
-### pyenv
+- [pyenv](https://github.com/pyenv/pyenv) (or similar) and python 3.9.\* installed.
 
-[pyenv](https://github.com/pyenv/pyenv) (or similar) and python 3.9.\* installed.
+- [nox](https://nox.thea.codes/en/stable/index.html) for linting, formatting, and testing.
 
-### nox
-
-[nox](https://nox.thea.codes/en/stable/index.html) for linting, formatting, and testing.
-
-### Poetry
-
-[Poetry](https://python-poetry.org/) is a project manager for python.
+- [Poetry](https://python-poetry.org/) is a project manager for python.
 
 ## Installation
 
