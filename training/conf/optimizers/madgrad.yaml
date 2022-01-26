@@ -1,8 +1,0 @@
-madgrad:
-  _target_: madgrad.MADGRAD
-  lr: 1.0e-4
-  momentum: 0.9
-  weight_decay: 0
-  eps: 1.0e-6
-
-  parameters: network
