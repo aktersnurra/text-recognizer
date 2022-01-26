@@ -88,9 +88,7 @@ class EfficientNet(nn.Module):
             for _ in range(num_repeats):
                 self._blocks.append(
                     MBConvBlock(
-                        **args,
-                        bn_momentum=self.bn_momentum,
-                        bn_eps=self.bn_eps,
+                        **args, bn_momentum=self.bn_momentum, bn_eps=self.bn_eps,
                     )
                 )
                 args.in_channels = args.out_channels

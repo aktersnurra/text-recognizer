@@ -46,13 +46,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
         log.info("Preparing IAM lines for synthetic paragraphs dataset.")
         log.info("Cropping IAM line regions and loading labels.")
 
-        iam = IAM(
-            mapping=EmnistMapping(
-                extra_symbols={
-                    NEW_LINE_TOKEN,
-                }
-            )
-        )
+        iam = IAM(mapping=EmnistMapping(extra_symbols=(NEW_LINE_TOKEN,)))
         iam.prepare_data()
 
         crops_train, labels_train = line_crops_and_labels(iam, "train")
