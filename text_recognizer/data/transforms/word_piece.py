@@ -1,6 +1,5 @@
 """Target transform for word pieces."""
-from pathlib import Path
-from typing import Optional, Union, Set
+from typing import Optional, Sequence
 
 import torch
 from torch import Tensor
@@ -18,10 +17,8 @@ class WordPiece:
         lexicon: str = "iamdb_1kwp_lex_1000.txt",
         use_words: bool = False,
         prepend_wordsep: bool = False,
-        special_tokens: Set[str] = {"<s>", "<e>", "<p>"},
-        extra_symbols: Optional[Set[str]] = {
-            "\n",
-        },
+        special_tokens: Sequence[str] = ("<s>", "<e>", "<p>"),
+        extra_symbols: Optional[Sequence[str]] = ("\n",),
         max_len: int = 451,
     ) -> None:
         self.mapping = WordPieceMapping(

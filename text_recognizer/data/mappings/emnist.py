@@ -1,5 +1,5 @@
 """Emnist mapping."""
-from typing import List, Optional, Set, Union
+from typing import List, Optional, Sequence, Union
 
 import torch
 from torch import Tensor
@@ -12,7 +12,7 @@ class EmnistMapping(AbstractMapping):
     """Mapping for EMNIST labels."""
 
     def __init__(
-        self, extra_symbols: Optional[Set[str]] = None, lower: bool = True
+        self, extra_symbols: Optional[Sequence[str]] = None, lower: bool = True
     ) -> None:
         self.extra_symbols = set(extra_symbols) if extra_symbols is not None else None
         self.mapping, self.inverse_mapping, self.input_size = emnist_mapping(
