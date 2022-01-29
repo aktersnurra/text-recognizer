@@ -7,10 +7,10 @@ from torch import nn, Tensor
 
 from text_recognizer.networks.base import BaseTransformer
 from text_recognizer.networks.transformer.axial_attention.encoder import AxialEncoder
+from text_recognizer.networks.transformer.decoder import Decoder
 from text_recognizer.networks.transformer.embeddings.axial import (
     AxialPositionalEmbedding,
 )
-from text_recognizer.networks.transformer.layers import Decoder
 
 
 class ConvTransformer(BaseTransformer):
