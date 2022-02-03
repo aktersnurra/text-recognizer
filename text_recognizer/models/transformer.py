@@ -56,13 +56,6 @@ class TransformerLitModel(BaseLitModel):
         loss = self.loss_fn(logits, targets[:, 1:])
         self.log("val/loss", loss, prog_bar=True)
 
-        # Get the token prediction.
-        # pred = self(data)
-        # self.val_cer(pred, targets)
-        # self.log("val/cer", self.val_cer, on_step=False, on_epoch=True, prog_bar=True)
-        # self.val_acc(pred, targets)
-        # self.log("val/acc", self.val_acc, on_step=False, on_epoch=True)
-
     def test_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
         """Test step."""
         data, targets = batch
