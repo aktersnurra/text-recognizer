@@ -1,8 +1,6 @@
 """Vision transformer for character recognition."""
-import math
 from typing import Optional, Tuple, Type
 
-from loguru import logger as log
 from torch import nn, Tensor
 
 from text_recognizer.networks.base import BaseTransformer
