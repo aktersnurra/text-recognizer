@@ -62,9 +62,11 @@ Ideas of mine that did not work unfortunately:
   - Added a lot of extra parameters with no gain in performance
   - Cool idea, but on a single GPU, nah... not worth it!
 
+* Word Pieces
+  - Might have worked better, but liked the idea of single character recognition more.
 
 ## Todo
-- [ ] remove einops
+- [ ] remove einops (try)
 - [ ] Tests
 - [ ] Evaluation
 - [ ] Wandb artifact fetcher
