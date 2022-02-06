@@ -19,6 +19,7 @@ hydra-core = "^1.1.1"
 attr = "^0.3.1"
 torch = "^1.10.1"
 torchvision = "^0.11.2"
+smart-open = "^5.2.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.4.2"
