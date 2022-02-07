@@ -139,5 +139,4 @@ data/raw/emnist/*
 data/raw/iam/*
 !data/raw/iam/metadata.toml
 
-src/wandb/*
-!src/wandb/settings
+training/logs
