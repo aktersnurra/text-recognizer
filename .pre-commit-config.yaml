@@ -32,4 +32,4 @@ repos:
     rev: v1.17.0
     hooks:
       - id: yamllint
-        args: []
+        args: [-c=.yamllint]
