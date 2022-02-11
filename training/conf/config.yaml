@@ -1,15 +1,16 @@
+---
 # @package _global_
 
 defaults:
   - _self_
   - callbacks: default
-  - criterion: label_smoothing
+  - criterion: cross_entropy
   - datamodule: iam_extended_paragraphs
   - hydra: default
   - logger: wandb
   - lr_schedulers:
       - cosine_annealing
-  - mapping: characters # word_piece
+  - mapping: characters
   - model: lit_transformer
   - network: conv_transformer
   - optimizers:
@@ -31,7 +32,8 @@ logging: INFO
 # path to original working directory
 # hydra hijacks working directory by changing it to the current log directory,
 # so it's useful to have this path as a special variable
-# learn more here: https://hydra.cc/docs/next/tutorials/basic/running_your_app/working_directory
+# learn more here:
+# https://hydra.cc/docs/next/tutorials/basic/running_your_app/working_directory
 work_dir: ${hydra:runtime.cwd}
 
 # use `python run.py debug=true` for easy debugging!
