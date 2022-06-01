@@ -3,7 +3,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import DefaultDict, List, Tuple
 
-import attr
+from attrs import define, field
 import h5py
 from loguru import logger as log
 import numpy as np
@@ -33,17 +33,17 @@ IMAGE_X_PADDING = 28
 MAX_OUTPUT_LENGTH = 89  # Same as IAMLines
 
 
-@attr.s(auto_attribs=True, repr=False)
+@define(auto_attribs=True, repr=False)
 class EMNISTLines(BaseDataModule):
     """EMNIST Lines dataset: synthetic handwritten lines dataset made from EMNIST."""
 
-    max_length: int = attr.ib(default=128)
-    min_overlap: float = attr.ib(default=0.0)
-    max_overlap: float = attr.ib(default=0.33)
-    num_train: int = attr.ib(default=10_000)
-    num_val: int = attr.ib(default=2_000)
-    num_test: int = attr.ib(default=2_000)
-    emnist: EMNIST = attr.ib(init=False, default=None)
+    max_length: int = field(default=128)
+    min_overlap: float = field(default=0.0)
+    max_overlap: float = field(default=0.33)
+    num_train: int = field(default=10_000)
+    num_val: int = field(default=2_000)
+    num_test: int = field(default=2_000)
+    emnist: EMNIST = field(init=False, default=None)
 
     def __attrs_post_init__(self) -> None:
         """Post init constructor."""

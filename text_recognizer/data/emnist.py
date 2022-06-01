@@ -6,7 +6,7 @@ import shutil
 from typing import Dict, List, Optional, Sequence, Set, Tuple
 import zipfile
 
-import attr
+from attrs import define
 import h5py
 from loguru import logger as log
 import numpy as np
@@ -35,7 +35,7 @@ ESSENTIALS_FILENAME = (
 )
 
 
-@attr.s(auto_attribs=True)
+@define(auto_attribs=True)
 class EMNIST(BaseDataModule):
     """Lightning DataModule class for loading EMNIST dataset.
 

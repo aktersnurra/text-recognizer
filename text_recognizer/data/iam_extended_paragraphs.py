@@ -1,5 +1,5 @@
 """IAM original and sythetic dataset class."""
-import attr
+from attrs import define, field
 from torch.utils.data import ConcatDataset
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
@@ -8,7 +8,7 @@ from text_recognizer.data.iam_synthetic_paragraphs import IAMSyntheticParagraphs
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
 
 
-@attr.s(auto_attribs=True, repr=False)
+@define(auto_attribs=True, repr=False)
 class IAMExtendedParagraphs(BaseDataModule):
     """A dataset with synthetic and real handwritten paragraph."""
 

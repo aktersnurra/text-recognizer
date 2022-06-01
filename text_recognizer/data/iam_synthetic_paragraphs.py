@@ -2,7 +2,7 @@
 import random
 from typing import Any, List, Sequence, Tuple
 
-import attr
+from attrs import define
 from loguru import logger as log
 import numpy as np
 from PIL import Image
@@ -34,7 +34,7 @@ PROCESSED_DATA_DIRNAME = (
 )
 
 
-@attr.s(auto_attribs=True, repr=False)
+@define(auto_attribs=True, repr=False)
 class IAMSyntheticParagraphs(IAMParagraphs):
     """IAM Handwriting database of synthetic paragraphs."""
 

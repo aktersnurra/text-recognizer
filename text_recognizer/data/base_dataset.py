@@ -1,7 +1,7 @@
 """Base PyTorch Dataset class."""
 from typing import Callable, Dict, Optional, Sequence, Tuple, Union
 
-import attr
+from attrs import define, field
 import torch
 from torch import Tensor
 from torch.utils.data import Dataset
@@ -9,7 +9,7 @@ from torch.utils.data import Dataset
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
 
 
-@attr.s
+@define
 class BaseDataset(Dataset):
     r"""Base Dataset class that processes data and targets through optional transfroms.
 
@@ -21,10 +21,10 @@ class BaseDataset(Dataset):
             target transforms.
     """
 
-    data: Union[Sequence, Tensor] = attr.ib()
-    targets: Union[Sequence, Tensor] = attr.ib()
-    transform: Union[Optional[Callable], str] = attr.ib(default=None)
-    target_transform: Union[Optional[Callable], str] = attr.ib(default=None)
+    data: Union[Sequence, Tensor] = field()
+    targets: Union[Sequence, Tensor] = field()
+    transform: Union[Optional[Callable], str] = field(default=None)
+    target_transform: Union[Optional[Callable], str] = field(default=None)
 
     def __attrs_pre_init__(self) -> None:
         """Pre init constructor."""

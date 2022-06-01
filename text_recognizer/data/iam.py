@@ -9,7 +9,7 @@ from typing import Any, Dict, List
 import xml.etree.ElementTree as ElementTree
 import zipfile
 
-import attr
+from attrs import define, field
 from boltons.cacheutils import cachedproperty
 from loguru import logger as log
 import toml
@@ -27,7 +27,7 @@ DOWNSAMPLE_FACTOR = 2  # If images were downsampled, the regions must also be.
 LINE_REGION_PADDING = 16  # Add this many pixels around the exact coordinates.
 
 
-@attr.s(auto_attribs=True)
+@define(auto_attribs=True)
 class IAM(BaseDataModule):
     r"""The IAM Lines dataset.
 
@@ -44,7 +44,7 @@ class IAM(BaseDataModule):
         contributed to one set only.
     """
 
-    metadata: Dict = attr.ib(init=False, default=toml.load(METADATA_FILENAME))
+    metadata: Dict = field(init=False, default=toml.load(METADATA_FILENAME))
 
     def prepare_data(self) -> None:
         """Prepares the IAM dataset."""
