@@ -2,7 +2,6 @@
 import random
 from typing import Any, List, Sequence, Tuple
 
-from attrs import define
 from loguru import logger as log
 import numpy as np
 from PIL import Image
@@ -34,9 +33,11 @@ PROCESSED_DATA_DIRNAME = (
 )
 
 
-@define(auto_attribs=True, repr=False)
 class IAMSyntheticParagraphs(IAMParagraphs):
     """IAM Handwriting database of synthetic paragraphs."""
+
+    def __init__(self) -> None:
+        super().__init__()
 
     def prepare_data(self) -> None:
         """Prepare IAM lines to be used to generate paragraphs."""

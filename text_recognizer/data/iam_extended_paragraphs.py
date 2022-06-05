@@ -1,19 +1,38 @@
 """IAM original and sythetic dataset class."""
-from attrs import define, field
+from typing import Callable, Optional, Type
 from torch.utils.data import ConcatDataset
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.iam_paragraphs import IAMParagraphs
+from text_recognizer.data.mappings import AbstractMapping
 from text_recognizer.data.iam_synthetic_paragraphs import IAMSyntheticParagraphs
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
 
 
-@define(auto_attribs=True, repr=False)
 class IAMExtendedParagraphs(BaseDataModule):
     """A dataset with synthetic and real handwritten paragraph."""
 
-    def __attrs_post_init__(self) -> None:
-        """Post init constructor."""
+    def __init__(
+        self,
+        mapping: Type[AbstractMapping],
+        transform: Optional[Callable] = None,
+        test_transform: Optional[Callable] = None,
+        target_transform: Optional[Callable] = None,
+        train_fraction: float = 0.8,
+        batch_size: int = 16,
+        num_workers: int = 0,
+        pin_memory: bool = True,
+    ) -> None:
+        super().__init__(
+            mapping,
+            transform,
+            test_transform,
+            target_transform,
+            train_fraction,
+            batch_size,
+            num_workers,
+            pin_memory,
+        )
         self.iam_paragraphs = IAMParagraphs(
             mapping=self.mapping,
             batch_size=self.batch_size,

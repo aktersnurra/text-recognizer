@@ -6,7 +6,6 @@ import shutil
 from typing import Dict, List, Optional, Sequence, Set, Tuple
 import zipfile
 
-from attrs import define
 import h5py
 from loguru import logger as log
 import numpy as np
@@ -35,7 +34,6 @@ ESSENTIALS_FILENAME = (
 )
 
 
-@define(auto_attribs=True)
 class EMNIST(BaseDataModule):
     """Lightning DataModule class for loading EMNIST dataset.
 
@@ -48,8 +46,8 @@ class EMNIST(BaseDataModule):
     EMNIST ByClass: 814,255 characters. 62 unbalanced classes.
     """
 
-    def __attrs_post_init__(self) -> None:
-        """Post init configuration."""
+    def __init__(self) -> None:
+        super().__init__()
         self.dims = (1, *self.mapping.input_size)
 
     def prepare_data(self) -> None:

@@ -3,7 +3,6 @@ import json
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
 
-from attrs import define, field
 from loguru import logger as log
 import numpy as np
 from PIL import Image, ImageOps
@@ -33,15 +32,13 @@ MAX_LABEL_LENGTH = 682
 MAX_WORD_PIECE_LENGTH = 451
 
 
-@define(auto_attribs=True, repr=False)
 class IAMParagraphs(BaseDataModule):
     """IAM handwriting database paragraphs."""
 
-    # Placeholders
-    dims: Tuple[int, int, int] = field(
-        init=False, default=(1, IMAGE_HEIGHT, IMAGE_WIDTH)
-    )
-    output_dims: Tuple[int, int] = field(init=False, default=(MAX_LABEL_LENGTH, 1))
+    def __init__(self) -> None:
+        super().__init__()
+        self.dims = (1, IMAGE_HEIGHT, IMAGE_WIDTH)
+        self.output_dims = (MAX_LABEL_LENGTH, 1)
 
     def prepare_data(self) -> None:
         """Create data for training/testing."""
