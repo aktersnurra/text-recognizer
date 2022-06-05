@@ -34,7 +34,7 @@ class PreNorm(nn.Module):
         self.norm = nn.LayerNorm(normalized_shape)
         self.fn = fn
 
-    def forward(self, x: Tensor, **kwargs: Dict) -> Tensor:
+    def forward(self, x: Tensor, **kwargs) -> Tensor:
         """Applies pre norm."""
         x = self.norm(x)
         return self.fn(x, **kwargs)
