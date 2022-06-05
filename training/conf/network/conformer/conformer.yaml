@@ -1,0 +1,27 @@
+---
+_target_: text_recognizer.networks.conformer.Conformer
+depth: 16
+block:
+  _target_: text_recognizer.networks.conformer.ConformerBlock
+  dim: &dim 128
+  attn:
+    _target_: text_recognizer.networks.transformer.Attention
+    dim: *dim
+    num_heads: 8
+    dim_head: 64
+    dropout_rate: 0.1
+    causal: false
+    rotary_embedding:
+      _target_: text_recognizer.networks.transformer.RotaryEmbedding
+      dim: 64
+  ff:
+    _target_: text_recognizer.networks.conformer.Feedforward
+    dim: *dim
+    expansion_factor: 4
+    dropout: 0.1
+  conv:
+    _target_: text_recognizer.networks.conformer.ConformerConv
+    dim: *dim
+    expansion_factor: 2
+    kernel_size: 31
+    dropout: 0.1
