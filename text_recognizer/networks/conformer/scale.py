@@ -9,5 +9,5 @@ class Scale(nn.Module):
         self.scale = scale
         self.fn = fn
 
-    def forward(self, x: Tensor, kwargs: Dict) -> Tensor:
+    def forward(self, x: Tensor, **kwargs) -> Tensor:
         return self.fn(x, **kwargs) * self.scale
