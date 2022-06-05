@@ -5,7 +5,7 @@ from typing import Optional
 from torch import nn, Tensor
 from text_recognizer.networks.conformer.conv import ConformerConv
 
-from text_recognizer.networks.conformer.mlp import MLP
+from text_recognizer.networks.conformer.ff import Feedforward
 from text_recognizer.networks.conformer.scale import Scale
 from text_recognizer.networks.transformer.attention import Attention
 from text_recognizer.networks.transformer.norm import PreNorm
@@ -15,7 +15,7 @@ class ConformerBlock(nn.Module):
     def __init__(
         self,
         dim: int,
-        ff: MLP,
+        ff: Feedforward,
         attn: Attention,
         conv: ConformerConv,
     ) -> None:
