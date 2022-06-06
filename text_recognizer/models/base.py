@@ -13,7 +13,7 @@ from torchmetrics import Accuracy
 from text_recognizer.data.mappings.base import AbstractMapping
 
 
-class BaseLitModel(LightningModule):
+class LitBase(LightningModule):
     """Abstract PyTorch Lightning class."""
 
     def __init__(
