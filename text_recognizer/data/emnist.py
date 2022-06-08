@@ -102,22 +102,6 @@ class EMNIST(BaseDataModule):
         return basic + data
 
 
-def emnist_mapping(
-    extra_symbols: Optional[Set[str]] = None,
-) -> Tuple[List, Dict[str, int], List[int]]:
-    """Return the EMNIST mapping."""
-    if not ESSENTIALS_FILENAME.exists():
-        download_and_process_emnist()
-    with ESSENTIALS_FILENAME.open() as f:
-        essentials = json.load(f)
-    mapping = list(essentials["characters"])
-    if extra_symbols is not None:
-        mapping += extra_symbols
-    inverse_mapping = {v: k for k, v in enumerate(mapping)}
-    input_shape = essentials["input_shape"]
-    return mapping, inverse_mapping, input_shape
-
-
 def download_and_process_emnist() -> None:
     """Downloads and preprocesses EMNIST dataset."""
     metadata = toml.load(METADATA_FILENAME)

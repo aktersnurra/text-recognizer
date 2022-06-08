@@ -32,13 +32,6 @@ class BaseDataset(Dataset):
         self.targets = targets
         self.transform = transform
         self.target_transform = target_transform
-
-    def __attrs_pre_init__(self) -> None:
-        """Pre init constructor."""
-        super().__init__()
-
-    def __attrs_post_init__(self) -> None:
-        """Post init constructor."""
         if len(self.data) != len(self.targets):
             raise ValueError("Data and targets must be of equal length.")
         self.transform = self._load_transform(self.transform)

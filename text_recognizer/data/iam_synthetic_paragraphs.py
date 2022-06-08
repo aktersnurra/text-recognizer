@@ -24,7 +24,7 @@ from text_recognizer.data.iam_paragraphs import (
     NEW_LINE_TOKEN,
     resize_image,
 )
-from text_recognizer.data.mappings.emnist import EmnistMapping
+from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
 
 

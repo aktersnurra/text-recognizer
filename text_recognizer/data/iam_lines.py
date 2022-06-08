@@ -5,7 +5,7 @@ dataset.
 """
 import json
 from pathlib import Path
-from typing import List, Sequence, Tuple
+from typing import Callable, List, Optional, Sequence, Tuple, Type
 
 from loguru import logger as log
 import numpy as np
@@ -19,7 +19,7 @@ from text_recognizer.data.base_dataset import (
     split_dataset,
 )
 from text_recognizer.data.iam import IAM
-from text_recognizer.data.mappings.emnist import EmnistMapping
+from text_recognizer.data.mappings import AbstractMapping, EmnistMapping
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
 from text_recognizer.data.utils import image_utils
 
@@ -37,8 +37,27 @@ MAX_WORD_PIECE_LENGTH = 72
 class IAMLines(BaseDataModule):
     """IAM handwritten lines dataset."""
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(
+        self,
+        mapping: Type[AbstractMapping],
+        transform: Optional[Callable] = None,
+        test_transform: Optional[Callable] = None,
+        target_transform: Optional[Callable] = None,
+        train_fraction: float = 0.8,
+        batch_size: int = 16,
+        num_workers: int = 0,
+        pin_memory: bool = True,
+    ) -> None:
+        super().__init__(
+            mapping,
+            transform,
+            test_transform,
+            target_transform,
+            train_fraction,
+            batch_size,
+            num_workers,
+            pin_memory,
+        )
         self.dims = (1, IMAGE_HEIGHT, IMAGE_WIDTH)
         self.output_dims = (MAX_LABEL_LENGTH, 1)
 

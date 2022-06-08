@@ -6,7 +6,7 @@ from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader
 
 from text_recognizer.data.base_dataset import BaseDataset
-from text_recognizer.data.mappings.base import AbstractMapping
+from text_recognizer.data.mappings import AbstractMapping
 
 T = TypeVar("T")
 
