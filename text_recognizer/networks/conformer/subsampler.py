@@ -34,13 +34,11 @@ class Subsampler(nn.Module):
                 )
             )
             subsampler.append(nn.Mish(inplace=True))
-        projector = nn.Sequential(
-            nn.Flatten(start_dim=2), nn.Linear(channels, channels), nn.Dropout(dropout)
-        )
+        projector = nn.Sequential(nn.Linear(channels, channels), nn.Dropout(dropout))
         return nn.Sequential(*subsampler), projector
 
     def forward(self, x: Tensor) -> Tensor:
         x = self.subsampler(x)
         x = self.pixel_pos_embedding(x)
-        x = self.projector(x)
-        return x.permute(0, 2, 1)
+        x = x.flatten(start_dim=2).permute(0, 2, 1)
+        return self.projector(x)
