@@ -6,22 +6,27 @@ from typing import Dict, List, Optional, Sequence, Union, Tuple
 import torch
 from torch import Tensor
 
-from text_recognizer.data.mappings.base import AbstractMapping
-
 ESSENTIALS_FILENAME = Path(__file__).parents[0].resolve() / "emnist_essentials.json"
 
 
-class EmnistMapping(AbstractMapping):
+class EmnistMapping:
     """Mapping for EMNIST labels."""
 
     def __init__(
-        self, extra_symbols: Optional[Sequence[str]] = None, lower: bool = True
+        self,
+        input_size: List[int],
+        mapping: List[str],
+        inverse_mapping: Dict[str, int],
+        extra_symbols: Optional[Sequence[str]] = None,
+        lower: bool = True,
     ) -> None:
+        self.input_size = input_size
+        self.mapping = mapping
+        self.inverse_mapping = inverse_mapping
         self.extra_symbols = set(extra_symbols) if extra_symbols is not None else None
         self.mapping, self.inverse_mapping, self.input_size = self._load_mapping()
         if lower:
             self._to_lower()
-        super().__init__(self.input_size, self.mapping, self.inverse_mapping)
 
     def _load_mapping(self) -> Tuple[List, Dict[str, int], List[int]]:
         """Return the EMNIST mapping."""

@@ -4,7 +4,7 @@ from torch.utils.data import ConcatDataset
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.iam_paragraphs import IAMParagraphs
-from text_recognizer.data.mappings import AbstractMapping
+from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.iam_synthetic_paragraphs import IAMSyntheticParagraphs
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
 
@@ -14,7 +14,7 @@ class IAMExtendedParagraphs(BaseDataModule):
 
     def __init__(
         self,
-        mapping: Type[AbstractMapping],
+        mapping: Type[EmnistMapping],
         transform: Optional[Callable] = None,
         test_transform: Optional[Callable] = None,
         target_transform: Optional[Callable] = None,

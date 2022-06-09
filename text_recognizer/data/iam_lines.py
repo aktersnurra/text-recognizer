@@ -19,7 +19,7 @@ from text_recognizer.data.base_dataset import (
     split_dataset,
 )
 from text_recognizer.data.iam import IAM
-from text_recognizer.data.mappings import AbstractMapping, EmnistMapping
+from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
 from text_recognizer.data.utils import image_utils
 
@@ -39,7 +39,7 @@ class IAMLines(BaseDataModule):
 
     def __init__(
         self,
-        mapping: Type[AbstractMapping],
+        mapping: Type[EmnistMapping],
         transform: Optional[Callable] = None,
         test_transform: Optional[Callable] = None,
         target_transform: Optional[Callable] = None,

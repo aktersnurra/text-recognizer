@@ -5,7 +5,7 @@ from omegaconf import DictConfig
 import torch
 from torch import nn, Tensor
 
-from text_recognizer.data.mappings import AbstractMapping
+from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.models.base import LitBase
 from text_recognizer.models.metrics import CharacterErrorRate
 
@@ -19,7 +19,7 @@ class LitTransformer(LitBase):
         loss_fn: Type[nn.Module],
         optimizer_configs: DictConfig,
         lr_scheduler_configs: Optional[DictConfig],
-        mapping: Type[AbstractMapping],
+        mapping: Type[EmnistMapping],
         max_output_len: int = 451,
         start_token: str = "<s>",
         end_token: str = "<e>",

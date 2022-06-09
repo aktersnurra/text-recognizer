@@ -6,7 +6,7 @@ from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader
 
 from text_recognizer.data.base_dataset import BaseDataset
-from text_recognizer.data.mappings import AbstractMapping
+from text_recognizer.data.mappings import EmnistMapping
 
 T = TypeVar("T")
 
@@ -24,7 +24,7 @@ class BaseDataModule(LightningDataModule):
 
     def __init__(
         self,
-        mapping: Type[AbstractMapping],
+        mapping: Type[EmnistMapping],
         transform: Optional[Callable] = None,
         test_transform: Optional[Callable] = None,
         target_transform: Optional[Callable] = None,

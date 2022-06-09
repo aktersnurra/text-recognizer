@@ -16,7 +16,7 @@ from text_recognizer.data.base_data_module import (
 )
 from text_recognizer.data.base_dataset import BaseDataset, convert_strings_to_labels
 from text_recognizer.data.emnist import EMNIST
-from text_recognizer.data.mappings import AbstractMapping
+from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
 from text_recognizer.data.utils.sentence_generator import SentenceGenerator
 
@@ -38,7 +38,7 @@ class EMNISTLines(BaseDataModule):
 
     def __init__(
         self,
-        mapping: Type[AbstractMapping],
+        mapping: Type[EmnistMapping],
         transform: Optional[Callable] = None,
         test_transform: Optional[Callable] = None,
         target_transform: Optional[Callable] = None,
@@ -113,7 +113,6 @@ class EMNISTLines(BaseDataModule):
         """Loads the dataset."""
         log.info("EMNISTLinesDataset loading data from HDF5...")
         if stage == "fit" or stage is None:
-            print(self.data_filename)
             with h5py.File(self.data_filename, "r") as f:
                 x_train = f["x_train"][:]
                 y_train = torch.LongTensor(f["y_train"][:])
