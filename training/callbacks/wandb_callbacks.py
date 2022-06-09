@@ -107,7 +107,7 @@ class LogTextPredictions(Callback):
         imgs, labels = samples
 
         imgs = imgs.to(device=pl_module.device)
-        logits = pl_module(imgs)
+        logits = pl_module.predict(imgs)
 
         mapping = pl_module.mapping
         data = [
