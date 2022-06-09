@@ -1,17 +1,17 @@
-"""Vision transformer for character recognition."""
+"""Base network module."""
 from typing import Optional, Tuple, Type
 
+from loguru import logger as log
 from torch import nn, Tensor
 
-from text_recognizer.networks.base import BaseTransformer
 from text_recognizer.networks.transformer.decoder import Decoder
 from text_recognizer.networks.transformer.embeddings.axial import (
     AxialPositionalEmbedding,
 )
 
 
-class ConvTransformer(BaseTransformer):
-    """Convolutional encoder and transformer decoder network."""
+class ConvTransformer(nn.Module):
+    """Base transformer network."""
 
     def __init__(
         self,
@@ -21,20 +21,30 @@ class ConvTransformer(BaseTransformer):
         pad_index: Tensor,
         encoder: Type[nn.Module],
         decoder: Decoder,
-        pixel_pos_embedding: AxialPositionalEmbedding,
+        pixel_embedding: AxialPositionalEmbedding,
         token_pos_embedding: Optional[Type[nn.Module]] = None,
     ) -> None:
-        super().__init__(
-            input_dims,
-            hidden_dim,
-            num_classes,
-            pad_index,
-            encoder,
-            decoder,
-            token_pos_embedding,
+        super().__init__()
+        self.input_dims = input_dims
+        self.hidden_dim = hidden_dim
+        self.num_classes = num_classes
+        self.pad_index = pad_index
+        self.encoder = encoder
+        self.decoder = decoder
+
+        # Token embedding.
+        self.token_embedding = nn.Embedding(
+            num_embeddings=self.num_classes, embedding_dim=self.hidden_dim
         )
 
-        self.pixel_pos_embedding = pixel_pos_embedding
+        # Positional encoding for decoder tokens.
+        if not self.decoder.has_pos_emb:
+            self.token_pos_embedding = token_pos_embedding
+        else:
+            self.token_pos_embedding = None
+            log.debug("Decoder already have a positional embedding.")
+
+        self.pixel_embedding = pixel_embedding
 
         # Latent projector for down sampling number of filters and 2d
         # positional encoding.
@@ -44,15 +54,17 @@ class ConvTransformer(BaseTransformer):
             kernel_size=1,
         )
 
+        # Output layer
+        self.to_logits = nn.Linear(
+            in_features=self.hidden_dim, out_features=self.num_classes
+        )
+
         # Initalize weights for encoder.
         self.init_weights()
 
     def init_weights(self) -> None:
         """Initalize weights for decoder network and to_logits."""
-        bound = 0.1
-        self.token_embedding.weight.data.uniform_(-bound, bound)
-        self.to_logits.bias.data.zero_()
-        self.to_logits.weight.data.uniform_(-bound, bound)
+        nn.init.kaiming_normal_(self.token_emb.emb.weight)
 
     def encode(self, x: Tensor) -> Tensor:
         """Encodes an image into a latent feature vector.
@@ -79,3 +91,54 @@ class ConvTransformer(BaseTransformer):
         # Permute tensor from [B, E, Ho * Wo] to [B, Sx, E]
         z = z.permute(0, 2, 1)
         return z
+
+    def decode(self, src: Tensor, trg: Tensor) -> Tensor:
+        """Decodes latent images embedding into word pieces.
+
+        Args:
+            src (Tensor): Latent images embedding.
+            trg (Tensor): Word embeddings.
+
+        Shapes:
+            - z: :math: `(B, Sx, D)`
+            - context: :math: `(B, Sy)`
+            - out: :math: `(B, Sy, C)`
+
+            where Sy is the length of the output and C is the number of classes.
+
+        Returns:
+            Tensor: Sequence of word piece embeddings.
+        """
+        trg = trg.long()
+        trg_mask = trg != self.pad_index
+        trg = self.token_embedding(trg)
+        trg = (
+            self.token_pos_embedding(trg)
+            if self.token_pos_embedding is not None
+            else trg
+        )
+        out = self.decoder(x=trg, context=src, input_mask=trg_mask)
+        logits = self.to_logits(out)  # [B, Sy, C]
+        logits = logits.permute(0, 2, 1)  # [B, C, Sy]
+        return logits
+
+    def forward(self, x: Tensor, context: Tensor) -> Tensor:
+        """Encodes images into word piece logtis.
+
+        Args:
+            x (Tensor): Input image(s).
+            context (Tensor): Target word embeddings.
+
+        Shapes:
+            - x: :math: `(B, D, H, W)`
+            - context: :math: `(B, Sy, C)`
+
+            where B is the batch size, D is the number of input channels, H is
+            the image height, W is the image width, and C is the number of classes.
+
+        Returns:
+            Tensor: Sequence of logits.
+        """
+        z = self.encode(x)
+        logits = self.decode(z, context)
+        return logits
