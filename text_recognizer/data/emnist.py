@@ -3,7 +3,7 @@ import json
 import os
 from pathlib import Path
 import shutil
-from typing import Dict, List, Optional, Sequence, Set, Tuple
+from typing import Sequence, Tuple
 import zipfile
 
 import h5py
