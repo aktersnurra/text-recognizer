@@ -93,12 +93,12 @@ decoder: &decoder
     _target_: text_recognizer.networks.transformer.decoder.DecoderBlock
     self_attn:
       _target_: text_recognizer.networks.transformer.attention.Attention
-      << : *attn
+      <<: *attn
       causal: true
-      << : *rotary_embedding
+      <<: *rotary_embedding
     cross_attn:
       _target_: text_recognizer.networks.transformer.attention.Attention
-      << : *attn
+      <<: *attn
       causal: false
     norm:
       _target_: text_recognizer.networks.transformer.norm.RMSNorm
@@ -124,15 +124,15 @@ network:
   num_classes: *num_classes
   pad_index: *ignore_index
   encoder:
-    << : *encoder
+    <<: *encoder
   decoder:
-    << : *decoder
+    <<: *decoder
   pixel_pos_embedding:
-    << : *pixel_pos_embedding
+    <<: *pixel_pos_embedding
 
 model:
-  _target_: text_recognizer.models.transformer.TransformerLitModel
-  << : *mapping
+  _target_: text_recognizer.models.transformer.LitTransformer
+  <<: *mapping
   max_output_len: *max_output_len
   start_token: <s>
   end_token: <e>

@@ -1,2 +1,2 @@
-_target_: text_recognizer.data.mappings.emnist.EmnistMapping
+_target_: text_recognizer.data.mappings.EmnistMapping
 extra_symbols: [ "\n" ]
