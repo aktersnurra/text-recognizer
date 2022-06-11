@@ -1,7 +1,9 @@
 _target_: text_recognizer.data.iam_lines.IAMLines
 batch_size: 8
 num_workers: 12
-train_fraction: 0.8
+train_fraction: 0.9
 pin_memory: true
 transform: transform/lines.yaml
 test_transform: test_transform/lines.yaml
+mapping:
+  _target_: text_recognizer.data.mappings.EmnistMapping

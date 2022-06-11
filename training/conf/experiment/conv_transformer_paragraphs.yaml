@@ -1,7 +1,7 @@
 # @package _global_
 
 defaults:
-  - override /mapping: emnist
+  - override /mapping: characters
   - override /criterion: cross_entropy
   - override /callbacks: htr
   - override /datamodule: iam_extended_paragraphs
@@ -10,7 +10,7 @@ defaults:
   - override /lr_schedulers: null
   - override /optimizers: null
 
-epochs: &epochs 200
+epochs: &epochs 629
 ignore_index: &ignore_index 3
 summary: [[1, 1, 576, 640], [1, 682]]
 
@@ -52,12 +52,8 @@ lr_schedulers:
     monitor: val/loss
 
 datamodule:
-  _target_: text_recognizer.data.iam_extended_paragraphs.IAMExtendedParagraphs
   batch_size: 6
-  num_workers: 12
-  train_fraction: 0.8
-  pin_memory: true
-  << : *mapping
+  train_fraction: 0.9
 
 trainer:
   max_epochs: *epochs
