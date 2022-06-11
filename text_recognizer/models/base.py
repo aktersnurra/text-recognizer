@@ -10,7 +10,7 @@ from torch import nn
 from torch import Tensor
 from torchmetrics import Accuracy
 
-from text_recognizer.data.mappings.base import EmnistMapping
+from text_recognizer.data.mappings import EmnistMapping
 
 
 class LitBase(LightningModule):
@@ -22,7 +22,7 @@ class LitBase(LightningModule):
         loss_fn: Type[nn.Module],
         optimizer_configs: DictConfig,
         lr_scheduler_configs: Optional[DictConfig],
-        mapping: Type[EmnistMapping],
+        mapping: EmnistMapping,
     ) -> None:
         super().__init__()
 

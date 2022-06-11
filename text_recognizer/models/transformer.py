@@ -19,7 +19,7 @@ class LitTransformer(LitBase):
         loss_fn: Type[nn.Module],
         optimizer_configs: DictConfig,
         lr_scheduler_configs: Optional[DictConfig],
-        mapping: Type[EmnistMapping],
+        mapping: EmnistMapping,
         max_output_len: int = 451,
         start_token: str = "<s>",
         end_token: str = "<e>",

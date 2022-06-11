@@ -1,6 +1,6 @@
 """Base lightning DataModule class."""
 from pathlib import Path
-from typing import Callable, Dict, Optional, Tuple, Type, TypeVar
+from typing import Callable, Dict, Optional, Tuple, TypeVar
 
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader
@@ -24,7 +24,7 @@ class BaseDataModule(LightningDataModule):
 
     def __init__(
         self,
-        mapping: Type[EmnistMapping],
+        mapping: EmnistMapping,
         transform: Optional[Callable] = None,
         test_transform: Optional[Callable] = None,
         target_transform: Optional[Callable] = None,

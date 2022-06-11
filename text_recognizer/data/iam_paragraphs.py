@@ -1,7 +1,7 @@
 """IAM Paragraphs Dataset class."""
 import json
 from pathlib import Path
-from typing import Dict, List, Optional, Sequence, Tuple
+from typing import Callable, Dict, List, Optional, Sequence, Tuple
 
 from loguru import logger as log
 import numpy as np
@@ -35,8 +35,27 @@ MAX_WORD_PIECE_LENGTH = 451
 class IAMParagraphs(BaseDataModule):
     """IAM handwriting database paragraphs."""
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(
+        self,
+        mapping: EmnistMapping,
+        transform: Optional[Callable] = None,
+        test_transform: Optional[Callable] = None,
+        target_transform: Optional[Callable] = None,
+        train_fraction: float = 0.8,
+        batch_size: int = 16,
+        num_workers: int = 0,
+        pin_memory: bool = True,
+    ) -> None:
+        super().__init__(
+            mapping,
+            transform,
+            test_transform,
+            target_transform,
+            train_fraction,
+            batch_size,
+            num_workers,
+            pin_memory,
+        )
         self.dims = (1, IMAGE_HEIGHT, IMAGE_WIDTH)
         self.output_dims = (MAX_LABEL_LENGTH, 1)
 

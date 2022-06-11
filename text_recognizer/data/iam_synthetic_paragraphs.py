@@ -1,6 +1,6 @@
 """IAM Synthetic Paragraphs Dataset class."""
 import random
-from typing import Any, List, Sequence, Tuple
+from typing import Any, Callable, List, Optional, Sequence, Tuple
 
 from loguru import logger as log
 import numpy as np
@@ -36,8 +36,27 @@ PROCESSED_DATA_DIRNAME = (
 class IAMSyntheticParagraphs(IAMParagraphs):
     """IAM Handwriting database of synthetic paragraphs."""
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(
+        self,
+        mapping: EmnistMapping,
+        transform: Optional[Callable] = None,
+        test_transform: Optional[Callable] = None,
+        target_transform: Optional[Callable] = None,
+        train_fraction: float = 0.8,
+        batch_size: int = 16,
+        num_workers: int = 0,
+        pin_memory: bool = True,
+    ) -> None:
+        super().__init__(
+            mapping,
+            transform,
+            test_transform,
+            target_transform,
+            train_fraction,
+            batch_size,
+            num_workers,
+            pin_memory,
+        )
 
     def prepare_data(self) -> None:
         """Prepare IAM lines to be used to generate paragraphs."""

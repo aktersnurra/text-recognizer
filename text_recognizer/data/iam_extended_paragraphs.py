@@ -1,5 +1,5 @@
 """IAM original and sythetic dataset class."""
-from typing import Callable, Optional, Type
+from typing import Callable, Optional
 from torch.utils.data import ConcatDataset
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
@@ -14,7 +14,7 @@ class IAMExtendedParagraphs(BaseDataModule):
 
     def __init__(
         self,
-        mapping: Type[EmnistMapping],
+        mapping: EmnistMapping,
         transform: Optional[Callable] = None,
         test_transform: Optional[Callable] = None,
         target_transform: Optional[Callable] = None,

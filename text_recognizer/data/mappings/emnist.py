@@ -14,19 +14,20 @@ class EmnistMapping:
 
     def __init__(
         self,
-        input_size: List[int],
-        mapping: List[str],
-        inverse_mapping: Dict[str, int],
         extra_symbols: Optional[Sequence[str]] = None,
         lower: bool = True,
     ) -> None:
-        self.input_size = input_size
-        self.mapping = mapping
-        self.inverse_mapping = inverse_mapping
         self.extra_symbols = set(extra_symbols) if extra_symbols is not None else None
         self.mapping, self.inverse_mapping, self.input_size = self._load_mapping()
         if lower:
             self._to_lower()
+
+    def __len__(self) -> int:
+        return len(self.mapping)
+
+    @property
+    def num_classes(self) -> int:
+        return self.__len__()
 
     def _load_mapping(self) -> Tuple[List, Dict[str, int], List[int]]:
         """Return the EMNIST mapping."""
