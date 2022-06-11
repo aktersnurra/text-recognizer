@@ -5,7 +5,7 @@ from typing import Optional, Type
 from torch import nn, Tensor
 
 from text_recognizer.networks.transformer.attention import Attention
-from text_recognizer.networks.transformer.mlp import FeedForward
+from text_recognizer.networks.transformer.ff import FeedForward
 
 
 class DecoderBlock(nn.Module):
