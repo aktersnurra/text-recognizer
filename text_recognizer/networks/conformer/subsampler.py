@@ -4,9 +4,7 @@ from typing import Tuple
 from einops import rearrange
 from torch import nn, Tensor
 
-from text_recognizer.networks.transformer import (
-    AxialPositionalEmbedding,
-)
+from text_recognizer.networks.transformer import AxialPositionalEmbedding
 
 
 class Subsampler(nn.Module):
