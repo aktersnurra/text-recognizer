@@ -54,11 +54,11 @@ class LitTransformer(LitBase):
     def validation_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
         """Validation step."""
         data, targets = batch
-
-        # Compute the loss.
-        logits = self.network(data, targets[:, :-1])
-        loss = self.loss_fn(logits, targets[:, 1:])
-        self.log("val/loss", loss, prog_bar=True)
+        preds = self.predict(data)
+        self.val_acc(preds, targets)
+        self.log("val/acc", self.val_acc, on_step=False, on_epoch=True)
+        self.val_cer(preds, targets)
+        self.log("val/cer", self.val_cer, on_step=False, on_epoch=True, prog_bar=True)
 
     def test_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
         """Test step."""
@@ -71,6 +71,7 @@ class LitTransformer(LitBase):
         self.test_acc(pred, targets)
         self.log("test/acc", self.test_acc, on_step=False, on_epoch=True)
 
+    @torch.no_grad()
     def predict(self, x: Tensor) -> Tensor:
         """Predicts text in image.
 
