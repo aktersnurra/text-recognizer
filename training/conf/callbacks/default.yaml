@@ -2,5 +2,5 @@ defaults:
   - lightning/checkpoint
   - lightning/learning_rate_monitor
   - wandb/watch
-  - wandb/config 
+  - wandb/config
   - wandb/checkpoints

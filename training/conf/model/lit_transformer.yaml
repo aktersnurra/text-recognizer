@@ -5,4 +5,4 @@ end_token: <e>
 pad_token: <p>
 mapping:
   _target_: text_recognizer.data.mappings.EmnistMapping
-  extra_symbols: ["\n"]
+  # extra_symbols: ["\n"]
