@@ -44,11 +44,11 @@ class BaseDataModule(LightningDataModule):
         self.pin_memory = pin_memory
 
         # Placeholders
-        self.data_train: BaseDataset
-        self.data_val: BaseDataset
-        self.data_test: BaseDataset
-        self.dims: Tuple[int, ...]
-        self.output_dims: Tuple[int, ...]
+        self.data_train: BaseDataset = None
+        self.data_val: BaseDataset = None
+        self.data_test: BaseDataset = None
+        self.dims: Tuple[int, ...] = None
+        self.output_dims: Tuple[int, ...] = None
 
     @classmethod
     def data_dirname(cls: T) -> Path:
