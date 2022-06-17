@@ -1,8 +1,7 @@
-cosine_annealing:
-  _target_: torch.optim.lr_scheduler.CosineAnnealingLR
-  T_max: 256
-  eta_min: 0.0
-  last_epoch: -1
+_target_: torch.optim.lr_scheduler.CosineAnnealingLR
+T_max: 256
+eta_min: 0.0
+last_epoch: -1
 
-  interval: epoch
-  monitor: val/loss
+interval: epoch
+monitor: val/loss

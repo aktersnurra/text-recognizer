@@ -7,13 +7,11 @@ defaults:
   - datamodule: iam_extended_paragraphs
   - hydra: default
   - logger: wandb
-  - lr_schedulers:
-      - cosine_annealing
+  - lr_schedulers: cosine_annealing
   - mapping: characters
   - model: lit_transformer
   - network: conv_transformer
-  - optimizers:
-      - radam
+  - optimizers: radam
   - trainer: default
 
 seed: 4711
