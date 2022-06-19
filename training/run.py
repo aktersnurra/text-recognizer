@@ -41,8 +41,8 @@ def run(config: DictConfig) -> Optional[float]:
         network=network,
         mapping=datamodule.mapping,
         loss_fn=loss_fn,
-        optimizer_configs=config.optimizers,
-        lr_scheduler_configs=config.lr_schedulers,
+        optimizer_config=config.optimizer,
+        lr_scheduler_config=config.lr_scheduler,
         _recursive_=False,
     )
 

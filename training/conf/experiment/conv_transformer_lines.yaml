@@ -6,8 +6,8 @@ defaults:
   - override /datamodule: iam_lines
   - override /network: conv_transformer
   - override /model: lit_transformer
-  - override /lr_schedulers: null
-  - override /optimizers: null
+  - override /lr_scheduler: null
+  - override /optimizer: null
 
 epochs: &epochs 512
 ignore_index: &ignore_index 3
@@ -28,7 +28,7 @@ callbacks:
     annealing_strategy: cos
     device: null
 
-optimizers:
+optimizer:
   _target_: torch.optim.RAdam
   lr: 3.0e-4
   betas: [0.9, 0.999]
@@ -36,7 +36,7 @@ optimizers:
   eps: 1.0e-8
   parameters: network
 
-lr_schedulers:
+lr_scheduler:
   _target_: torch.optim.lr_scheduler.OneCycleLR
   max_lr: 3.0e-4
   total_steps: null

@@ -20,16 +20,16 @@ class LitBase(LightningModule):
         self,
         network: Type[nn.Module],
         loss_fn: Type[nn.Module],
-        optimizer_configs: DictConfig,
-        lr_scheduler_configs: Optional[DictConfig],
+        optimizer_config: DictConfig,
+        lr_scheduler_config: Optional[DictConfig],
         mapping: EmnistMapping,
     ) -> None:
         super().__init__()
 
         self.network = network
         self.loss_fn = loss_fn
-        self.optimizer_configs = optimizer_configs
-        self.lr_scheduler_configs = lr_scheduler_configs
+        self.optimizer_config = optimizer_config
+        self.lr_scheduler_config = lr_scheduler_config
         self.mapping = mapping
 
         # Placeholders
