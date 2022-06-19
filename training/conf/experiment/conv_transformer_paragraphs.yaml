@@ -40,7 +40,7 @@ lr_scheduler:
   max_lr: 3.0e-4
   total_steps: null
   epochs: *epochs
-  steps_per_epoch: 5037
+  steps_per_epoch: 3358
   pct_start: 0.15
   anneal_strategy: cos
   cycle_momentum: true
@@ -55,7 +55,7 @@ lr_scheduler:
   monitor: val/cer
 
 datamodule:
-  batch_size: 4
+  batch_size: 6
   train_fraction: 0.95
 
 network:
@@ -63,9 +63,9 @@ network:
   num_classes: *num_classes
   pad_index: *ignore_index
   encoder:
-    depth: 5
+    depth: 6
   decoder:
-    depth: 4
+    depth: 5
   pixel_embedding:
     shape: [18, 80]
 
@@ -75,4 +75,4 @@ model:
 trainer:
   gradient_clip_val: 0.5
   max_epochs: *epochs
-  accumulate_grad_batches: 2
+  accumulate_grad_batches: 1
