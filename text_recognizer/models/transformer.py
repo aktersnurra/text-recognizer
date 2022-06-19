@@ -17,8 +17,8 @@ class LitTransformer(LitBase):
         self,
         network: Type[nn.Module],
         loss_fn: Type[nn.Module],
-        optimizer_configs: DictConfig,
-        lr_scheduler_configs: Optional[DictConfig],
+        optimizer_config: DictConfig,
+        lr_scheduler_config: Optional[DictConfig],
         mapping: EmnistMapping,
         max_output_len: int = 451,
         start_token: str = "<s>",
@@ -26,7 +26,7 @@ class LitTransformer(LitBase):
         pad_token: str = "<p>",
     ) -> None:
         super().__init__(
-            network, loss_fn, optimizer_configs, lr_scheduler_configs, mapping
+            network, loss_fn, optimizer_config, lr_scheduler_config, mapping
         )
         self.max_output_len = max_output_len
         self.start_token = start_token
