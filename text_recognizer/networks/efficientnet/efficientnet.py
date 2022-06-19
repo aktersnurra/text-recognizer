@@ -61,14 +61,14 @@ class EfficientNet(nn.Module):
         """Builds the efficientnet backbone."""
         _block_args = block_args()[: self.depth]
         in_channels = 1  # BW
-        out_channels = round_filters(32, self.params)
+        out_channels = round_filters(16, self.params)
         self._conv_stem = nn.Sequential(
             nn.ZeroPad2d((0, 1, 0, 1)),
             nn.Conv2d(
                 in_channels=in_channels,
                 out_channels=out_channels,
                 kernel_size=3,
-                stride=self.stride,
+                stride=2,
                 bias=False,
             ),
             nn.BatchNorm2d(
@@ -97,19 +97,6 @@ class EfficientNet(nn.Module):
         self._conv_head = nn.Sequential(
             nn.Conv2d(
                 in_channels,
-                self.out_channels,
-                kernel_size=2,
-                stride=self.stride,
-                bias=False,
-            ),
-            nn.BatchNorm2d(
-                num_features=self.out_channels,
-                momentum=self.bn_momentum,
-                eps=self.bn_eps,
-            ),
-            nn.Mish(inplace=True),
-            nn.Conv2d(
-                self.out_channels,
                 self.out_channels,
                 kernel_size=1,
                 stride=1,

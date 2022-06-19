@@ -9,7 +9,7 @@ encoder:
   stochastic_dropout_rate: 0.2
   bn_momentum: 0.99
   bn_eps: 1.0e-3
-  depth: 3
+  depth: 5
   out_channels: *hidden_dim
   stride: [2, 1]
 decoder:
@@ -47,4 +47,4 @@ decoder:
 pixel_embedding:
   _target_: text_recognizer.networks.transformer.AxialPositionalEmbedding
   dim: *hidden_dim
-  shape: [17, 78]
+  shape: [18, 78]
