@@ -36,7 +36,6 @@ class EfficientNet(nn.Module):
         bn_eps: float = 1.0e-3,
         depth: int = 7,
         out_channels: int = 1280,
-        stride: Tuple[int, int] = (2, 2),
     ) -> None:
         super().__init__()
         self.params = self._get_arch_params(arch)
@@ -44,7 +43,6 @@ class EfficientNet(nn.Module):
         self.bn_momentum = bn_momentum
         self.bn_eps = bn_eps
         self.depth = depth
-        self.stride = stride
         self.out_channels: int = out_channels
         self._conv_stem: nn.Sequential
         self._blocks: nn.ModuleList
