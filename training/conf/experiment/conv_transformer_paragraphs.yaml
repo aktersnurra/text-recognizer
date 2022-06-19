@@ -67,7 +67,7 @@ network:
   decoder:
     depth: 4
   pixel_embedding:
-    shape: [17, 79]
+    shape: [18, 80]
 
 model:
   max_output_len: *max_output_len
