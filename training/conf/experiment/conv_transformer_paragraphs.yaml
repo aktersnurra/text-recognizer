@@ -1,7 +1,6 @@
 # @package _global_
 
 defaults:
-  - override /mapping: characters
   - override /criterion: cross_entropy
   - override /callbacks: htr
   - override /datamodule: iam_extended_paragraphs
@@ -39,11 +38,11 @@ optimizers:
 
 lr_schedulers:
   _target_: torch.optim.lr_scheduler.OneCycleLR
-  max_lr: 2.0e-4
+  max_lr: 3.0e-4
   total_steps: null
   epochs: *epochs
   steps_per_epoch: 3201
-  pct_start: 0.1
+  pct_start: 0.3
   anneal_strategy: cos
   cycle_momentum: true
   base_momentum: 0.85
@@ -69,7 +68,7 @@ network:
   decoder:
     depth: 6
   pixel_embedding:
-    shape: [36, 40]
+    shape: [18, 78]
 
 model:
   max_output_len: *max_output_len
@@ -78,4 +77,3 @@ trainer:
   gradient_clip_val: 0.5
   max_epochs: *epochs
   accumulate_grad_batches: 1
-  resume_from_checkpoint: /home/aktersnurra/projects/text-recognizer/training/logs/runs/2022-06-16/21-00-39/checkpoints/last.ckpt

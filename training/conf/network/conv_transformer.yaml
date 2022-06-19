@@ -11,6 +11,7 @@ encoder:
   bn_eps: 1.0e-3
   depth: 3
   out_channels: *hidden_dim
+  stride: [2, 1]
 decoder:
   _target_: text_recognizer.networks.transformer.Decoder
   depth: 6
@@ -46,4 +47,4 @@ decoder:
 pixel_embedding:
   _target_: text_recognizer.networks.transformer.AxialPositionalEmbedding
   dim: *hidden_dim
-  shape: [72, 80]
+  shape: [17, 78]

@@ -1,7 +1,6 @@
 # @package _global_
 
 defaults:
-  - override /mapping: characters
   - override /criterion: cross_entropy
   - override /callbacks: htr
   - override /datamodule: iam_lines
