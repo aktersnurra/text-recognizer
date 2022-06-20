@@ -79,7 +79,7 @@ class LitBase(LightningModule):
         """Configures optimizer and lr scheduler."""
         optimizer = self._configure_optimizer()
         scheduler = self._configure_lr_schedulers(optimizer)
-        return {"optimizer": optimizer, "scheduler": scheduler}
+        return {"optimizer": optimizer, "lr_scheduler": scheduler}
 
     def forward(self, data: Tensor) -> Tensor:
         """Feedforward pass."""
