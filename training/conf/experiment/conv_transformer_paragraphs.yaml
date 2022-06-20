@@ -46,7 +46,7 @@ lr_scheduler:
   total_steps: null
   epochs: *epochs
   steps_per_epoch: 3358
-  pct_start: 0.15
+  pct_start: 0.1
   anneal_strategy: cos
   cycle_momentum: true
   base_momentum: 0.85
