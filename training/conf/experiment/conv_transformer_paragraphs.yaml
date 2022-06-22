@@ -41,26 +41,21 @@ optimizer:
   eps: 1.0e-8
 
 lr_scheduler:
-  _target_: torch.optim.lr_scheduler.OneCycleLR
-  max_lr: 3.0e-4
-  total_steps: null
-  epochs: *epochs
-  steps_per_epoch: 3358
-  pct_start: 0.1
-  anneal_strategy: cos
-  cycle_momentum: true
-  base_momentum: 0.85
-  max_momentum: 0.95
-  div_factor: 25.0
-  final_div_factor: 10000.0
-  three_phase: true
-  last_epoch: -1
+  _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
+  mode: min
+  factor: 0.8
+  patience: 10
+  threshold: 1.0e-4
+  threshold_mode: rel
+  cooldown: 0
+  min_lr: 1.0e-5
+  eps: 1.0e-8
   verbose: false
-  interval: step
+  interval: epoch
   monitor: val/cer
 
 datamodule:
-  batch_size: 6
+  batch_size: 8
   train_fraction: 0.95
 
 network:
@@ -68,16 +63,16 @@ network:
   num_classes: *num_classes
   pad_index: *ignore_index
   encoder:
-    depth: 6
-  decoder:
     depth: 4
+  decoder:
+    depth: 6
   pixel_embedding:
-    shape: [18, 80]
+    shape: [18, 79]
 
 model:
   max_output_len: *max_output_len
 
 trainer:
-  gradient_clip_val: 0.5
+  gradient_clip_val: 1.0
   max_epochs: *epochs
   accumulate_grad_batches: 1
