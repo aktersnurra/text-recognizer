@@ -49,6 +49,7 @@ class LitBase(LightningModule):
 
     def _configure_optimizer(self) -> Type[torch.optim.Optimizer]:
         """Configures the optimizer."""
+        log.info(f"Instantiating optimizer <{self.optimizer_config._target_}>")
         return hydra.utils.instantiate(
             self.optimizer_config, params=self.network.parameters()
         )
