@@ -70,7 +70,7 @@ class UploadCheckpointsAsArtifact(Callback):
         """Uploads model checkpoint to W&B."""
         logger = get_wandb_logger(trainer)
         experiment = logger.experiment
-        ckpts = wandb.Artifact("experiment-ckpts", type="checkpoints")
+        ckpts = wandb.Artifact("checkpoints", type="checkpoints")
 
         if self.upload_best_only:
             ckpts.add_file(trainer.checkpoint_callback.best_model_path)
