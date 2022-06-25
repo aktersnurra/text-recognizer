@@ -75,7 +75,7 @@ class UploadCheckpointsAsArtifact(Callback):
         if self.upload_best_only:
             ckpts.add_file(trainer.checkpoint_callback.best_model_path)
         else:
-            for ckpt in (self.ckpt_dir).rglob("**/*.ckpt"):
+            for ckpt in (self.ckpt_dir).rglob("*.ckpt"):
                 ckpts.add_file(ckpt)
 
         experiment.use_artifact(ckpts)
