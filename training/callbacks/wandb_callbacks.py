@@ -49,7 +49,7 @@ class UploadConfigAsArtifact(Callback):
         """Uploads project code as an artifact."""
         logger = get_wandb_logger(trainer)
         experiment = logger.experiment
-        artifact = wandb.Artifact("experiment-config", type="config")
+        artifact = wandb.Artifact("config", type="config")
         for filepath in self.config_dir.rglob("*.yaml"):
             artifact.add_file(str(filepath))
 
