@@ -42,7 +42,7 @@ class UploadConfigAsArtifact(Callback):
     """Upload all *.py files to W&B as an artifact, at the beginning of the run."""
 
     def __init__(self) -> None:
-        self.config_dir = Path(".hydra/")
+        self.config_dir = Path(".")
 
     @rank_zero_only
     def on_train_start(self, trainer: Trainer, pl_module: LightningModule) -> None:
