@@ -59,7 +59,7 @@ def save_model(run: Run, tag: str) -> None:
     # TODO: be able to download from w&b
 
 
-def find_best_model(entity: str, project: str, tag: str, metric: str, mode: str) -> Run:
+def find_best_run(entity: str, project: str, tag: str, metric: str, mode: str) -> Run:
     """Find the best model on wandb."""
     if mode == "min":
         default_metric_value = sys.maxsize
@@ -107,7 +107,7 @@ def find_best_model(entity: str, project: str, tag: str, metric: str, mode: str)
     help="Min or max value of metric",
 )
 def main(entity: str, project: str, tag: str, metric: str, mode: str) -> None:
-    best_run = find_best_model(entity, project, tag, metric, mode)
+    best_run = find_best_run(entity, project, tag, metric, mode)
     save_model(best_run, tag)
 
 
