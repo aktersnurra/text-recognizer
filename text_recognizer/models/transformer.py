@@ -20,7 +20,7 @@ class LitTransformer(LitBase):
         optimizer_config: DictConfig,
         lr_scheduler_config: Optional[DictConfig],
         mapping: EmnistMapping,
-        max_output_len: int = 451,
+        max_output_len: int = 682,
         start_token: str = "<s>",
         end_token: str = "<e>",
         pad_token: str = "<p>",
