@@ -42,14 +42,14 @@ class UploadConfigAsArtifact(Callback):
     """Upload all *.py files to W&B as an artifact, at the beginning of the run."""
 
     def __init__(self) -> None:
-        self.config_dir = Path(".")
+        self.config_dir = Path(".hydra/")
 
     @rank_zero_only
     def on_train_start(self, trainer: Trainer, pl_module: LightningModule) -> None:
         """Uploads project code as an artifact."""
         logger = get_wandb_logger(trainer)
         experiment = logger.experiment
-        artifact = wandb.Artifact("config", type="config")
+        artifact = wandb.Artifact("experiment-config", type="config")
         for filepath in self.config_dir.rglob("*.yaml"):
             artifact.add_file(str(filepath))
 
@@ -70,7 +70,7 @@ class UploadCheckpointsAsArtifact(Callback):
         """Uploads model checkpoint to W&B."""
         logger = get_wandb_logger(trainer)
         experiment = logger.experiment
-        ckpts = wandb.Artifact("checkpoints", type="checkpoints")
+        ckpts = wandb.Artifact("experiment-ckpts", type="checkpoints")
 
         if self.upload_best_only:
             ckpts.add_file(trainer.checkpoint_callback.best_model_path)
