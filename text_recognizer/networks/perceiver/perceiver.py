@@ -2,9 +2,9 @@
 
 A copy from lucidrains.
 """
-from itertools import repeat
 from typing import Optional
 
+from einops import repeat, rearrange
 import torch
 from torch import nn, Tensor
 
@@ -44,13 +44,17 @@ class PerceiverIO(nn.Module):
 
         self.layers = nn.ModuleList(
             [
-                [
-                    PreNorm(
-                        latent_dim,
-                        Attention(latent_dim, heads=latent_heads, dim_head=latent_dim),
-                    ),
-                    PreNorm(latent_dim, FeedForward(latent_dim)),
-                ]
+                nn.ModuleList(
+                    [
+                        PreNorm(
+                            latent_dim,
+                            Attention(
+                                latent_dim, heads=latent_heads, dim_head=latent_dim
+                            ),
+                        ),
+                        PreNorm(latent_dim, FeedForward(latent_dim)),
+                    ]
+                )
                 for _ in range(depth)
             ]
         )
@@ -69,7 +73,7 @@ class PerceiverIO(nn.Module):
         self, data: Tensor, queries: Tensor, mask: Optional[Tensor] = None
     ) -> Tensor:
         b = data.shape[0]
-        x = repeat(self.latents, "nd -> bnd", b=b)
+        x = repeat(self.latents, "n d -> b n d", b=b)
 
         cross_attn, cross_ff = self.cross_attn_block
 
