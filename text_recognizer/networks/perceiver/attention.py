@@ -25,9 +25,7 @@ class Attention(nn.Module):
         self.to_kv = nn.Linear(context_dim, 2 * inner_dim, bias=False)
         self.to_out = nn.Linear(inner_dim, query_dim, bias=False)
 
-    def forward(
-        self, x: Tensor, context: Optional[Tensor] = None, mask=Optional[Tensor]
-    ) -> Tensor:
+    def forward(self, x: Tensor, context: Optional[Tensor] = None) -> Tensor:
         h = self.heads
         q = self.to_q(x)
         context = context if context is not None else x
@@ -35,12 +33,6 @@ class Attention(nn.Module):
 
         q, v, k = map(lambda t: rearrange(t, "b n (h d) -> (b h) n d", h=h), (q, k, v))
         sim = einsum("b i d, b j d -> b i j", q, k) * self.scale
-
-        # if mask is not None:
-        #     mask = rearrange(mask, "b ... -> b (...)")
-        #     max_neg_val = -torch.finfo(sim.dtype).max
-        #     mask = repeat(mask, "b j -> (b h) () j", h=h)
-        #     sim.masked_fill_(~mask, max_neg_val)
 
         attn = sim.softmax(dim=-1)
         out = einsum("b i j, b j d -> b i d", attn, v)
