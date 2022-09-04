@@ -69,15 +69,13 @@ class PerceiverIO(nn.Module):
         self.decoder_ff = PreNorm(queries_dim, FeedForward(queries_dim))
         self.to_logits = nn.Linear(queries_dim, logits_dim)
 
-    def forward(
-        self, data: Tensor, queries: Tensor, mask: Optional[Tensor] = None
-    ) -> Tensor:
+    def forward(self, data: Tensor, queries: Tensor) -> Tensor:
         b = data.shape[0]
         x = repeat(self.latents, "n d -> b n d", b=b)
 
         cross_attn, cross_ff = self.cross_attn_block
 
-        x = cross_attn(x, context=data, mask=mask) + x
+        x = cross_attn(x, context=data) + x
         x = cross_ff(x) + x
 
         for attn, ff in self.layers:
