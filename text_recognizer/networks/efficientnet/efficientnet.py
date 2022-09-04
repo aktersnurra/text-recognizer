@@ -73,17 +73,6 @@ class EfficientNet(nn.Module):
                 num_features=out_channels, momentum=self.bn_momentum, eps=self.bn_eps
             ),
             nn.Mish(inplace=True),
-            nn.Conv2d(
-                in_channels=out_channels,
-                out_channels=out_channels,
-                kernel_size=3,
-                stride=2,
-                bias=False,
-            ),
-            nn.BatchNorm2d(
-                num_features=out_channels, momentum=self.bn_momentum, eps=self.bn_eps
-            ),
-            nn.Mish(inplace=True),
         )
         self._blocks = nn.ModuleList([])
         for args in _block_args:
