@@ -1,1 +1,0 @@
-from text_recognizer.networks.perceiver.perceiver import PerceiverIO
