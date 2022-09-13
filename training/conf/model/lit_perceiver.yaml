@@ -1,5 +1,0 @@
-_target_: text_recognizer.models.LitPerceiver
-max_output_len: 682
-start_token: <s>
-end_token: <e>
-pad_token: <p>

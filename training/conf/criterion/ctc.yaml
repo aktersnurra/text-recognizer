@@ -1,2 +1,0 @@
-_target_: torch.nn.CTCLoss
-zero_infinity: true
