@@ -53,6 +53,7 @@ Ideas of mine that did not work unfortunately:
 
 * Efficientnet was apparently a terrible choice of an encoder
   - A ConvNext module heavily copied from lucidrains [x-unet](https://github.com/lucidrains/x-unet)
+  was incredibly much better at encoding the images to a better representation.
 
 * Use VQVAE to create pre-train a good latent representation
   - Tests with various compressions did not show any performance increase compared to training directly e2e, more like decrease to be honest
