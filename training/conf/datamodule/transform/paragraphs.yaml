@@ -17,13 +17,13 @@ color_jitter:
 random_affine:
   _target_: torchvision.transforms.RandomAffine
   degrees: 1
-  shear: [-10, 10]
+  shear: [-5, 5]
   interpolation: BILINEAR
 
 random_perspective:
   _target_: torchvision.transforms.RandomPerspective
-  distortion_scale: 0.1
-  p: 0.5
+  distortion_scale: 0.05
+  p: 0.25
   fill: 0
 
 to_tensor:
