@@ -33,9 +33,9 @@ class LitBase(LightningModule):
         self.mapping = mapping
 
         # Placeholders
-        self.train_acc = Accuracy()
-        self.val_acc = Accuracy()
-        self.test_acc = Accuracy()
+        self.train_acc = Accuracy(mdmc_reduce="samplewise")
+        self.val_acc = Accuracy(mdmc_reduce="samplewise")
+        self.test_acc = Accuracy(mdmc_reduce="samplewise")
 
     def optimizer_zero_grad(
         self,
