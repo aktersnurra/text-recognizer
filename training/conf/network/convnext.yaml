@@ -1,0 +1,5 @@
+_target_: text_recognizer.networks.convnext.ConvNext
+dim: 16
+dim_mults: [2, 4, 8]
+depths: [3, 3, 6]
+downsampling_factors: [[2, 2], [2, 2], [2, 2]]

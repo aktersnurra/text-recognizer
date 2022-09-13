@@ -19,10 +19,11 @@ summary: [[1, 1, 576, 640], [1, 682]]
 logger:
   wandb:
     tags: ${tags}
+    id: 8je5lxmx
 
 criterion:
   ignore_index: *ignore_index
-  label_smoothing: 0.05
+  # label_smoothing: 0.05
 
 callbacks:
   stochastic_weight_averaging:
@@ -62,10 +63,6 @@ network:
   input_dims: [1, 1, 576, 640]
   num_classes: *num_classes
   pad_index: *ignore_index
-  encoder:
-    depth: 4
-  decoder:
-    depth: 6
   pixel_embedding:
     shape: [18, 79]
 

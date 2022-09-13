@@ -1,5 +1,4 @@
 _target_: pytorch_lightning.Trainer
-stochastic_weight_avg: true
 auto_scale_batch_size: binsearch
 auto_lr_find: false
 gradient_clip_val: 0.5
@@ -7,8 +6,6 @@ fast_dev_run: false
 gpus: 1
 precision: 16
 max_epochs: 256
-terminate_on_nan: true
-weights_summary: null
 limit_train_batches: 1.0
 limit_val_batches: 1.0
 limit_test_batches: 1.0
