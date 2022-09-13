@@ -3,3 +3,15 @@ dim: 16
 dim_mults: [2, 4, 8]
 depths: [3, 3, 6]
 downsampling_factors: [[2, 2], [2, 2], [2, 2]]
+attn:
+  _target_: text_recognizer.networks.convnext.TransformerBlock
+  attn:
+    _target_: text_recognizer.networks.convnext.Attention
+    dim: 128
+    heads: 4
+    dim_head: 64
+    scale: 8
+  ff:
+    _target_: text_recognizer.networks.convnext.FeedForward
+    dim: 128
+    mult: 4
