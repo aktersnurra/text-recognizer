@@ -8,12 +8,10 @@ from torch import Tensor
 class PositionalEncoding(nn.Module):
     """Encodes a sense of distance or time for transformer networks."""
 
-    def __init__(
-        self, hidden_dim: int, dropout_rate: float, max_len: int = 1000
-    ) -> None:
+    def __init__(self, dim: int, dropout_rate: float, max_len: int = 1000) -> None:
         super().__init__()
         self.dropout = nn.Dropout(p=dropout_rate)
-        pe = self.make_pe(hidden_dim, max_len)
+        pe = self.make_pe(dim, max_len)
         self.register_buffer("pe", pe)
 
     @staticmethod
