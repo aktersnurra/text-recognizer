@@ -30,7 +30,6 @@ make generate
 
 ## Train
 
-
 Use, modify, or create a new experiment found at `training/conf/experiment/`.
 To run an experiment we first need to enter the virtual env by running:
 
@@ -52,15 +51,17 @@ Create a picture of the network and place it here
 
 Ideas of mine that did not work unfortunately:
 
+* Efficientnet was apparently a terrible choice of an encoder
+  - A ConvNext module heavily copied from lucidrains [x-unet](https://github.com/lucidrains/x-unet)
+
 * Use VQVAE to create pre-train a good latent representation
   - Tests with various compressions did not show any performance increase compared to training directly e2e, more like decrease to be honest
   - This is very unfortunate as I really hoped that this idea would work :(
   - I still really like this idea, and I might not have given up just yet...
 
-
 * Axial Transformer Encoder
   - Added a lot of extra parameters with no gain in performance
-  - Cool idea, but on a single GPU, nah... not worth it!
+  - Cool idea, but on a single GPU
 
 * Word Pieces
   - Might have worked better, but liked the idea of single character recognition more.
