@@ -59,7 +59,7 @@ Ideas of mine that did not work unfortunately:
   - Tests with various compressions did not show any performance increase compared to training directly e2e, more like decrease to be honest
   - This is very unfortunate as I really hoped that this idea would work :(
   - I still really like this idea, and I might not have given up just yet...
-  - I have no given up... :( ConvNext ftw
+  - I have now given up... :( ConvNext ftw
 
 * Axial Transformer Encoder
   - Added a lot of extra parameters with no gain in performance
