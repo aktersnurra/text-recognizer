@@ -1,11 +1,12 @@
 """IAM original and sythetic dataset class."""
 from typing import Callable, Optional
+
 from torch.utils.data import ConcatDataset
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.iam_paragraphs import IAMParagraphs
-from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.iam_synthetic_paragraphs import IAMSyntheticParagraphs
+from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
 
 
@@ -87,10 +88,15 @@ class IAMExtendedParagraphs(BaseDataModule):
         x = x[0] if isinstance(x, list) else x
         xt = xt[0] if isinstance(xt, list) else xt
         data = (
-            f"Train/val/test sizes: {len(self.data_train)}, {len(self.data_val)}, {len(self.data_test)}\n"
-            f"Train Batch x stats: {(x.shape, x.dtype, x.min(), x.mean(), x.std(), x.max())}\n"
+            "Train/val/test sizes: "
+            f"{len(self.data_train)}, "
+            f"{len(self.data_val)}, "
+            f"{len(self.data_test)}\n"
+            "Train Batch x stats: "
+            f"{(x.shape, x.dtype, x.min(), x.mean(), x.std(), x.max())}\n"
             f"Train Batch y stats: {(y.shape, y.dtype, y.min(), y.max())}\n"
-            f"Test Batch x stats: {(xt.shape, xt.dtype, xt.min(), xt.mean(), xt.std(), xt.max())}\n"
+            f"Test Batch x stats: "
+            f"{(xt.shape, xt.dtype, xt.min(), xt.mean(), xt.std(), xt.max())}\n"
             f"Test Batch y stats: {(yt.shape, yt.dtype, yt.min(), yt.max())}\n"
         )
         return basic + data

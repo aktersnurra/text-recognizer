@@ -7,8 +7,8 @@ import json
 from pathlib import Path
 from typing import Callable, List, Optional, Sequence, Tuple, Type
 
-from loguru import logger as log
 import numpy as np
+from loguru import logger as log
 from PIL import Image, ImageFile, ImageOps
 from torch import Tensor
 
@@ -22,7 +22,6 @@ from text_recognizer.data.iam import IAM
 from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
 from text_recognizer.data.utils import image_utils
-
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 

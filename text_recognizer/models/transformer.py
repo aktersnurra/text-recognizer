@@ -1,9 +1,9 @@
 """Lightning model for base Transformers."""
 from typing import Optional, Tuple, Type
 
-from omegaconf import DictConfig
 import torch
-from torch import nn, Tensor
+from omegaconf import DictConfig
+from torch import Tensor, nn
 
 from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.models.base import LitBase

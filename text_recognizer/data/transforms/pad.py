@@ -1,8 +1,8 @@
 """Pad targets to equal length."""
 
 import torch
-from torch import Tensor
 import torch.functional as F
+from torch import Tensor
 
 
 class Pad:

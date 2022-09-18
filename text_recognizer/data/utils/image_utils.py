@@ -4,8 +4,8 @@ from io import BytesIO
 from pathlib import Path
 from typing import Any, Union
 
-from PIL import Image
 import smart_open
+from PIL import Image
 
 
 def read_image_pil(image_uri: Union[Path, str], grayscale: bool = False) -> Image:

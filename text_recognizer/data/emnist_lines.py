@@ -4,22 +4,18 @@ from pathlib import Path
 from typing import Callable, DefaultDict, List, Optional, Tuple, Type
 
 import h5py
-from loguru import logger as log
 import numpy as np
 import torch
-from torch import Tensor
 import torchvision.transforms as T
+from loguru import logger as log
+from torch import Tensor
 
-from text_recognizer.data.base_data_module import (
-    BaseDataModule,
-    load_and_print_info,
-)
+from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.base_dataset import BaseDataset, convert_strings_to_labels
 from text_recognizer.data.emnist import EMNIST
 from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
 from text_recognizer.data.utils.sentence_generator import SentenceGenerator
-
 
 DATA_DIRNAME = BaseDataModule.data_dirname() / "processed" / "emnist_lines"
 ESSENTIALS_FILENAME = (

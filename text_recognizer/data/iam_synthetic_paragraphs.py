@@ -2,15 +2,12 @@
 import random
 from typing import Any, Callable, List, Optional, Sequence, Tuple
 
-from loguru import logger as log
 import numpy as np
+from loguru import logger as log
 from PIL import Image
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
-from text_recognizer.data.base_dataset import (
-    BaseDataset,
-    convert_strings_to_labels,
-)
+from text_recognizer.data.base_dataset import BaseDataset, convert_strings_to_labels
 from text_recognizer.data.iam import IAM
 from text_recognizer.data.iam_lines import (
     line_crops_and_labels,
@@ -18,15 +15,14 @@ from text_recognizer.data.iam_lines import (
     save_images_and_labels,
 )
 from text_recognizer.data.iam_paragraphs import (
-    get_dataset_properties,
-    IAMParagraphs,
     IMAGE_SCALE_FACTOR,
     NEW_LINE_TOKEN,
+    IAMParagraphs,
+    get_dataset_properties,
     resize_image,
 )
 from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
-
 
 PROCESSED_DATA_DIRNAME = (
     BaseDataModule.data_dirname() / "processed" / "iam_synthetic_paragraphs"

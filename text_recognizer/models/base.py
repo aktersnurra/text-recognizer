@@ -2,12 +2,11 @@
 from typing import Any, Dict, Optional, Tuple, Type
 
 import hydra
+import torch
 from loguru import logger as log
 from omegaconf import DictConfig
 from pytorch_lightning import LightningModule
-import torch
-from torch import nn
-from torch import Tensor
+from torch import Tensor, nn
 from torchmetrics import Accuracy
 
 from text_recognizer.data.mappings import EmnistMapping

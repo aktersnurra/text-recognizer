@@ -3,10 +3,10 @@ import json
 from pathlib import Path
 from typing import Callable, Dict, List, Optional, Sequence, Tuple
 
-from loguru import logger as log
 import numpy as np
-from PIL import Image, ImageOps
 import torchvision.transforms as T
+from loguru import logger as log
+from PIL import Image, ImageOps
 from tqdm import tqdm
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
@@ -18,7 +18,6 @@ from text_recognizer.data.base_dataset import (
 from text_recognizer.data.iam import IAM
 from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
-
 
 PROCESSED_DATA_DIRNAME = BaseDataModule.data_dirname() / "processed" / "iam_paragraphs"
 

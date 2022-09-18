@@ -1,7 +1,7 @@
 """Emnist mapping."""
 import json
 from pathlib import Path
-from typing import Dict, List, Optional, Sequence, Union, Tuple
+from typing import Dict, List, Optional, Sequence, Tuple, Union
 
 import torch
 from torch import Tensor

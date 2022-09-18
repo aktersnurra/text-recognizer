@@ -2,11 +2,10 @@
 from pathlib import Path
 from typing import Callable
 
-from loguru import logger as log
-from omegaconf import OmegaConf
-from omegaconf import DictConfig
-from hydra.utils import instantiate
 import torchvision.transforms as T
+from hydra.utils import instantiate
+from loguru import logger as log
+from omegaconf import DictConfig, OmegaConf
 
 TRANSFORM_DIRNAME = (
     Path(__file__).resolve().parents[3] / "training" / "conf" / "datamodule"
