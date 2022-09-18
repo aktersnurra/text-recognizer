@@ -15,7 +15,6 @@ Install poetry and pyenv.
 
 ```sh
 pyenv local 3.9.*
-make check
 make install
 ```
 
@@ -74,3 +73,4 @@ Ideas of mine that did not work unfortunately:
 - [ ] Evaluation
 - [ ] Wandb artifact fetcher
 - [ ] fix linting
+- [ ] Modularize the decoder
