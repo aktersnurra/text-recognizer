@@ -7,8 +7,7 @@ Explanation of roatary:
     https://blog.eleuther.ai/rotary-embeddings/
 """
 import torch
-from torch import nn
-from torch import Tensor
+from torch import Tensor, nn
 
 
 class RotaryEmbedding(nn.Module):

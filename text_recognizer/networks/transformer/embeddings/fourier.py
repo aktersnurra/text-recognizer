@@ -1,8 +1,7 @@
 """Fourier positional embedding."""
 import numpy as np
 import torch
-from torch import nn
-from torch import Tensor
+from torch import Tensor, nn
 
 
 class PositionalEncoding(nn.Module):

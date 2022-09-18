@@ -5,9 +5,8 @@ Stolen from lucidrains:
 """
 from typing import Optional
 
-from torch import nn
-from torch import Tensor
 import torch.nn.functional as F
+from torch import Tensor, nn
 
 
 class GEGLU(nn.Module):

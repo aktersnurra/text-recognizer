@@ -2,7 +2,7 @@
 from copy import deepcopy
 from typing import Optional, Type
 
-from torch import nn, Tensor
+from torch import Tensor, nn
 
 from text_recognizer.networks.transformer.attention import Attention
 from text_recognizer.networks.transformer.ff import FeedForward

@@ -3,10 +3,11 @@
 Stolen from:
     https://github.com/lucidrains/axial-attention/blob/eff2c10c2e76c735a70a6b995b571213adffbbb7/axial_attention/axial_attention.py#L100
 """
+from functools import reduce
+from operator import mul
+
 import torch
 from torch import nn
-from operator import mul
-from functools import reduce
 
 
 class AxialPositionalEmbedding(nn.Module):

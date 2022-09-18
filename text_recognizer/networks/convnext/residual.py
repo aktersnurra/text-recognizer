@@ -1,6 +1,7 @@
 """Generic residual layer."""
 from typing import Callable
-from torch import nn, Tensor
+
+from torch import Tensor, nn
 
 
 class Residual(nn.Module):

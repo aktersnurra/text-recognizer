@@ -1,12 +1,10 @@
 """Implementes the attention module for the transformer."""
 from typing import Optional, Tuple
 
-from einops import rearrange
 import torch
-from torch import einsum
-from torch import nn
-from torch import Tensor
 import torch.nn.functional as F
+from einops import rearrange
+from torch import Tensor, einsum, nn
 
 from text_recognizer.networks.transformer.embeddings.rotary import (
     RotaryEmbedding,
@@ -35,7 +33,7 @@ class Attention(nn.Module):
         self.dropout_rate = dropout_rate
         self.rotary_embedding = rotary_embedding
 
-        self.scale = self.dim ** -0.5
+        self.scale = self.dim**-0.5
         inner_dim = self.num_heads * self.dim_head
 
         self.to_q = nn.Linear(self.dim, inner_dim, bias=False)

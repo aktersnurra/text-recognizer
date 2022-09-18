@@ -1,7 +1,7 @@
 """Base network module."""
 from typing import Optional, Tuple, Type
 
-from torch import nn, Tensor
+from torch import Tensor, nn
 
 from text_recognizer.networks.transformer.decoder import Decoder
 from text_recognizer.networks.transformer.embeddings.axial import (

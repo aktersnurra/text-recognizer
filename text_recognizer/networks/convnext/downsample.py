@@ -1,7 +1,7 @@
 from typing import Tuple
 
 from einops.layers.torch import Rearrange
-from torch import nn, Tensor
+from torch import Tensor, nn
 
 
 class Downsample(nn.Module):

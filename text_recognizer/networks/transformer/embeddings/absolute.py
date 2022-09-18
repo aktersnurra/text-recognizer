@@ -1,9 +1,9 @@
 """Absolute positional embedding."""
 
-from einops import rearrange
 import torch
-from torch import nn
 import torch.nn.functional as F
+from einops import rearrange
+from torch import nn
 
 
 def l2norm(t, groups=1):
@@ -15,7 +15,7 @@ def l2norm(t, groups=1):
 class AbsolutePositionalEmbedding(nn.Module):
     def __init__(self, dim, max_seq_len, l2norm_embed=False):
         super().__init__()
-        self.scale = dim ** -0.5 if not l2norm_embed else 1.0
+        self.scale = dim**-0.5 if not l2norm_embed else 1.0
         self.max_seq_len = max_seq_len
         self.l2norm_embed = l2norm_embed
         self.emb = nn.Embedding(max_seq_len, dim)
