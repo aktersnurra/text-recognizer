@@ -4,8 +4,8 @@ from io import BytesIO
 from pathlib import Path
 from typing import Any, Union
 
-from PIL import Image
 import smart_open
+from PIL import Image
 
 
 def read_image_pil(image_uri: Union[Path, str], grayscale: bool = False) -> Image:
@@ -14,7 +14,7 @@ def read_image_pil(image_uri: Union[Path, str], grayscale: bool = False) -> Imag
         return read_image_pil_file(image_file, grayscale)
 
 
-def read_image_pil_file(image_file: Any, grayscale: bool = False) -> Image:
+def read_image_pil_file(image_file: str, grayscale: bool = False) -> Image:
     """Return PIL image."""
     with Image.open(image_file) as image:
         if grayscale:
