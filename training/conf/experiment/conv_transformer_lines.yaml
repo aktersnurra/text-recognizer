@@ -15,7 +15,7 @@ epochs: &epochs 260
 ignore_index: &ignore_index 3
 num_classes: &num_classes 57
 max_output_len: &max_output_len 89
-summary: [[1, 1, 56, 1024], [1, 89]]
+# summary: [[1, 1, 56, 1024], [1, 89]]
 
 logger:
   wandb:
@@ -70,6 +70,18 @@ network:
     dim_mults: [2, 4, 8]
     depths: [3, 3, 6]
     downsampling_factors: [[2, 2], [2, 2], [2, 2]]
+    attn:
+      _target_: text_recognizer.networks.convnext.TransformerBlock
+      attn:
+        _target_: text_recognizer.networks.convnext.Attention
+        dim: 128
+        heads: 4
+        dim_head: 64
+        scale: 8
+      ff:
+        _target_: text_recognizer.networks.convnext.FeedForward
+        dim: 128
+        mult: 4
   decoder:
     _target_: text_recognizer.networks.transformer.Decoder
     depth: 6
