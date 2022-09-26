@@ -12,9 +12,9 @@ repos:
         entry: black
         language: system
         types: [python]
-      - id: flake8
-        name: flake8
-        entry: flake8
+      - id: ruff
+        name: ruff
+        entry: ruff
         language: system
         types: [python]
   - repo: https://github.com/compilerla/conventional-pre-commit

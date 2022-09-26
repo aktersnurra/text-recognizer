@@ -6,7 +6,7 @@ import numpy as np
 from loguru import logger as log
 from PIL import Image
 
-from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
+from text_recognizer.data.base_data_module import load_and_print_info
 from text_recognizer.data.base_dataset import BaseDataset, convert_strings_to_labels
 from text_recognizer.data.iam import IAM
 from text_recognizer.data.iam_lines import (
@@ -23,9 +23,10 @@ from text_recognizer.data.iam_paragraphs import (
 )
 from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
+from text_recognizer.metadata import shared as metadata
 
 PROCESSED_DATA_DIRNAME = (
-    BaseDataModule.data_dirname() / "processed" / "iam_synthetic_paragraphs"
+    metadata.DATA_DIRNAME / "processed" / "iam_synthetic_paragraphs"
 )
 
 
@@ -117,7 +118,8 @@ class IAMSyntheticParagraphs(IAMParagraphs):
         x = x[0] if isinstance(x, list) else x
         data = (
             f"Train/val/test sizes: {len(self.data_train)}, 0, 0\n"
-            f"Train Batch x stats: {(x.shape, x.dtype, x.min(), x.mean(), x.std(), x.max())}\n"
+            "Train Batch x stats: "
+            f"{(x.shape, x.dtype, x.min(), x.mean(), x.std(), x.max())}\n"
             f"Train Batch y stats: {(y.shape, y.dtype, y.min(), y.max())}\n"
         )
         return basic + data
