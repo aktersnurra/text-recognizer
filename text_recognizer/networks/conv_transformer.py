@@ -1,6 +1,7 @@
 """Base network module."""
 from typing import Optional, Tuple, Type
 
+import torch
 from torch import Tensor, nn
 
 from text_recognizer.networks.transformer.decoder import Decoder
@@ -108,6 +109,9 @@ class ConvTransformer(nn.Module):
         trg = self.token_embedding(trg)
         trg += self.token_pos_embedding(trg)
         out = self.decoder(x=trg, context=src, input_mask=trg_mask)
+        logits = (
+            out @ torch.transpose(self.token_embedding.weight.to(trg.dtype), 0, 1)
+        ).float()
         logits = self.to_logits(out)  # [B, Sy, C]
         logits = logits.permute(0, 2, 1)  # [B, C, Sy]
         return logits
