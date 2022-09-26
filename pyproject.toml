@@ -65,6 +65,10 @@ fail_under = 50
 [tool.isort]
 profile = "black"
 
+[tool.ruff]
+line-length = 88
+select = []
+
 [tool.poetry.scripts]
 download-emnist = "text_recognizer.data.emnist:download_emnist"
 download-nltk = "text_recognizer.data.utils.sentence_generator:load_nltk_brown_corpus"
