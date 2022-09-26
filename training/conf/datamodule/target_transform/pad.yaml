@@ -1,4 +1,0 @@
-pad:
-  _target_: text_recognizer.data.transforms.pad.Pad
-  max_len: 682
-  pad_index: 3

@@ -6,8 +6,10 @@ from torch.utils.data import ConcatDataset
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.iam_paragraphs import IAMParagraphs
 from text_recognizer.data.iam_synthetic_paragraphs import IAMSyntheticParagraphs
+from text_recognizer.data.transforms.pad import Pad
 from text_recognizer.data.mappings import EmnistMapping
-from text_recognizer.data.transforms.load_transform import load_transform_from_file
+from text_recognizer.data.stems.paragraph import ParagraphStem
+import text_recognizer.metadata.iam_paragraphs as metadata
 
 
 class IAMExtendedParagraphs(BaseDataModule):
@@ -104,8 +106,13 @@ class IAMExtendedParagraphs(BaseDataModule):
 
 def show_dataset_info() -> None:
     """Displays Iam extended dataset information."""
-    transform = load_transform_from_file("transform/paragraphs.yaml")
-    test_transform = load_transform_from_file("test_transform/paragraphs_test.yaml")
+    transform = ParagraphStem(augment=False)
+    test_transform = ParagraphStem(augment=False)
+    target_transform = Pad(metadata.MAX_LABEL_LENGTH, 3)
     load_and_print_info(
-        IAMExtendedParagraphs(transform=transform, test_transform=test_transform)
+        IAMExtendedParagraphs(
+            transform=transform,
+            test_transform=test_transform,
+            target_transform=target_transform,
+        )
     )

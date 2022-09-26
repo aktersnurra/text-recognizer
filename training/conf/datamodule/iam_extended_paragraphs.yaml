@@ -3,9 +3,16 @@ batch_size: 4
 num_workers: 12
 train_fraction: 0.8
 pin_memory: true
-transform: transform/paragraphs.yaml
-test_transform: test_transform/paragraphs.yaml
-target_transform: target_transform/pad.yaml
+transform:
+  _target_: text_recognizer.data.stems.paragraph.ParagraphStem
+  augment: true
+test_transform:
+  _target_: text_recognizer.data.stems.paragraph.ParagraphStem
+  augment: false
+target_transform:
+  _target_: text_recognizer.data.transforms.pad.Pad
+  max_len: 682
+  pad_index: 3
 mapping:
   _target_: text_recognizer.data.mappings.EmnistMapping
   extra_symbols: ["\n"]

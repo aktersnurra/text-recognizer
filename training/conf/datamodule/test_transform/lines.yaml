@@ -1,6 +1,0 @@
-embed_crop:
-  _target_: text_recognizer.data.transforms.embed_crop.EmbedCrop
-  augment: true
-
-to_tensor:
-  _target_: torchvision.transforms.ToTensor

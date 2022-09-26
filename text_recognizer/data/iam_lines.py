@@ -21,8 +21,9 @@ from text_recognizer.data.base_dataset import (
 from text_recognizer.data.iam import IAM
 from text_recognizer.data.mappings import EmnistMapping
 from text_recognizer.data.transforms.load_transform import load_transform_from_file
+from text_recognizer.data.stems.line import IamLinesStem
 from text_recognizer.data.utils import image_utils
-from text_recognizer.metadata import iam_lines as metadata
+import text_recognizer.metadata.iam_lines as metadata
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -227,6 +228,6 @@ def load_line_crops_and_labels(split: str, data_dirname: Path) -> Tuple[List, Li
 
 def generate_iam_lines() -> None:
     """Displays Iam Lines dataset statistics."""
-    transform = load_transform_from_file("transform/lines.yaml")
-    test_transform = load_transform_from_file("test_transform/lines.yaml")
+    transform = IamLinesStem()
+    test_transform = IamLinesStem()
     load_and_print_info(IAMLines(transform=transform, test_transform=test_transform))

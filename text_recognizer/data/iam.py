@@ -15,7 +15,7 @@ from loguru import logger as log
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.utils.download_utils import download_dataset
-from text_recognizer.metadata import iam as metadata
+import text_recognizer.metadata.iam as metadata
 
 
 class IAM(BaseDataModule):

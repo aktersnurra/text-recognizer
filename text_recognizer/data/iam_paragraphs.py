@@ -16,9 +16,10 @@ from text_recognizer.data.base_dataset import (
     split_dataset,
 )
 from text_recognizer.data.iam import IAM
+from text_recognizer.data.transforms.pad import Pad
 from text_recognizer.data.mappings import EmnistMapping
-from text_recognizer.data.transforms.load_transform import load_transform_from_file
-from text_recognizer.metadata import iam_paragraphs as metadata
+from text_recognizer.data.stems.paragraph import ParagraphStem
+import text_recognizer.metadata.iam_paragraphs as metadata
 
 
 class IAMParagraphs(BaseDataModule):
@@ -294,8 +295,13 @@ def _num_lines(label: str) -> int:
 
 def create_iam_paragraphs() -> None:
     """Loads and displays dataset statistics."""
-    transform = load_transform_from_file("transform/paragraphs.yaml")
-    test_transform = load_transform_from_file("test_transform/paragraphs_test.yaml")
+    transform = ParagraphStem()
+    test_transform = ParagraphStem()
+    target_transform = Pad(metadata.MAX_LABEL_LENGTH, 3)
     load_and_print_info(
-        IAMParagraphs(transform=transform, test_transform=test_transform)
+        IAMParagraphs(
+            transform=transform,
+            test_transform=test_transform,
+            target_transform=target_transform,
+        )
     )

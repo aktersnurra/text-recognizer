@@ -13,9 +13,9 @@ from text_recognizer.data.base_data_module import BaseDataModule, load_and_print
 from text_recognizer.data.base_dataset import BaseDataset, convert_strings_to_labels
 from text_recognizer.data.emnist import EMNIST
 from text_recognizer.data.mappings import EmnistMapping
-from text_recognizer.data.transforms.load_transform import load_transform_from_file
+from text_recognizer.data.stems.line import LineStem
 from text_recognizer.data.utils.sentence_generator import SentenceGenerator
-from text_recognizer.metadata import emnist_lines as metadata
+import text_recognizer.metadata.emnist_lines as metadata
 
 
 class EMNISTLines(BaseDataModule):
@@ -250,6 +250,6 @@ def _create_dataset_of_images(
 
 def generate_emnist_lines() -> None:
     """Generates a synthetic handwritten dataset and displays info."""
-    transform = load_transform_from_file("transform/emnist_lines.yaml")
-    test_transform = load_transform_from_file("test_transform/default.yaml")
+    transform = LineStem(augment=False)
+    test_transform = LineStem(augment=False)
     load_and_print_info(EMNISTLines(transform=transform, test_transform=test_transform))
