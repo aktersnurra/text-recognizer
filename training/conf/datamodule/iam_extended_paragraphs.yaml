@@ -13,6 +13,6 @@ target_transform:
   _target_: text_recognizer.data.transforms.pad.Pad
   max_len: 682
   pad_index: 3
-mapping:
-  _target_: text_recognizer.data.mappings.EmnistMapping
+tokenizer:
+  _target_: text_recognizer.data.tokenizer.Tokenizer
   extra_symbols: ["\n"]

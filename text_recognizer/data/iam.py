@@ -4,14 +4,14 @@ Which encompasses both paragraphs and lines, with associated utilities.
 """
 
 import os
-import xml.etree.ElementTree as ElementTree
-import zipfile
 from pathlib import Path
 from typing import Any, Dict, List
+import xml.etree.ElementTree as ElementTree
+import zipfile
 
-import toml
 from boltons.cacheutils import cachedproperty
 from loguru import logger as log
+import toml
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.utils.download_utils import download_dataset

@@ -17,7 +17,7 @@ from text_recognizer.data.base_dataset import (
 )
 from text_recognizer.data.iam import IAM
 from text_recognizer.data.transforms.pad import Pad
-from text_recognizer.data.mappings import EmnistMapping
+from text_recognizer.data.tokenizer import Tokenizer
 from text_recognizer.data.stems.paragraph import ParagraphStem
 import text_recognizer.metadata.iam_paragraphs as metadata
 
@@ -27,7 +27,7 @@ class IAMParagraphs(BaseDataModule):
 
     def __init__(
         self,
-        mapping: EmnistMapping,
+        tokenizer: Tokenizer,
         transform: Optional[Callable] = None,
         test_transform: Optional[Callable] = None,
         target_transform: Optional[Callable] = None,
@@ -37,7 +37,7 @@ class IAMParagraphs(BaseDataModule):
         pin_memory: bool = True,
     ) -> None:
         super().__init__(
-            mapping,
+            tokenizer,
             transform,
             test_transform,
             target_transform,
@@ -56,7 +56,7 @@ class IAMParagraphs(BaseDataModule):
 
         log.info("Cropping IAM paragraph regions and saving them along with labels...")
 
-        iam = IAM(mapping=EmnistMapping(extra_symbols={metadata.NEW_LINE_TOKEN}))
+        iam = IAM(tokenizer=self.tokenizer)
         iam.prepare_data()
 
         properties = {}
@@ -88,7 +88,7 @@ class IAMParagraphs(BaseDataModule):
             data = [resize_image(crop, metadata.IMAGE_SCALE_FACTOR) for crop in crops]
             targets = convert_strings_to_labels(
                 strings=labels,
-                mapping=self.mapping.inverse_mapping,
+                mapping=self.tokenizer.inverse_mapping,
                 length=self.output_dims[0],
             )
             return BaseDataset(
@@ -122,7 +122,7 @@ class IAMParagraphs(BaseDataModule):
         """Return information about the dataset."""
         basic = (
             "IAM Paragraphs Dataset\n"
-            f"Num classes: {len(self.mapping)}\n"
+            f"Num classes: {len(self.tokenizer)}\n"
             f"Input dims: {self.dims}\n"
             f"Output dims: {self.output_dims}\n"
         )

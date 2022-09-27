@@ -84,8 +84,9 @@ network:
   decoder:
     _target_: text_recognizer.networks.transformer.Decoder
     depth: 6
+    dim: *hidden_dim
     block:
-      _target_: text_recognizer.networks.transformer.DecoderBlock
+      _target_: text_recognizer.networks.transformer.decoder_block.DecoderBlock
       self_attn:
         _target_: text_recognizer.networks.transformer.Attention
         dim: *hidden_dim

@@ -6,19 +6,29 @@ from typing import Dict, List, Optional, Sequence, Tuple, Union
 import torch
 from torch import Tensor
 
-ESSENTIALS_FILENAME = Path(__file__).parents[0].resolve() / "emnist_essentials.json"
+import text_recognizer.metadata.shared as metadata
 
 
-class EmnistMapping:
+class Tokenizer:
     """Mapping for EMNIST labels."""
 
     def __init__(
         self,
         extra_symbols: Optional[Sequence[str]] = None,
         lower: bool = True,
+        start_token: str = "<s>",
+        end_token: str = "<e>",
+        pad_token: str = "<p>",
     ) -> None:
         self.extra_symbols = set(extra_symbols) if extra_symbols is not None else None
         self.mapping, self.inverse_mapping, self.input_size = self._load_mapping()
+        self.start_token = start_token
+        self.end_token = end_token
+        self.pad_token = pad_token
+        self.start_index = int(self.get_value(self.start_token))
+        self.end_index = int(self.get_value(self.end_token))
+        self.pad_index = int(self.get_value(self.pad_token))
+        self.ignore_indices = set([self.start_index, self.end_index, self.pad_index])
         if lower:
             self._to_lower()
 
@@ -31,7 +41,7 @@ class EmnistMapping:
 
     def _load_mapping(self) -> Tuple[List, Dict[str, int], List[int]]:
         """Return the EMNIST mapping."""
-        with ESSENTIALS_FILENAME.open() as f:
+        with metadata.ESSENTIALS_FILENAME.open() as f:
             essentials = json.load(f)
         mapping = list(essentials["characters"])
         if self.extra_symbols is not None:
@@ -57,19 +67,25 @@ class EmnistMapping:
             return self.mapping[index]
         raise KeyError(f"Index ({index}) not in mapping.")
 
-    def get_index(self, token: str) -> Tensor:
+    def get_value(self, token: str) -> Tensor:
         """Returns index value of token."""
         if token in self.inverse_mapping:
             return torch.LongTensor([self.inverse_mapping[token]])
         raise KeyError(f"Token ({token}) not found in inverse mapping.")
 
-    def get_text(self, indices: Union[List[int], Tensor]) -> str:
+    def decode(self, indices: Union[List[int], Tensor]) -> str:
         """Returns the text from a list of indices."""
         if isinstance(indices, Tensor):
             indices = indices.tolist()
-        return "".join([self.mapping[index] for index in indices])
+        return "".join(
+            [
+                self.mapping[index]
+                for index in indices
+                if index not in self.ignore_indices
+            ]
+        )
 
-    def get_indices(self, text: str) -> Tensor:
+    def encode(self, text: str) -> Tensor:
         """Returns tensor of indices for a string."""
         return Tensor([self.inverse_mapping[token] for token in text])
 

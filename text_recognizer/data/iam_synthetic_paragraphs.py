@@ -19,7 +19,7 @@ from text_recognizer.data.iam_lines import (
     load_line_crops_and_labels,
     save_images_and_labels,
 )
-from text_recognizer.data.mappings import EmnistMapping
+from text_recognizer.data.tokenizer import Tokenizer
 from text_recognizer.data.stems.paragraph import ParagraphStem
 from text_recognizer.data.transforms.pad import Pad
 import text_recognizer.metadata.iam_synthetic_paragraphs as metadata
@@ -30,7 +30,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
 
     def __init__(
         self,
-        mapping: EmnistMapping,
+        tokenizer: Tokenizer,
         transform: Optional[Callable] = None,
         test_transform: Optional[Callable] = None,
         target_transform: Optional[Callable] = None,
@@ -40,7 +40,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
         pin_memory: bool = True,
     ) -> None:
         super().__init__(
-            mapping,
+            tokenizer,
             transform,
             test_transform,
             target_transform,
@@ -58,7 +58,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
         log.info("Preparing IAM lines for synthetic paragraphs dataset.")
         log.info("Cropping IAM line regions and loading labels.")
 
-        iam = IAM(mapping=EmnistMapping(extra_symbols=(metadata.NEW_LINE_TOKEN,)))
+        iam = IAM(tokenizer=self.tokenizer)
         iam.prepare_data()
 
         crops_train, labels_train = line_crops_and_labels(iam, "train")
@@ -94,7 +94,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
 
             targets = convert_strings_to_labels(
                 strings=paragraphs_labels,
-                mapping=self.mapping.inverse_mapping,
+                mapping=self.tokenizer.inverse_mapping,
                 length=self.output_dims[0],
             )
             self.data_train = BaseDataset(
@@ -108,7 +108,7 @@ class IAMSyntheticParagraphs(IAMParagraphs):
         """Return information about the dataset."""
         basic = (
             "IAM Synthetic Paragraphs Dataset\n"  # pylint: disable=no-member
-            f"Num classes: {len(self.mapping)}\n"
+            f"Num classes: {len(self.tokenizer)}\n"
             f"Input dims : {self.dims}\n"
             f"Output dims: {self.output_dims}\n"
         )

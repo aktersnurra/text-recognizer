@@ -13,7 +13,6 @@ from loguru import logger as log
 
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.base_dataset import BaseDataset, split_dataset
-from text_recognizer.data.transforms.load_transform import load_transform_from_file
 from text_recognizer.data.utils.download_utils import download_dataset
 import text_recognizer.metadata.emnist as metadata
 
@@ -32,7 +31,7 @@ class EMNIST(BaseDataModule):
 
     def __init__(self) -> None:
         super().__init__()
-        self.dims = (1, *self.mapping.input_size)
+        self.dims = (1, *self.tokenizer.input_size)
 
     def prepare_data(self) -> None:
         """Downloads dataset if not present."""
@@ -65,8 +64,8 @@ class EMNIST(BaseDataModule):
         """Returns string with info about the dataset."""
         basic = (
             "EMNIST Dataset\n"
-            f"Num classes: {len(self.mapping)}\n"
-            f"Mapping: {self.mapping}\n"
+            f"Num classes: {len(self.tokenizer)}\n"
+            f"Mapping: {self.tokenizer}\n"
             f"Dims: {self.dims}\n"
         )
         if not any([self.data_train, self.data_val, self.data_test]):
@@ -193,5 +192,4 @@ def _augment_emnist_characters(characters: Sequence[str]) -> Sequence[str]:
 
 def download_emnist() -> None:
     """Download dataset from internet, if it does not exists, and displays info."""
-    transform = load_transform_from_file("transform/default.yaml")
-    load_and_print_info(EMNIST(transform=transform, test_transfrom=transform))
+    load_and_print_info(EMNIST())

@@ -14,7 +14,6 @@ from pytorch_lightning import (
 from pytorch_lightning.loggers import LightningLoggerBase
 from torch import nn
 from torchinfo import summary
-
 import utils
 
 
@@ -39,7 +38,7 @@ def run(config: DictConfig) -> Optional[float]:
     model: LightningModule = hydra.utils.instantiate(
         config.model,
         network=network,
-        mapping=datamodule.mapping,
+        tokenizer=datamodule.tokenizer,
         loss_fn=loss_fn,
         optimizer_config=config.optimizer,
         lr_scheduler_config=config.lr_scheduler,

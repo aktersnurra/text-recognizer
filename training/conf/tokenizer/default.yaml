@@ -1,0 +1,2 @@
+_target_: text_recognizer.data.tokenizer.Tokenizer
+extra_symbols: ["\n"]

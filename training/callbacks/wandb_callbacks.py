@@ -117,9 +117,9 @@ class LogTextPredictions(Callback):
         imgs = imgs.to(device=pl_module.device)
         logits = pl_module.predict(imgs)
 
-        mapping = pl_module.mapping
+        tokenizer = pl_module.tokenizer
         data = [
-            wandb.Image(img, caption=mapping.get_text(pred))
+            wandb.Image(img, caption=tokenizer.decode(pred))
             for img, pred, label in zip(
                 imgs[: self.num_samples],
                 logits[: self.num_samples],

@@ -7,7 +7,7 @@ from text_recognizer.data.base_data_module import BaseDataModule, load_and_print
 from text_recognizer.data.iam_paragraphs import IAMParagraphs
 from text_recognizer.data.iam_synthetic_paragraphs import IAMSyntheticParagraphs
 from text_recognizer.data.transforms.pad import Pad
-from text_recognizer.data.mappings import EmnistMapping
+from text_recognizer.data.tokenizer import Tokenizer
 from text_recognizer.data.stems.paragraph import ParagraphStem
 import text_recognizer.metadata.iam_paragraphs as metadata
 
@@ -17,7 +17,7 @@ class IAMExtendedParagraphs(BaseDataModule):
 
     def __init__(
         self,
-        mapping: EmnistMapping,
+        tokenizer: Tokenizer,
         transform: Optional[Callable] = None,
         test_transform: Optional[Callable] = None,
         target_transform: Optional[Callable] = None,
@@ -27,7 +27,7 @@ class IAMExtendedParagraphs(BaseDataModule):
         pin_memory: bool = True,
     ) -> None:
         super().__init__(
-            mapping,
+            tokenizer,
             transform,
             test_transform,
             target_transform,
@@ -37,7 +37,7 @@ class IAMExtendedParagraphs(BaseDataModule):
             pin_memory,
         )
         self.iam_paragraphs = IAMParagraphs(
-            mapping=self.mapping,
+            tokenizer=self.tokenizer,
             batch_size=self.batch_size,
             num_workers=self.num_workers,
             train_fraction=self.train_fraction,
@@ -46,7 +46,7 @@ class IAMExtendedParagraphs(BaseDataModule):
             target_transform=self.target_transform,
         )
         self.iam_synthetic_paragraphs = IAMSyntheticParagraphs(
-            mapping=self.mapping,
+            tokenizer=self.tokenizer,
             batch_size=self.batch_size,
             num_workers=self.num_workers,
             train_fraction=self.train_fraction,
@@ -78,7 +78,7 @@ class IAMExtendedParagraphs(BaseDataModule):
         """Returns info about the dataset."""
         basic = (
             "IAM Original and Synthetic Paragraphs Dataset\n"  # pylint: disable=no-member
-            f"Num classes: {len(self.mapping)}\n"
+            f"Num classes: {len(self.tokenizer)}\n"
             f"Dims: {self.dims}\n"
             f"Output dims: {self.output_dims}\n"
         )
