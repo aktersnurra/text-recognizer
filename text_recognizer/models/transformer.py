@@ -5,11 +5,10 @@ from typing import Optional, Tuple, Type
 import torch
 from omegaconf import DictConfig
 from torch import nn, Tensor
+from torchmetrics import CharErrorRate, WordErrorRate
 
 from text_recognizer.data.tokenizer import Tokenizer
 from text_recognizer.models.base import LitBase
-from text_recognizer.models.metrics.cer import CharacterErrorRate
-from text_recognizer.models.metrics.wer import WordErrorRate
 
 
 class LitTransformer(LitBase):
@@ -33,10 +32,10 @@ class LitTransformer(LitBase):
         )
         self.max_output_len = max_output_len
         self.ignore_indices = set([self.start_index, self.end_index, self.pad_index])
-        self.val_cer = CharacterErrorRate(self.ignore_indices)
-        self.test_cer = CharacterErrorRate(self.ignore_indices)
-        self.val_wer = WordErrorRate(self.ignore_indices)
-        self.test_wer = WordErrorRate(self.ignore_indices)
+        self.val_cer = CharErrorRate()
+        self.test_cer = CharErrorRate()
+        self.val_wer = WordErrorRate()
+        self.test_wer = WordErrorRate()
 
     def forward(self, data: Tensor) -> Tensor:
         """Forward pass with the transformer network."""
