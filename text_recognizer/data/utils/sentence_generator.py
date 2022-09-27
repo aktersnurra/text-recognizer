@@ -5,12 +5,12 @@ import string
 from typing import Optional
 
 import nltk
-import numpy as np
 from nltk.corpus.reader.util import ConcatenatedCorpusView
+import numpy as np
 
-from text_recognizer.data.base_data_module import BaseDataModule
+import text_recognizer.metadata.shared as metadata
 
-NLTK_DATA_DIRNAME = BaseDataModule.data_dirname() / "downloaded" / "nltk"
+NLTK_DATA_DIRNAME = metadata.DOWNLOADED_DATA_DIRNAME / "nltk"
 
 
 class SentenceGenerator:
@@ -25,7 +25,7 @@ class SentenceGenerator:
         self.max_length = max_length
 
     def generate(self, max_length: Optional[int] = None) -> str:
-        r"""Generates a word or sentences from the Brown corpus.
+        """Generates a word or sentences from the Brown corpus.
 
         Sample a string from the Brown corpus of length at least one word and at most
         max_length, padding to max_length with the '_' characters if sentence is
