@@ -1,4 +1,5 @@
 import random
+from typing import Any, Dict
 
 from PIL import Image
 import torchvision.transforms as T
@@ -11,8 +12,11 @@ class LineStem(ImageStem):
     """A stem for handling images containing a line of text."""
 
     def __init__(
-        self, augment=False, color_jitter_kwargs=None, random_affine_kwargs=None
-    ):
+        self,
+        augment: bool = False,
+        color_jitter_kwargs: Dict[str, Any] = None,
+        random_affine_kwargs: Dict[str, Any] = None,
+    ) -> None:
         super().__init__()
         if color_jitter_kwargs is None:
             color_jitter_kwargs = {"brightness": (0.5, 1)}
@@ -39,8 +43,11 @@ class IamLinesStem(ImageStem):
     """A stem for handling images containing lines of text from the IAMLines dataset."""
 
     def __init__(
-        self, augment=False, color_jitter_kwargs=None, random_affine_kwargs=None
-    ):
+        self,
+        augment: bool = False,
+        color_jitter_kwargs: Dict[str, Any] = None,
+        random_affine_kwargs: Dict[str, Any] = None,
+    ) -> None:
         super().__init__()
 
         def embed_crop(crop, augment=augment):
