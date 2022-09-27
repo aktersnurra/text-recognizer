@@ -31,7 +31,6 @@ class LitTransformer(LitBase):
             tokenizer,
         )
         self.max_output_len = max_output_len
-        self.ignore_indices = set([self.start_index, self.end_index, self.pad_index])
         self.val_cer = CharErrorRate()
         self.test_cer = CharErrorRate()
         self.val_wer = WordErrorRate()
