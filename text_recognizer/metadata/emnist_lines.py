@@ -5,10 +5,7 @@ import text_recognizer.metadata.shared as shared
 
 PROCESSED_DATA_DIRNAME = shared.DATA_DIRNAME / "processed" / "emnist_lines"
 ESSENTIALS_FILENAME = (
-    Path(__file__).parents[1].resolve()
-    / "data"
-    / "mappings"
-    / "emnist_lines_essentials.json"
+    Path(__file__).parents[1].resolve() / "data" / "emnist_lines_essentials.json"
 )
 
 CHAR_HEIGHT, CHAR_WIDTH = emnist.DIMS[1:3]
