@@ -36,11 +36,11 @@ class DecoderBlock(nn.Module):
     ) -> Tensor:
         """Applies decoder block on input signals."""
         x = x + self.attn(self.ln_attn(x), input_mask=input_mask)
-        x += self.cross_attn(
+        x = x + self.cross_attn(
             x=self.ln_cross_attn(x),
             context=context,
             input_mask=input_mask,
             context_mask=context_mask,
         )
-        x += self.ff(self.ln_ff(x))
+        x = x + self.ff(self.ln_ff(x))
         return x
