@@ -5,5 +5,5 @@ train_fraction: 0.9
 pin_memory: true
 transform: transform/lines.yaml
 test_transform: test_transform/lines.yaml
-mapping:
+tokenizer:
   _target_: text_recognizer.data.tokenizer.Tokenizer
