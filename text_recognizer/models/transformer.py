@@ -95,8 +95,8 @@ class LitTransformer(LitBase):
             Tensor: A tensor of token indices of the predictions from the model.
         """
         start_index = self.tokenizer.start_index
-        end_index = self.tokenizer.start_index
-        pad_index = self.tokenizer.start_index
+        end_index = self.tokenizer.end_index
+        pad_index = self.tokenizer.pad_index
         bsz = x.shape[0]
 
         # Encode image(s) to latent vectors.
