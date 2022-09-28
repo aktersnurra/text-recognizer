@@ -80,7 +80,7 @@ class ConvTransformer(nn.Module):
         """
         z = self.encoder(x)
         z = self.conv(z)
-        z += self.pixel_embedding(z)
+        z = z + self.pixel_embedding(z)
         z = z.flatten(start_dim=2)
 
         # Permute tensor from [B, E, Ho * Wo] to [B, Sx, E]
@@ -107,7 +107,7 @@ class ConvTransformer(nn.Module):
         trg = trg.long()
         trg_mask = trg != self.pad_index
         trg = self.token_embedding(trg)
-        trg += self.token_pos_embedding(trg)
+        trg = trg + self.token_pos_embedding(trg)
         out = self.decoder(x=trg, context=src, input_mask=trg_mask)
         logits = (
             out @ torch.transpose(self.token_embedding.weight.to(trg.dtype), 0, 1)
