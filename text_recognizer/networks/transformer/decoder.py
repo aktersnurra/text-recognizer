@@ -1,13 +1,11 @@
 """Transformer decoder module."""
 from copy import deepcopy
-from typing import Optional, Type
+from typing import Optional
 
 from torch import Tensor, nn
 
-from text_recognizer.networks.transformer.attention import Attention
 from text_recognizer.networks.transformer.decoder_block import DecoderBlock
 from text_recognizer.networks.transformer.embeddings.rotary import RotaryEmbedding
-from text_recognizer.networks.transformer.ff import FeedForward
 
 
 class Decoder(nn.Module):
@@ -18,7 +16,7 @@ class Decoder(nn.Module):
         depth: int,
         dim: int,
         block: DecoderBlock,
-        rotary_embedding: Optional[RotaryEmbedding] = None,
+        rotary_embedding: RotaryEmbedding,
     ) -> None:
         super().__init__()
         self.depth = depth

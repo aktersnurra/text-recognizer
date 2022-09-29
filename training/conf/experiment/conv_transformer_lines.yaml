@@ -83,7 +83,7 @@ network:
     pixel_embedding:
       _target_: "text_recognizer.networks.transformer.embeddings.axial.\
         AxialPositionalEmbeddingImage"
-      dim: &hidden_dim 384
+      dim: *dim
       axial_shape: [7, 128]
       axial_dims: [192, 192]
   decoder:
@@ -96,19 +96,19 @@ network:
       dim: *dim
       depth: 6
       block:
-        _target_: text_recognizer.networks.transformer.decoder_block.\
-          DecoderBlock
+        _target_: "text_recognizer.networks.transformer.decoder_block.\
+          DecoderBlock"
         self_attn:
           _target_: text_recognizer.networks.transformer.Attention
           dim: *dim
-          num_heads: 10
+          num_heads: 8
           dim_head: 64
           dropout_rate: &dropout_rate 0.2
           causal: true
         cross_attn:
           _target_: text_recognizer.networks.transformer.Attention
           dim: *dim
-          num_heads: 10
+          num_heads: 8
           dim_head: 64
           dropout_rate: *dropout_rate
           causal: false
@@ -125,12 +125,6 @@ network:
       rotary_embedding:
         _target_: text_recognizer.networks.transformer.RotaryEmbedding
         dim: 64
-    token_pos_embedding:
-      _target_: "text_recognizer.networks.transformer.embeddings.fourier.\
-        PositionalEncoding"
-      dim: *dim
-      dropout_rate: 0.1
-      max_len: *max_output_len
 
 model:
   max_output_len: *max_output_len

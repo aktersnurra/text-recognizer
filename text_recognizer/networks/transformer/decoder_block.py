@@ -30,9 +30,9 @@ class DecoderBlock(nn.Module):
     def forward(
         self,
         x: Tensor,
+        rotary_embedding: RotaryEmbedding,
         context: Optional[Tensor] = None,
         mask: Optional[Tensor] = None,
-        rotary_embedding: Optional[RotaryEmbedding] = None,
     ) -> Tensor:
         """Applies decoder block on input signals."""
         x = x + self.attn(self.ln_attn(x), mask=mask, rotary_embedding=rotary_embedding)
