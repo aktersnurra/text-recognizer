@@ -1,6 +1,4 @@
 """Text decoder."""
-from typing import Optional, Type
-
 import torch
 from torch import Tensor, nn
 
@@ -8,26 +6,24 @@ from text_recognizer.networks.transformer.decoder import Decoder
 
 
 class TextDecoder(nn.Module):
-    """Decoder transformer network."""
+    """Decodes images to token logits."""
 
     def __init__(
         self,
-        hidden_dim: int,
+        dim: int,
         num_classes: int,
         pad_index: Tensor,
         decoder: Decoder,
     ) -> None:
         super().__init__()
-        self.hidden_dim = hidden_dim
+        self.dim = dim
         self.num_classes = num_classes
         self.pad_index = pad_index
         self.decoder = decoder
         self.token_embedding = nn.Embedding(
-            num_embeddings=self.num_classes, embedding_dim=self.hidden_dim
+            num_embeddings=self.num_classes, embedding_dim=self.dim
         )
-        self.to_logits = nn.Linear(
-            in_features=self.hidden_dim, out_features=self.num_classes
-        )
+        self.to_logits = nn.Linear(in_features=self.dim, out_features=self.num_classes)
 
     def forward(self, tokens: Tensor, img_features: Tensor) -> Tensor:
         """Decodes latent images embedding into word pieces.

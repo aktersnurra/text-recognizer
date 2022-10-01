@@ -1,3 +1,4 @@
+"""Convnext downsample module."""
 from typing import Tuple
 
 from einops.layers.torch import Rearrange
@@ -5,6 +6,8 @@ from torch import Tensor, nn
 
 
 class Downsample(nn.Module):
+    """Downsamples feature maps by patches."""
+
     def __init__(self, dim: int, dim_out: int, factors: Tuple[int, int]) -> None:
         super().__init__()
         s1, s2 = factors
@@ -14,4 +17,5 @@ class Downsample(nn.Module):
         )
 
     def forward(self, x: Tensor) -> Tensor:
+        """Applies patch function."""
         return self.fn(x)

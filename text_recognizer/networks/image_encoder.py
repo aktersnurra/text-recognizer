@@ -9,7 +9,7 @@ from text_recognizer.networks.transformer.embeddings.axial import (
 
 
 class ImageEncoder(nn.Module):
-    """Base transformer network."""
+    """Encodes images to latent embeddings."""
 
     def __init__(
         self,

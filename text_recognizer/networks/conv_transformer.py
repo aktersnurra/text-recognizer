@@ -1,7 +1,6 @@
 """Base network module."""
 from typing import Type
 
-import torch
 from torch import Tensor, nn
 
 from text_recognizer.networks.transformer.decoder import Decoder
@@ -28,11 +27,11 @@ class ConvTransformer(nn.Module):
         return self.decoder(tokens, img_features)
 
     def forward(self, img: Tensor, tokens: Tensor) -> Tensor:
-        """Encodes images into word piece logtis.
+        """Encodes images into token logtis.
 
         Args:
             img (Tensor): Input image(s).
-            tokens (Tensor): Target word embeddings.
+            tokens (Tensor): token embeddings.
 
         Shapes:
             - img: :math: `(B, 1, H, W)`

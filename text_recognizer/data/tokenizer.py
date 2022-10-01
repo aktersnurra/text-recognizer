@@ -37,6 +37,7 @@ class Tokenizer:
 
     @property
     def num_classes(self) -> int:
+        """Return number of classes in the dataset."""
         return self.__len__()
 
     def _load_mapping(self) -> Tuple[List, Dict[str, int], List[int]]:
