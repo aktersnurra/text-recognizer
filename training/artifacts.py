@@ -3,23 +3,20 @@ from datetime import datetime
 from pathlib import Path
 import shutil
 import sys
-from typing import Optional, Union
+from typing import Optional
 
 import click
 from loguru import logger as log
+from training import metadata
 import wandb
 from wandb.apis.public import Run
-
-TRAINING_DIR = Path(__file__).parents[0].resolve()
-ARTIFACTS_DIR = TRAINING_DIR.parent / "text_recognizer" / "artifacts"
-RUNS_DIR = TRAINING_DIR / "logs" / "runs"
 
 
 def _get_run_dir(run: Run) -> Optional[Path]:
     created_at = datetime.fromisoformat(run.created_at).astimezone()
     date = created_at.date()
     hour = (created_at + created_at.utcoffset()).hour
-    runs = list((RUNS_DIR / f"{date}").glob(f"{hour}-*"))
+    runs = list((metadata.RUNS_DIR / f"{date}").glob(f"{hour}-*"))
     if not runs:
         return None
     return runs[0]
@@ -45,7 +42,7 @@ def _copy_checkpoint(checkpoint: Path, dst_dir: Path) -> None:
 
 def save_model(run: Run, tag: str) -> None:
     """Save model to artifacts."""
-    dst_dir = ARTIFACTS_DIR / f"{tag}_text_recognizer"
+    dst_dir = metadata.ARTIFACTS_DIR / f"{tag}_text_recognizer"
     dst_dir.mkdir(parents=True, exist_ok=True)
     run_dir = _get_run_dir(run)
     if not run_dir:
@@ -77,7 +74,10 @@ def find_best_run(entity: str, project: str, tag: str, metric: str, mode: str) -
     best_run = runs[0]
     summary = best_run.summary
     log.info(
-        f"Best run is ({best_run.name}, {best_run.id}) picked from {len(runs)} runs with the following metric"
+        (
+            f"Best run is ({best_run.name}, {best_run.id}) picked from {len(runs)} "
+            "runs with the following metric"
+        )
     )
     log.info(
         f"{metric}: {summary[metric]}"
