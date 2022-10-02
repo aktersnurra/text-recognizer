@@ -12,6 +12,7 @@ defaults:
   - network: conv_transformer
   - optimizer: radam
   - trainer: default
+  - experiment: null
 
 seed: 4711
 tune: false
