@@ -26,7 +26,7 @@ class TextDecoder(nn.Module):
         self.to_logits = nn.Linear(in_features=self.dim, out_features=self.num_classes)
 
     def forward(self, tokens: Tensor, img_features: Tensor) -> Tensor:
-        """Decodes latent images embedding into word pieces.
+        """Decodes latent images embedding into logit tokens.
 
         Args:
             tokens (Tensor): Token indecies.

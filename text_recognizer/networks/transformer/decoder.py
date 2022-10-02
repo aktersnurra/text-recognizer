@@ -30,7 +30,7 @@ class Decoder(nn.Module):
         context: Optional[Tensor] = None,
         mask: Optional[Tensor] = None,
     ) -> Tensor:
-        """Applies the network to the signals."""
+        """Applies attention blocks."""
         for block in self.blocks:
             x = block(
                 x=x,
