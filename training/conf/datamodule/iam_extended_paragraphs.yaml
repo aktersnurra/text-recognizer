@@ -4,10 +4,10 @@ num_workers: 12
 train_fraction: 0.8
 pin_memory: true
 transform:
-  _target_: text_recognizer.data.stems.paragraph.ParagraphStem
+  _target_: text_recognizer.data.transforms.paragraph.ParagraphStem
   augment: true
 test_transform:
-  _target_: text_recognizer.data.stems.paragraph.ParagraphStem
+  _target_: text_recognizer.data.transforms.paragraph.ParagraphStem
   augment: false
 target_transform:
   _target_: text_recognizer.data.transforms.pad.Pad

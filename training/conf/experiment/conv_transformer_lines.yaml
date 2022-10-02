@@ -54,9 +54,6 @@ lr_scheduler:
 datamodule:
   batch_size: 16
   train_fraction: 0.95
-  transform:
-    _target_: text_recognizer.data.stems.line.IamLinesStem
-    augment: false
 
 network:
   _target_: text_recognizer.networks.ConvTransformer
