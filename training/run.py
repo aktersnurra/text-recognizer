@@ -79,7 +79,11 @@ def run(config: DictConfig) -> Optional[float]:
 
     if config.test:
         log.info("Testing network...")
-        trainer.test(model, datamodule=datamodule)
+        ckpt_path = trainer.checkpoint_callback.best_model_path
+        if ckpt_path is None:
+            log.error("No best checkpoint path for model found")
+            return
+        trainer.test(model, datamodule=datamodule, ckpt_path=ckpt_path)
 
     log.info(f"Best checkpoint path:\n{trainer.checkpoint_callback.best_model_path}")
     utils.finish(logger)
