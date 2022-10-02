@@ -75,5 +75,7 @@ Ideas of mine that did not work unfortunately:
 - [ ] fix linting
 - [ ] Modularize the decoder
 - [ ] Add kv cache
-- [ ] Fix stems
-- [ ] residual attn
+- [x] Fix stems
+- [x] residual attn
+- [x] single kv head
+- [x] fix rotary embedding
