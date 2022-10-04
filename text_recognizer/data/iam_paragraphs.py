@@ -18,7 +18,7 @@ from text_recognizer.data.base_dataset import (
 from text_recognizer.data.iam import IAM
 from text_recognizer.data.transforms.pad import Pad
 from text_recognizer.data.tokenizer import Tokenizer
-from text_recognizer.data.stems.paragraph import ParagraphStem
+from text_recognizer.data.transforms.paragraph import ParagraphStem
 import text_recognizer.metadata.iam_paragraphs as metadata
 
 

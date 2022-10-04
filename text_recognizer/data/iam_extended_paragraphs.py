@@ -8,7 +8,7 @@ from text_recognizer.data.iam_paragraphs import IAMParagraphs
 from text_recognizer.data.iam_synthetic_paragraphs import IAMSyntheticParagraphs
 from text_recognizer.data.transforms.pad import Pad
 from text_recognizer.data.tokenizer import Tokenizer
-from text_recognizer.data.stems.paragraph import ParagraphStem
+from text_recognizer.data.transforms.paragraph import ParagraphStem
 import text_recognizer.metadata.iam_paragraphs as metadata
 
 

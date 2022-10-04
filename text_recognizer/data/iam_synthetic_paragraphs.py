@@ -20,7 +20,7 @@ from text_recognizer.data.iam_lines import (
     save_images_and_labels,
 )
 from text_recognizer.data.tokenizer import Tokenizer
-from text_recognizer.data.stems.paragraph import ParagraphStem
+from text_recognizer.data.transforms.paragraph import ParagraphStem
 from text_recognizer.data.transforms.pad import Pad
 import text_recognizer.metadata.iam_synthetic_paragraphs as metadata
 

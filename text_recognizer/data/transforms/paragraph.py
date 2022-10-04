@@ -2,7 +2,7 @@
 import torchvision.transforms as T
 
 import text_recognizer.metadata.iam_paragraphs as metadata
-from text_recognizer.data.stems.image import ImageStem
+from text_recognizer.data.transforms.image import ImageStem
 
 
 IMAGE_HEIGHT, IMAGE_WIDTH = metadata.IMAGE_HEIGHT, metadata.IMAGE_WIDTH

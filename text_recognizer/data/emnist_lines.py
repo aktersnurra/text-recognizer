@@ -13,7 +13,7 @@ from text_recognizer.data.base_data_module import BaseDataModule, load_and_print
 from text_recognizer.data.base_dataset import BaseDataset, convert_strings_to_labels
 from text_recognizer.data.emnist import EMNIST
 from text_recognizer.data.tokenizer import Tokenizer
-from text_recognizer.data.stems.line import LineStem
+from text_recognizer.data.transforms.line import LineStem
 from text_recognizer.data.utils.sentence_generator import SentenceGenerator
 import text_recognizer.metadata.emnist_lines as metadata
 

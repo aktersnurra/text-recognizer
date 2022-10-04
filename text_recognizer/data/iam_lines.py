@@ -20,7 +20,7 @@ from text_recognizer.data.base_dataset import (
 )
 from text_recognizer.data.iam import IAM
 from text_recognizer.data.tokenizer import Tokenizer
-from text_recognizer.data.stems.line import IamLinesStem
+from text_recognizer.data.transforms.line import IamLinesStem
 from text_recognizer.data.utils import image_utils
 import text_recognizer.metadata.iam_lines as metadata
 
