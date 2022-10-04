@@ -4,6 +4,7 @@ defaults:
   - _self_
   - callbacks: default
   - criterion: cross_entropy
+  - decoder: greedy
   - datamodule: iam_extended_paragraphs
   - hydra: default
   - logger: wandb

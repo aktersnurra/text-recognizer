@@ -1,5 +1,5 @@
 """Script to run experiments."""
-from typing import List, Optional, Type
+from typing import Callable, List, Optional, Type
 
 import hydra
 from loguru import logger as log
@@ -34,11 +34,19 @@ def run(config: DictConfig) -> Optional[float]:
     log.info(f"Instantiating criterion <{config.criterion._target_}>")
     loss_fn: Type[nn.Module] = hydra.utils.instantiate(config.criterion)
 
+    log.info(f"Instantiating decoder <{config.criterion._target_}>")
+    decoder: Type[Callable] = hydra.utils.instantiate(
+        config.decoder,
+        network=network,
+        tokenizer=datamodule.tokenizer,
+    )
+
     log.info(f"Instantiating model <{config.model._target_}>")
     model: LightningModule = hydra.utils.instantiate(
         config.model,
         network=network,
         tokenizer=datamodule.tokenizer,
+        decoder=decoder,
         loss_fn=loss_fn,
         optimizer_config=config.optimizer,
         lr_scheduler_config=config.lr_scheduler,

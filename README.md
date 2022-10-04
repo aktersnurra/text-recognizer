@@ -73,7 +73,7 @@ Ideas of mine that did not work unfortunately:
 - [ ] Evaluation
 - [ ] Wandb artifact fetcher
 - [ ] fix linting
-- [ ] Modularize the decoder
+- [x] Modularize the decoder
 - [ ] Add kv cache
 - [x] Fix stems
 - [x] residual attn
