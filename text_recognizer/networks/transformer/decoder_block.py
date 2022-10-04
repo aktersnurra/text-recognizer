@@ -10,7 +10,7 @@ from text_recognizer.networks.transformer.ff import FeedForward
 
 
 class DecoderBlock(nn.Module):
-    """Decoder block."""
+    """Residual decoder block."""
 
     def __init__(
         self,

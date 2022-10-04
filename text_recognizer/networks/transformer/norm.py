@@ -4,7 +4,7 @@ Copied from lucidrains:
     https://github.com/lucidrains/x-transformers/blob/main/x_transformers/x_transformers.py
 
 """
-from typing import Dict, Optional, Type
+from typing import Optional, Type
 
 import torch
 from torch import Tensor, nn

@@ -62,7 +62,6 @@ class LitBase(LightningModule):
         )
         monitor = self.lr_scheduler_config.pop("monitor")
         interval = self.lr_scheduler_config.pop("interval")
-
         return {
             "monitor": monitor,
             "interval": interval,
