@@ -75,6 +75,7 @@ Ideas of mine that did not work unfortunately:
 - [ ] fix linting
 - [x] Modularize the decoder
 - [ ] Add kv cache
+- [ ] Train with Laprop
 - [x] Fix stems
 - [x] residual attn
 - [x] single kv head
