@@ -1,7 +1,7 @@
 """Convolution self attention block."""
 
 import torch.nn.functional as F
-from einops import rearrange, reduce
+from einops import rearrange
 from torch import Tensor, einsum, nn
 
 from text_recognizer.networks.convnext.norm import LayerNorm
