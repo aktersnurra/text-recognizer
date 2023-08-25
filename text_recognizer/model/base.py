@@ -5,14 +5,14 @@ import hydra
 import torch
 from loguru import logger as log
 from omegaconf import DictConfig
-from pytorch_lightning import LightningModule
+import pytorch_lightning as L
 from torch import nn, Tensor
 from torchmetrics import Accuracy
 
 from text_recognizer.data.tokenizer import Tokenizer
 
 
-class LitBase(LightningModule):
+class LitBase(L.LightningModule):
     """Abstract PyTorch Lightning class."""
 
     def __init__(
@@ -41,7 +41,6 @@ class LitBase(LightningModule):
         epoch: int,
         batch_idx: int,
         optimizer: Type[torch.optim.Optimizer],
-        optimizer_idx: int,
     ) -> None:
         """Optimal way to set grads to zero."""
         optimizer.zero_grad(set_to_none=True)
