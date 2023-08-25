@@ -80,3 +80,6 @@ Ideas of mine that did not work unfortunately:
 - [x] residual attn
 - [x] single kv head
 - [x] fix rotary embedding
+- [ ] simplify attention with norm
+- [ ] tie embeddings
+- [ ] cnn -> tf encoder -> tf decoder
