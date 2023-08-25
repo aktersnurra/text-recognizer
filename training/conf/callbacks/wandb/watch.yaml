@@ -1,5 +1,5 @@
 watch_model:
   _target_: callbacks.wandb_callbacks.WatchModel
-  log: gradients
+  log_params: gradients
   log_freq: 100
   log_graph: true

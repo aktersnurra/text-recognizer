@@ -1,0 +1,37 @@
+_target_: text_recognizer.network.vit.VisionTransformer
+image_height: 56
+image_width: 1024
+patch_height: 28
+patch_width: 32
+dim: &dim 256
+num_classes: &num_classes 57
+encoder:
+  _target_: text_recognizer.network.transformer.encoder.Encoder
+  dim: *dim
+  inner_dim: 1024
+  heads: 8
+  dim_head: 64
+  depth: 6
+  dropout_rate: 0.0
+decoder:
+  _target_: text_recognizer.network.transformer.decoder.Decoder
+  dim: *dim
+  inner_dim: 1024
+  heads: 8
+  dim_head: 64
+  depth: 6
+  dropout_rate: 0.0
+token_embedding:
+  _target_: "text_recognizer.network.transformer.embedding.token.\
+    TokenEmbedding"
+  num_tokens: *num_classes
+  dim: *dim
+  use_l2: true
+pos_embedding:
+  _target_: "text_recognizer.network.transformer.embedding.absolute.\
+    AbsolutePositionalEmbedding"
+  dim: *dim
+  max_length: 89
+  use_l2: true
+tie_embeddings: true
+pad_index: 3

@@ -56,70 +56,70 @@ datamodule:
   train_fraction: 0.95
 
 network:
-  _target_: text_recognizer.networks.ConvTransformer
+  _target_: text_recognizer.network.ConvTransformer
   encoder:
-    _target_: text_recognizer.networks.image_encoder.ImageEncoder
+    _target_: text_recognizer.network.image_encoder.ImageEncoder
     encoder:
-      _target_: text_recognizer.networks.convnext.ConvNext
+      _target_: text_recognizer.network.convnext.ConvNext
       dim: 16
       dim_mults: [2, 4, 32]
       depths: [3, 3, 6]
       downsampling_factors: [[2, 2], [2, 2], [2, 2]]
       attn:
-        _target_: text_recognizer.networks.convnext.TransformerBlock
+        _target_: text_recognizer.network.convnext.TransformerBlock
         attn:
-          _target_: text_recognizer.networks.convnext.Attention
+          _target_: text_recognizer.network.convnext.Attention
           dim: &dim 512
           heads: 4
           dim_head: 64
           scale: 8
         ff:
-          _target_: text_recognizer.networks.convnext.FeedForward
+          _target_: text_recognizer.network.convnext.FeedForward
           dim: *dim
           mult: 2
     pixel_embedding:
-      _target_: "text_recognizer.networks.transformer.embeddings.axial.\
+      _target_: "text_recognizer.network.transformer.embeddings.axial.\
         AxialPositionalEmbeddingImage"
       dim: *dim
       axial_shape: [7, 128]
   decoder:
-    _target_: text_recognizer.networks.text_decoder.TextDecoder
+    _target_: text_recognizer.network.text_decoder.TextDecoder
     dim: *dim
     num_classes: 58
     pad_index: *ignore_index
     decoder:
-      _target_: text_recognizer.networks.transformer.Decoder
+      _target_: text_recognizer.network.transformer.Decoder
       dim: *dim
       depth: 6
       block:
-        _target_: "text_recognizer.networks.transformer.decoder_block.\
+        _target_: "text_recognizer.network.transformer.decoder_block.\
           DecoderBlock"
         self_attn:
-          _target_: text_recognizer.networks.transformer.Attention
+          _target_: text_recognizer.network.transformer.Attention
           dim: *dim
           num_heads: 8
           dim_head: &dim_head 64
           dropout_rate: &dropout_rate 0.2
           causal: true
         cross_attn:
-          _target_: text_recognizer.networks.transformer.Attention
+          _target_: text_recognizer.network.transformer.Attention
           dim: *dim
           num_heads: 8
           dim_head: *dim_head
           dropout_rate: *dropout_rate
           causal: false
         norm:
-          _target_: text_recognizer.networks.transformer.RMSNorm
+          _target_: text_recognizer.network.transformer.RMSNorm
           dim: *dim
         ff:
-          _target_: text_recognizer.networks.transformer.FeedForward
+          _target_: text_recognizer.network.transformer.FeedForward
           dim: *dim
           dim_out: null
           expansion_factor: 2
           glu: true
           dropout_rate: *dropout_rate
       rotary_embedding:
-        _target_: text_recognizer.networks.transformer.RotaryEmbedding
+        _target_: text_recognizer.network.transformer.RotaryEmbedding
         dim: *dim_head
 
 model:

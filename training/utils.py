@@ -10,7 +10,7 @@ from pytorch_lightning import (
     LightningModule,
     Trainer,
 )
-from pytorch_lightning.loggers import LightningLoggerBase
+from pytorch_lightning.loggers import Logger
 from pytorch_lightning.loggers.wandb import WandbLogger
 from pytorch_lightning.utilities import rank_zero_only
 from tqdm import tqdm
@@ -59,10 +59,10 @@ def configure_callbacks(
     return callbacks
 
 
-def configure_logger(config: DictConfig) -> List[Type[LightningLoggerBase]]:
+def configure_logger(config: DictConfig) -> List[Type[Logger]]:
     """Configures Lightning loggers."""
 
-    def load_logger(logger_config: DictConfig) -> Type[LightningLoggerBase]:
+    def load_logger(logger_config: DictConfig) -> Type[Logger]:
         log.info(f"Instantiating logger <{logger_config._target_}>")
         return hydra.utils.instantiate(logger_config)
 
@@ -137,7 +137,7 @@ def log_hyperparameters(
 
 
 def finish(
-    logger: List[Type[LightningLoggerBase]],
+    logger: List[Type[Logger]],
 ) -> None:
     """Makes sure everything closed properly."""
     for lg in logger:

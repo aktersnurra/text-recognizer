@@ -11,7 +11,7 @@ from pytorch_lightning import (
     seed_everything,
     Trainer,
 )
-from pytorch_lightning.loggers import LightningLoggerBase
+from pytorch_lightning.loggers import Logger
 from torch import nn
 from torchinfo import summary
 import utils
@@ -55,7 +55,7 @@ def run(config: DictConfig) -> Optional[float]:
 
     # Load callback and logger.
     callbacks: List[Type[Callback]] = utils.configure_callbacks(config)
-    logger: List[Type[LightningLoggerBase]] = utils.configure_logger(config)
+    logger: List[Type[Logger]] = utils.configure_logger(config)
 
     log.info(f"Instantiating trainer <{config.trainer._target_}>")
     trainer: Trainer = hydra.utils.instantiate(
