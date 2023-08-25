@@ -4,8 +4,8 @@ import torch.nn.functional as F
 from einops import rearrange
 from torch import Tensor, einsum, nn
 
-from text_recognizer.networks.convnext.norm import LayerNorm
-from text_recognizer.networks.convnext.residual import Residual
+from text_recognizer.network.convnext.norm import LayerNorm
+from text_recognizer.network.convnext.residual import Residual
 
 
 def l2norm(t: Tensor) -> Tensor:

@@ -2,7 +2,7 @@
 from pathlib import Path
 from typing import Callable, Dict, Optional, Tuple, TypeVar
 
-from pytorch_lightning import LightningDataModule
+import pytorch_lightning as L
 from torch.utils.data import DataLoader
 
 from text_recognizer.data.base_dataset import BaseDataset
@@ -19,7 +19,7 @@ def load_and_print_info(data_module_class: type) -> None:
     print(dataset)
 
 
-class BaseDataModule(LightningDataModule):
+class BaseDataModule(L.LightningDataModule):
     """Base PyTorch Lightning DataModule."""
 
     def __init__(

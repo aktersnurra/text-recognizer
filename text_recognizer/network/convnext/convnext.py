@@ -3,9 +3,9 @@ from typing import Optional, Sequence
 
 from torch import Tensor, nn
 
-from text_recognizer.networks.convnext.attention import TransformerBlock
-from text_recognizer.networks.convnext.downsample import Downsample
-from text_recognizer.networks.convnext.norm import LayerNorm
+from text_recognizer.network.convnext.attention import TransformerBlock
+from text_recognizer.network.convnext.downsample import Downsample
+from text_recognizer.network.convnext.norm import LayerNorm
 
 
 class ConvNextBlock(nn.Module):
