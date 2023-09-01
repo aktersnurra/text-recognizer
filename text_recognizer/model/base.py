@@ -94,3 +94,13 @@ class LitBase(L.LightningModule):
     def test_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> None:
         """Test step."""
         pass
+
+    def is_logged_batch(self) -> bool:
+        if self.trainer is None:
+            return False
+        else:
+            return self.trainer._logger_connector.should_update_logs
+
+    def add_on_first_batch(self, metrics: dict, output: dict, batch_idx: int) -> None:
+        if batch_idx == 0:
+            output.update(metrics)
