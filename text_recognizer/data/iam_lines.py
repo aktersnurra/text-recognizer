@@ -5,7 +5,7 @@ dataset.
 """
 import json
 from pathlib import Path
-from typing import Callable, List, Optional, Sequence, Tuple, Type
+from typing import Callable, List, Optional, Sequence, Tuple
 
 import numpy as np
 from loguru import logger as log
