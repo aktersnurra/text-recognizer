@@ -10,10 +10,10 @@ defaults:
   - logger: wandb
   - lr_scheduler: cosine_annealing
   - model: lit_transformer
-  - network: conv_transformer
+  - network: vit_lines
   - optimizer: radam
   - trainer: default
-  - experiment: vit_lines
+  - experiment: null
 
 seed: 4711
 tune: false

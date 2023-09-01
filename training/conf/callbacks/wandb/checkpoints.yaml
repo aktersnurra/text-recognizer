@@ -1,4 +1,4 @@
 upload_ckpts_as_artifact:
-  _target_: callbacks.wandb_callbacks.UploadCheckpointsAsArtifact
+  _target_: callbacks.wandb.UploadCheckpointsAsArtifact
   ckpt_dir: checkpoints/
   upload_best_only: true

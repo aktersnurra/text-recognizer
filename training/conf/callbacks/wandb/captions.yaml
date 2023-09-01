@@ -1,0 +1,4 @@
+log_text_predictions:
+  _target_: callbacks.wandb.ImageToCaptionLogger
+  num_samples: 8
+  on_train: true
