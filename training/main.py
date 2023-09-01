@@ -5,7 +5,7 @@ from training.metadata import TRAINING_DIR
 
 
 @hydra.main(
-    version_base="1.2", config_path=str(TRAINING_DIR / "conf"), config_name="config"
+    version_base="1.3", config_path=str(TRAINING_DIR / "conf"), config_name="config"
 )
 def main(config: DictConfig) -> None:
     """Loads config with hydra and runs the experiment."""
