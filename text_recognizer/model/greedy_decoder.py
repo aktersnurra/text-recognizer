@@ -34,7 +34,7 @@ class GreedyDecoder:
         for i in range(1, self.max_output_len):
             tokens = indecies[:, :i]  # (B, Sy)
             logits = self.network.decode(tokens, img_features)  # [ B, N, C ]
-            indecies_ = torch.argmax(logits, dim=2)  # [ B, N ]
+            indecies_ = logits.argmax(dim=2)  # [ B, N ]
             indecies[:, i] = indecies_[:, -1]
 
             # Early stopping of prediction loop if token is end or padding token.

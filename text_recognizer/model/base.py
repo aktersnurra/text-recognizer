@@ -7,7 +7,6 @@ from loguru import logger as log
 from omegaconf import DictConfig
 import pytorch_lightning as L
 from torch import nn, Tensor
-from torchmetrics import Accuracy
 
 from text_recognizer.data.tokenizer import Tokenizer
 
@@ -24,17 +23,11 @@ class LitBase(L.LightningModule):
         tokenizer: Tokenizer,
     ) -> None:
         super().__init__()
-
         self.network = network
         self.loss_fn = loss_fn
         self.optimizer_config = optimizer_config
         self.lr_scheduler_config = lr_scheduler_config
         self.tokenizer = tokenizer
-        ignore_index = int(self.tokenizer.get_value("<p>"))
-        # Placeholders
-        self.train_acc = Accuracy(mdmc_reduce="samplewise", ignore_index=ignore_index)
-        self.val_acc = Accuracy(mdmc_reduce="samplewise", ignore_index=ignore_index)
-        self.test_acc = Accuracy(mdmc_reduce="samplewise", ignore_index=ignore_index)
 
     def optimizer_zero_grad(
         self,

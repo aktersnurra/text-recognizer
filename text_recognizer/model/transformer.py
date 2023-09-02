@@ -8,7 +8,7 @@ from torchmetrics import CharErrorRate, WordErrorRate
 
 from .greedy_decoder import GreedyDecoder
 from text_recognizer.data.tokenizer import Tokenizer
-from text_recognizer.model.base import LitBase
+from .base import LitBase
 
 
 class LitTransformer(LitBase):
@@ -45,7 +45,7 @@ class LitTransformer(LitBase):
         logits = self.network(data, targets)  # [B, N, C]
         return logits.permute(0, 2, 1)  # [B, C, N]
 
-    def training_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> Tensor:
+    def training_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> dict:
         """Training step."""
         data, targets = batch
         logits = self.teacher_forward(data, targets[:, :-1])
@@ -61,7 +61,7 @@ class LitTransformer(LitBase):
             ), self.tokenizer.batch_decode(targets)
             outputs.update({"predictions": preds, "ground_truths": gts})
 
-        return loss
+        return outputs
 
     def validation_step(self, batch: Tuple[Tensor, Tensor], batch_idx: int) -> dict:
         """Validation step."""
