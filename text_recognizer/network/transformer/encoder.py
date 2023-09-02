@@ -1,8 +1,8 @@
 """Transformer encoder module."""
 from torch import Tensor, nn
 
-from text_recognizer.network.transformer.attention import Attention
-from text_recognizer.network.transformer.ff import FeedForward
+from .attention import Attention
+from .ff import FeedForward
 
 
 class Encoder(nn.Module):

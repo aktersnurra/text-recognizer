@@ -1,6 +1,6 @@
 from torch import nn, Tensor
 
-from text_recognizer.network.transformer.embedding.l2_norm import l2_norm
+from .l2_norm import l2_norm
 
 
 class TokenEmbedding(nn.Module):

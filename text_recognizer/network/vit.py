@@ -4,10 +4,10 @@ from typing import Type
 from einops.layers.torch import Rearrange
 from torch import Tensor, nn
 
-from text_recognizer.network.transformer.embedding.token import TokenEmbedding
-from text_recognizer.network.transformer.embedding.sincos import sincos_2d
-from text_recognizer.network.transformer.decoder import Decoder
-from text_recognizer.network.transformer.encoder import Encoder
+from .transformer.embedding.token import TokenEmbedding
+from .transformer.embedding.sincos import sincos_2d
+from .transformer.decoder import Decoder
+from .transformer.encoder import Encoder
 
 
 class VisionTransformer(nn.Module):
@@ -59,11 +59,10 @@ class VisionTransformer(nn.Module):
 
     def decode(self, text: Tensor, img_features: Tensor) -> Tensor:
         text = text.long()
-        # TODO: add mask to decoder
         mask = text != self.pad_index
         tokens = self.token_embedding(text)
         tokens = tokens + self.pos_embedding(tokens)
-        output = self.decoder(tokens, context=img_features)
+        output = self.decoder(tokens, context=img_features, mask=mask)
         return self.to_logits(output)
 
     def forward(

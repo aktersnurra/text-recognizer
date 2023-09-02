@@ -2,7 +2,8 @@ from typing import Optional
 
 import torch
 from torch import nn, Tensor
-from text_recognizer.network.transformer.embedding.l2_norm import l2_norm
+
+from .l2_norm import l2_norm
 
 
 class AbsolutePositionalEmbedding(nn.Module):
