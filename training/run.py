@@ -34,7 +34,7 @@ def run(config: DictConfig) -> Optional[float]:
     log.info(f"Instantiating criterion <{config.criterion._target_}>")
     loss_fn: Type[nn.Module] = hydra.utils.instantiate(config.criterion)
 
-    log.info(f"Instantiating decoder <{config.criterion._target_}>")
+    log.info(f"Instantiating decoder <{config.decoder._target_}>")
     decoder: Type[Callable] = hydra.utils.instantiate(
         config.decoder,
         network=network,
