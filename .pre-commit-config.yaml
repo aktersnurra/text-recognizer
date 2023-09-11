@@ -7,16 +7,12 @@ repos:
       - id: trailing-whitespace
   - repo: local
     hooks:
-      - id: black
-        name: black
-        entry: black
-        language: system
-        types: [python]
       - id: ruff
         name: ruff
         entry: ruff
         language: system
         types: [python]
+        args: [--fix, --exit-non-zero-on-fix]
   - repo: https://github.com/compilerla/conventional-pre-commit
     rev: v1.2.0
     hooks:
