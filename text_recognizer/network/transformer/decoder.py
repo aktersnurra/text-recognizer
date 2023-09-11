@@ -3,14 +3,14 @@ from typing import Optional
 from torch import Tensor, nn
 
 from .attention import Attention
-from .ff import FeedForward
+from .embedding.rotary import RotaryEmbedding
 
 
 class Decoder(nn.Module):
     def __init__(
         self,
         dim: int,
-        inner_dim: int,
+        ff_mult: int,
         heads: int,
         dim_head: int,
         depth: int,
@@ -23,25 +23,36 @@ class Decoder(nn.Module):
                 nn.ModuleList(
                     [
                         Attention(
-                            dim,
-                            heads,
-                            True,
-                            dim_head,
-                            dropout_rate,
+                            dim=dim,
+                            heads=heads,
+                            causal=True,
+                            dim_head=dim_head,
+                            ff_mult=ff_mult,
+                            dropout_rate=dropout_rate,
+                            use_flash=True,
+                            norm_context=False,
+                            rotary_emb=RotaryEmbedding(dim_head),
                         ),
-                        FeedForward(dim, inner_dim, dropout_rate),
                         Attention(
-                            dim,
-                            heads,
-                            False,
-                            dim_head,
-                            dropout_rate,
+                            dim=dim,
+                            heads=heads,
+                            causal=False,
+                            dim_head=dim_head,
+                            ff_mult=ff_mult,
+                            dropout_rate=dropout_rate,
+                            use_flash=True,
+                            norm_context=False,
                         ),
                     ]
                 )
                 for _ in range(depth)
             ]
         )
+
+    def self_attn(self, x: Tensor, mask: Tensor) -> Tensor:
+        for self_attn, _ in self.layers:
+            x = x + self_attn(x, mask=mask)
+        return self.norm(x)
 
     def forward(
         self,
@@ -50,8 +61,7 @@ class Decoder(nn.Module):
         mask: Optional[Tensor] = None,
     ) -> Tensor:
         """Applies decoder block on input signals."""
-        for self_attn, ff, cross_attn in self.layers:
+        for self_attn, cross_attn in self.layers:
             x = x + self_attn(x, mask=mask)
-            x = x + ff(x)
             x = x + cross_attn(x, context=context)
         return self.norm(x)
