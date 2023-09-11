@@ -1,5 +1,5 @@
 """Base PyTorch Dataset class."""
-from typing import Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import Callable, Dict, Sequence, Tuple, Union
 
 import torch
 from torch import Tensor

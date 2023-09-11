@@ -6,7 +6,7 @@ from omegaconf import DictConfig
 from torch import nn, Tensor
 from torchmetrics import CharErrorRate, WordErrorRate
 
-from .greedy_decoder import GreedyDecoder
+from text_recognizer.decoder.greedy_decoder import GreedyDecoder
 from text_recognizer.data.tokenizer import Tokenizer
 from .base import LitBase
 

@@ -1,5 +1,4 @@
 """Base lightning DataModule class."""
-from pathlib import Path
 from typing import Callable, Dict, Optional, Tuple, TypeVar
 
 import pytorch_lightning as L
