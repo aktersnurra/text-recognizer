@@ -1,0 +1,5 @@
+_target_: lion_pytorch.Lion
+lr: 5e-5
+betas: [0.95, 0.99]
+weight_decay: 0.1
+use_triton: true

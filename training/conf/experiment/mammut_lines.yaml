@@ -4,8 +4,8 @@ defaults:
   - override /criterion: cross_entropy
   - override /callbacks: htr
   - override /datamodule: iam_lines
-  - override /network: vit_lines
-  - override /model: lit_transformer
+  - override /network: mammut_lines
+  - override /model: lit_mammut
   - override /lr_scheduler: cosine_annealing
   - override /optimizer: adan
 

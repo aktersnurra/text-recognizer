@@ -1,0 +1,4 @@
+_target_: text_recognizer.model.mammut.LitMaMMUT
+max_output_len: 682
+caption_loss_weight: 1.0
+contrastive_loss_weight: 1.0
