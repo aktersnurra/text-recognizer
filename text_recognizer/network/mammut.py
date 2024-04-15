@@ -1,12 +1,12 @@
 from typing import Type
 
-from einops import repeat
 import torch
-from torch import nn, Tensor
 import torch.nn.functional as F
+from einops import repeat
+from torch import Tensor, nn
 
-from text_recognizer.network.transformer.decoder import Decoder
 from text_recognizer.network.transformer.attention import Attention
+from text_recognizer.network.transformer.decoder import Decoder
 
 
 class ToLatent(nn.Module):
