@@ -1,10 +1,10 @@
-from typing import Optional
 from collections import namedtuple
+from typing import Optional
 
 import torch
-from torch import Tensor, einsum, nn
-from einops import rearrange
 import torch.nn.functional as F
+from einops import rearrange
+from torch import Tensor, einsum, nn
 
 Config = namedtuple(
     "FlashAttentionConfig", ["enable_flash", "enable_math", "enable_mem_efficient"]
@@ -79,6 +79,11 @@ class Attend(nn.Module):
         causal: bool,
         mask: Optional[Tensor] = None,
     ) -> Tensor:
+        if k.ndim == 3:
+            k = rearrange(k, 'b ... -> b 1 ...').expand_as(q)
+        if v.ndim == 3:
+            v = rearrange(v, 'b ... -> b 1 ...').expand_as(q)
+
         if mask is not None:
             mask = rearrange(mask, "b j -> b 1 1 j")
         if self.use_flash:

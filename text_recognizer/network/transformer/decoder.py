@@ -1,9 +1,9 @@
 """Transformer decoder module."""
 from typing import Optional
+
 from torch import Tensor, nn
 
 from .attention import Attention
-from .embedding.rotary import RotaryEmbedding
 
 
 class Decoder(nn.Module):
@@ -15,6 +15,7 @@ class Decoder(nn.Module):
         dim_head: int,
         depth: int,
         dropout_rate: float = 0.0,
+        one_kv_head: bool = False,
     ) -> None:
         super().__init__()
         self.norm = nn.LayerNorm(dim)
@@ -31,7 +32,8 @@ class Decoder(nn.Module):
                             dropout_rate=dropout_rate,
                             use_flash=True,
                             norm_context=False,
-                            rotary_emb=RotaryEmbedding(dim_head),
+                            use_rotary_emb=True,
+                            one_kv_head=one_kv_head,
                         ),
                         Attention(
                             dim=dim,
@@ -42,6 +44,8 @@ class Decoder(nn.Module):
                             dropout_rate=dropout_rate,
                             use_flash=True,
                             norm_context=False,
+                            use_rotary_emb=False,
+                            one_kv_head=one_kv_head,
                         ),
                     ]
                 )

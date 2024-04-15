@@ -13,6 +13,8 @@ class Encoder(nn.Module):
         ff_mult: int,
         depth: int,
         dropout_rate: float = 0.0,
+        use_rotary_emb: bool = False,
+        one_kv_head: bool = False,
     ) -> None:
         super().__init__()
         self.norm = nn.LayerNorm(dim)
@@ -27,6 +29,8 @@ class Encoder(nn.Module):
                     dropout_rate=dropout_rate,
                     use_flash=True,
                     norm_context=False,
+                    use_rotary_emb=use_rotary_emb,
+                    one_kv_head=one_kv_head,
                 )
                 for _ in range(depth)
             ]
