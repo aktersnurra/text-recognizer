@@ -11,10 +11,10 @@ import numpy as np
 import toml
 from loguru import logger as log
 
+import text_recognizer.metadata.emnist as metadata
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.base_dataset import BaseDataset, split_dataset
 from text_recognizer.data.utils.download_utils import download_dataset
-import text_recognizer.metadata.emnist as metadata
 
 
 class EMNIST(BaseDataModule):

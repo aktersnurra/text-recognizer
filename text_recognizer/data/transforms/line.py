@@ -1,8 +1,8 @@
 import random
 from typing import Any, Dict
 
-from PIL import Image
 import torchvision.transforms as T
+from PIL import Image
 
 import text_recognizer.metadata.iam_lines as metadata
 from text_recognizer.data.transforms.image import ImageStem

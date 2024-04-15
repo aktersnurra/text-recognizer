@@ -1,14 +1,15 @@
 """Fetches model artifacts from wandb."""
-from datetime import datetime
-from pathlib import Path
 import shutil
 import sys
+from datetime import datetime
+from pathlib import Path
 from typing import Optional
 
 import click
 from loguru import logger as log
-from training import metadata
+
 import wandb
+from training import metadata
 from wandb.apis.public import Run
 
 

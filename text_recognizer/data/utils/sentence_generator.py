@@ -5,8 +5,8 @@ import string
 from typing import Optional
 
 import nltk
-from nltk.corpus.reader.util import ConcatenatedCorpusView
 import numpy as np
+from nltk.corpus.reader.util import ConcatenatedCorpusView
 
 import text_recognizer.metadata.shared as metadata
 

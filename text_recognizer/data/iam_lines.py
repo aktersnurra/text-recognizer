@@ -12,6 +12,7 @@ from loguru import logger as log
 from PIL import Image, ImageFile, ImageOps
 from torch import Tensor
 
+import text_recognizer.metadata.iam_lines as metadata
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.base_dataset import (
     BaseDataset,
@@ -22,7 +23,6 @@ from text_recognizer.data.iam import IAM
 from text_recognizer.data.tokenizer import Tokenizer
 from text_recognizer.data.transforms.line import IamLinesStem
 from text_recognizer.data.utils import image_utils
-import text_recognizer.metadata.iam_lines as metadata
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 

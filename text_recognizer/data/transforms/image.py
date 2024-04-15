@@ -1,7 +1,7 @@
-from PIL import Image
 import torch
-from torch import Tensor
 import torchvision.transforms as T
+from PIL import Image
+from torch import Tensor
 
 
 class ImageStem:

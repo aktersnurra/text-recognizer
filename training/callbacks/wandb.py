@@ -2,11 +2,12 @@
 from pathlib import Path
 from typing import Tuple
 
-import wandb
-from torch import Tensor
 from pytorch_lightning import Callback, LightningModule, Trainer
 from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.utilities import rank_zero_only
+from torch import Tensor
+
+import wandb
 
 
 def get_wandb_logger(trainer: Trainer) -> WandbLogger:

@@ -2,19 +2,19 @@
 from typing import Callable, List, Optional, Type
 
 import hydra
+import utils
 from loguru import logger as log
 from omegaconf import DictConfig
 from pytorch_lightning import (
     Callback,
     LightningDataModule,
     LightningModule,
-    seed_everything,
     Trainer,
+    seed_everything,
 )
 from pytorch_lightning.loggers import Logger
 from torch import nn
 from torchinfo import summary
-import utils
 
 
 def run(config: DictConfig) -> Optional[float]:

@@ -9,6 +9,7 @@ from loguru import logger as log
 from PIL import Image, ImageOps
 from tqdm import tqdm
 
+import text_recognizer.metadata.iam_paragraphs as metadata
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.base_dataset import (
     BaseDataset,
@@ -16,10 +17,9 @@ from text_recognizer.data.base_dataset import (
     split_dataset,
 )
 from text_recognizer.data.iam import IAM
-from text_recognizer.data.transforms.pad import Pad
 from text_recognizer.data.tokenizer import Tokenizer
+from text_recognizer.data.transforms.pad import Pad
 from text_recognizer.data.transforms.paragraph import ParagraphStem
-import text_recognizer.metadata.iam_paragraphs as metadata
 
 
 class IAMParagraphs(BaseDataModule):

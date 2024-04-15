@@ -2,11 +2,11 @@
 from typing import Any, Dict, Optional, Tuple, Type
 
 import hydra
+import pytorch_lightning as L
 import torch
 from loguru import logger as log
 from omegaconf import DictConfig
-import pytorch_lightning as L
-from torch import nn, Tensor
+from torch import Tensor, nn
 
 from text_recognizer.data.tokenizer import Tokenizer
 

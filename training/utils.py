@@ -1,6 +1,6 @@
 """Util functions for training with hydra and pytorch lightning."""
-from typing import List, Type
 import warnings
+from typing import List, Type
 
 import hydra
 from loguru import logger as log
@@ -14,6 +14,7 @@ from pytorch_lightning.loggers import Logger
 from pytorch_lightning.loggers.wandb import WandbLogger
 from pytorch_lightning.utilities import rank_zero_only
 from tqdm import tqdm
+
 import wandb
 
 

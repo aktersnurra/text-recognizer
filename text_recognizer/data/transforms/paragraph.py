@@ -4,7 +4,6 @@ import torchvision.transforms as T
 import text_recognizer.metadata.iam_paragraphs as metadata
 from text_recognizer.data.transforms.image import ImageStem
 
-
 IMAGE_HEIGHT, IMAGE_WIDTH = metadata.IMAGE_HEIGHT, metadata.IMAGE_WIDTH
 IMAGE_SHAPE = metadata.IMAGE_SHAPE
 

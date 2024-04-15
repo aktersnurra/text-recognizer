@@ -3,13 +3,13 @@ from typing import Callable, Optional
 
 from torch.utils.data import ConcatDataset
 
+import text_recognizer.metadata.iam_paragraphs as metadata
 from text_recognizer.data.base_data_module import BaseDataModule, load_and_print_info
 from text_recognizer.data.iam_paragraphs import IAMParagraphs
 from text_recognizer.data.iam_synthetic_paragraphs import IAMSyntheticParagraphs
-from text_recognizer.data.transforms.pad import Pad
 from text_recognizer.data.tokenizer import Tokenizer
+from text_recognizer.data.transforms.pad import Pad
 from text_recognizer.data.transforms.paragraph import ParagraphStem
-import text_recognizer.metadata.iam_paragraphs as metadata
 
 
 class IAMExtendedParagraphs(BaseDataModule):

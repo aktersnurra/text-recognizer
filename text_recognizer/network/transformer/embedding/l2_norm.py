@@ -1,5 +1,5 @@
-from einops import rearrange
 import torch.nn.functional as F
+from einops import rearrange
 from torch import Tensor
 
 

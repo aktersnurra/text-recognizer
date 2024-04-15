@@ -6,23 +6,23 @@ import numpy as np
 from loguru import logger as log
 from PIL import Image
 
+import text_recognizer.metadata.iam_synthetic_paragraphs as metadata
 from text_recognizer.data.base_data_module import load_and_print_info
 from text_recognizer.data.base_dataset import BaseDataset, convert_strings_to_labels
 from text_recognizer.data.iam import IAM
-from text_recognizer.data.iam_paragraphs import (
-    IAMParagraphs,
-    get_dataset_properties,
-    resize_image,
-)
 from text_recognizer.data.iam_lines import (
     line_crops_and_labels,
     load_line_crops_and_labels,
     save_images_and_labels,
 )
+from text_recognizer.data.iam_paragraphs import (
+    IAMParagraphs,
+    get_dataset_properties,
+    resize_image,
+)
 from text_recognizer.data.tokenizer import Tokenizer
-from text_recognizer.data.transforms.paragraph import ParagraphStem
 from text_recognizer.data.transforms.pad import Pad
-import text_recognizer.metadata.iam_synthetic_paragraphs as metadata
+from text_recognizer.data.transforms.paragraph import ParagraphStem
 
 
 class IAMSyntheticParagraphs(IAMParagraphs):

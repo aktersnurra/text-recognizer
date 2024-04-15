@@ -1,6 +1,7 @@
 """Loads config with hydra and runs experiment."""
 import hydra
 from omegaconf import DictConfig
+
 from training.metadata import TRAINING_DIR
 
 

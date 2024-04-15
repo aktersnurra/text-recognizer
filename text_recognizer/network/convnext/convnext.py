@@ -4,9 +4,9 @@ from typing import Optional, Sequence
 import torch
 from torch import Tensor, nn
 
-from .transformer import Transformer
 from .downsample import Downsample
 from .norm import LayerNorm
+from .transformer import Transformer
 
 
 class GRN(nn.Module):
