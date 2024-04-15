@@ -1,15 +1,15 @@
 _target_: text_recognizer.network.convnext.convnext.ConvNext
 dim: 8
-dim_mults: [2, 8]
-depths: [2, 2]
+dim_mults: [2, 8, 8, 8]
+depths: [2, 2, 2, 2]
 attn:
   _target_: text_recognizer.network.convnext.transformer.Transformer
-  attn:
-    _target_: text_recognizer.network.convnext.transformer.Attention
-    dim: 64
-    heads: 4
-    dim_head: 64
-    scale: 8
+  attn: null
+    # _target_: text_recognizer.network.convnext.transformer.Attention
+    # dim: 64
+    # heads: 4
+    # dim_head: 64
+    # scale: 8
   ff:
     _target_: text_recognizer.network.convnext.transformer.FeedForward
     dim: 64

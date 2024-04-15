@@ -1,0 +1,31 @@
+_target_: text_recognizer.network.convformer.Convformer
+image_height: 7
+image_width: 128
+patch_height: 1
+patch_width: 1
+dim: &dim 512
+num_classes: &num_classes 57
+encoder:
+  _target_: text_recognizer.network.convnext.convnext.ConvNext
+  dim: 16
+  dim_mults: [2, 8, 32]
+  depths: [2, 2, 2]
+  attn: null
+decoder:
+  _target_: text_recognizer.network.transformer.decoder.Decoder
+  dim: *dim
+  ff_mult: 4
+  heads: 12
+  dim_head: 64
+  depth: 6
+  dropout_rate: 0.
+  one_kv_head: true
+token_embedding:
+  _target_: "text_recognizer.network.transformer.embedding.token.\
+    TokenEmbedding"
+  num_tokens: *num_classes
+  dim: *dim
+  use_l2: true
+tie_embeddings: false
+pad_index: 3
+channels: 512

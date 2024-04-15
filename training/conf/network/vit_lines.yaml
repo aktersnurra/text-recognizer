@@ -1,51 +1,39 @@
-_target_: text_recognizer.network.convformer.Convformer
-image_height: 7
-image_width: 128
-patch_height: 7
-patch_width: 1
+_target_: text_recognizer.network.transformer.transformer.Transformer
 dim: &dim 768
-num_classes: &num_classes 58
+num_classes: &num_classes 57
 encoder:
-  _target_: text_recognizer.network.transformer.encoder.Encoder
+  _target_: text_recognizer.network.transformer.vit.Vit
+  image_height: 56
+  image_width: 1024
+  patch_height: 56
+  patch_width: 8
   dim: *dim
-  inner_dim: 3072
-  ff_mult: 4
-  heads: 12
-  dim_head: 64
-  depth: 4
-  dropout_rate: 0.1
+  encoder:
+    _target_: text_recognizer.network.transformer.encoder.Encoder
+    dim: *dim
+    heads: 16
+    dim_head: 64
+    ff_mult: 4
+    depth: 6
+    dropout_rate: 0.
+    use_rotary_emb: true
+    one_kv_head: false
+  channels: 1
+  patch_dropout: 0.4
 decoder:
   _target_: text_recognizer.network.transformer.decoder.Decoder
   dim: *dim
-  inner_dim: 3072
   ff_mult: 4
   heads: 12
   dim_head: 64
   depth: 6
-  dropout_rate: 0.1
+  dropout_rate: 0.
+  one_kv_head: false
 token_embedding:
   _target_: "text_recognizer.network.transformer.embedding.token.\
     TokenEmbedding"
   num_tokens: *num_classes
   dim: *dim
   use_l2: true
-tie_embeddings: true
+tie_embeddings: false
 pad_index: 3
-channels: 64
-stem:
-  _target_: text_recognizer.network.convnext.convnext.ConvNext
-  dim: 8
-  dim_mults: [2, 8, 8]
-  depths: [2, 2, 2]
-  attn: null
-    # _target_: text_recognizer.network.convnext.transformer.Transformer
-    # attn:
-    #   _target_: text_recognizer.network.convnext.transformer.Attention
-    #   dim: 64
-    #   heads: 4
-    #   dim_head: 64
-    #   scale: 8
-    # ff:
-    #   _target_: text_recognizer.network.convnext.transformer.FeedForward
-    #   dim: 64
-    #   mult: 4
